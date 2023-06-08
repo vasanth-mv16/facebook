@@ -3,7 +3,10 @@ package com.facebook.service.serviceImpl;
 import com.facebook.model.User;
 import com.facebook.service.UserService;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Implements the following services for the user
@@ -73,17 +76,12 @@ public class UserServiceImpl implements UserService {
      * {@inheritDoc}
      */
     public boolean deleteDetail(final Long id) {
-        final Iterator<User> iterator = USER_LIST.iterator();
+        final User user = getUser(id);
 
-        while (iterator.hasNext()) {
-            final User existingUser = iterator.next();
-
-            if (existingUser.getId() == id) {
-                iterator.remove();
-
-                return true;
-            }
+        if (user != null) {
+            return USER_LIST.remove(user);
         }
+
         return false;
     }
 

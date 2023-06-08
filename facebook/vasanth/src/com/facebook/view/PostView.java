@@ -6,9 +6,7 @@ import com.facebook.model.User;
 import com.facebook.view.validation.UserValidation;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.InputMismatchException;
-import java.util.List;
 import java.util.Scanner;
 
 
@@ -26,7 +24,6 @@ public class PostView {
     private static final PostController POST_CONTROLLER = new PostController();
     private static final UserValidation USER_VALIDATION = new UserValidation();
     private static Long postId = 0L;
-    private static final List<Post> userPost = new ArrayList<>();
 
     /**
      * Shows the menu details for the user to post and edit
@@ -52,8 +49,9 @@ public class PostView {
                 break;
             case 5:
                 LIKE_VIEW.printLikeDetails(user);
+                break;
             case 6:
-//                USER_VIEW.printUserOptions();
+                USER_VIEW.printUserOptions(user);
                 break;
             default :
                 System.out.println("INVALID CHOICE,SELECT THE ABOVE CHOICE");

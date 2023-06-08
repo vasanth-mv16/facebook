@@ -20,7 +20,7 @@ public class UserView {
     private static final UserController USER_CONTROLLER = new UserController();
     private static final UserValidation USER_VALIDATION = new UserValidation();
     private static final PostView POST_VIEW = new PostView();
-    private static Long id = 0L;
+    private static Long id = 1L;
 
     public static void main(String[] args) {
         final UserView userView = new UserView();
@@ -58,21 +58,22 @@ public class UserView {
      * Shows the user sign up details
      */
     private void signUp() {
-        final User user1 = new User();
-        
-        user1.setId(++id);
-        user1.setName(getName());
-        user1.setMobileNumber(getMobileNumber());
-        user1.setEmail(getEmail());
-        user1.setPassword(getPassword());
-        getGender(user1);
-        System.out.println(USER_CONTROLLER.create(user1));
-        System.out.println("ACCOUNT SUCCESSFULLY SIGN UP\nPRESS ANY WORD FOR EDIT AND PRESS NO FOR MENU ");
+        final User user = new User();
+
+        user.setId(id++);
+        user.setName(getName());
+        user.setMobileNumber(getMobileNumber());
+        user.setEmail(getEmail());
+        user.setPassword(getPassword());
+        getGender(user);
+        user.setDateOfBirth(getDateOfBirth());
+        System.out.println((USER_CONTROLLER.create(user)) ? "ACCOUNT SUCCESSFULLY SIGN UP" : "ACCOUNT ALREADY EXIST" );
+        System.out.println("PRESS ANY WORD FOR EDIT USER DETAILS AND PRESS NO FOR MENU ");
 
         if (USER_VALIDATION.isValidateCheck(SCANNER.nextLine())) {
             printMenu();
         } else {
-            printUserOptions(user1);
+            printUserOptions(user);
         }
     }
 
@@ -81,8 +82,7 @@ public class UserView {
      */
     private void deleteUser() {
         System.out.println("ENTER USERID");
-        System.out.println(USER_CONTROLLER.isDelete(SCANNER.nextLong()));
-//        printUserOptions();
+        System.out.println(USER_CONTROLLER.isDelete(Long.valueOf(SCANNER.nextLine())));
     }
 
     /**
@@ -90,7 +90,6 @@ public class UserView {
      */
     private void getUserDetail() {
         System.out.println(USER_CONTROLLER.getUserDetails());
-//        printUserOptions();
     }
 
     /**
@@ -102,14 +101,7 @@ public class UserView {
         System.out.println("ENTER ID TO UPDATE:");
         user.setId(Long.valueOf(SCANNER.nextLine()));
         getUpdateChoice(user);
-
-        if (USER_CONTROLLER.isUpdate(user)) {
-            System.out.println("ACCOUNT SUCCESSFULLY UPDATED");
-//            printUserOptions();
-        } else {
-            System.out.println("NOT UPDATED");
-//            printUserOptions();
-        }
+        System.out.println((USER_CONTROLLER.isUpdate(user)) ? "ACCOUNT SUCCESSFULLY UPDATED" : "NOT UPDATED");
     }
 
     /**
@@ -151,8 +143,8 @@ public class UserView {
      * Prints the options for user
      */
     public void printUserOptions(final User user) {
-        System.out.println("CLICK 1 TO GET\nCLICK 2 TO UPDATE\nCLICK 3 TO DELETE\nCLICK 4 TO GET USERS\nCLICK 5 TO " +
-                "PRINT POST DETAILS\nCLICK 6 TO LOGOUT\nCLICK 7 TO EXIT\nCLICK 8 TO PRINT MENU");
+        String.join("\n","CLICK 1 TO GET","CLICK 2 TO UPDATE","CLICK 3 TO DELETE","CLICK 4 TO GET USERS",
+                "CLICK 5 TO PRINT POST DETAILS","CLICK 6 TO LOGOUT","CLICK 7 TO EXIT","CLICK 8 TO PRINT MENU");
 
         switch (getChoice()) {
             case 1:
@@ -207,11 +199,20 @@ public class UserView {
      * @return emailId of the user
      */
     public String getEmail() {
-        System.out.println("EMAIL ID MUST CONTAINS 'a-z' AT FIRST, THEN CONTAINS 'A-Z, 0-9' AND '@' AFTER 'a-z A-Z' " +
-                           "AND '.' THEN 2 OR MORE ALPHABETIC CHARACTER\nENTER YOUR EMAIL ID :");
+        System.out.println("ENTER YOUR EMAIL ID :");
         final String email = SCANNER.nextLine().trim();
 
-        return (USER_VALIDATION.isValidateEmail(email)) ? email : getEmail();
+        if (email.contains("$")) {
+            printMenu();
+        }
+
+        if (USER_VALIDATION.isValidateEmail(email)) {
+            return email;
+        } else {
+            String.join("", "EMAIL MUST CONTAINS 'a-z' AT FIRST, THEN CONTAINS 'a-z' OR '0-9' AND '@'",
+                    "AFTER 'a-z' AND '.' THEN 2 OR MORE 'a-z'");
+            return getEmail();
+        }
     }
 
     /**
@@ -220,10 +221,19 @@ public class UserView {
      * @return mobile number of the user
      */
     public String getMobileNumber() {
-        System.out.println("MOBILE NUMBER MUST CONTAINS 10 DIGIT AND STARTS WITH RANGE (6-9)\nENTER YOUR MOBILE " +
-                           "NUMBER :");
+        System.out.println("ENTER YOUR MOBILE NUMBER :");
         final String mobileNumber = SCANNER.nextLine().trim();
 
+        if (mobileNumber.contains("$")) {
+            printMenu();
+        }
+
+        if (USER_VALIDATION.isValidateMobileNumber(mobileNumber)) {
+            return mobileNumber;
+        } else {
+            String.join("","INDIA MOBILE NUMBER MUST CONTAINS '+91' FOLLOWED BY 10 DIGITS AND STARTS",
+                    "WITH RANGE (6-9),US MOBILE NUMBER MUST CONTAINS '+1' FOLLOWED BY 10 DIGITS AND STARTS WITH (2-9)");
+        }
         return (USER_VALIDATION.isValidateMobileNumber(mobileNumber)) ? mobileNumber : getMobileNumber();
     }
 
@@ -233,10 +243,19 @@ public class UserView {
      * @return username of the user
      */
     public String getName() {
-        System.out.println("USERNAME MUST CONTAIN 'a-z' AND '_' AND '0-9'\nENTER YOUR USERNAME :");
+        System.out.println("ENTER YOUR USERNAME :\nDO YOU WANT TO GO MENU, PRESS '$'");
         final String name = SCANNER.nextLine().trim();
 
-        return (USER_VALIDATION.isValidateName(name)) ? name : getName();
+        if (name.contains("$")) {
+            printMenu();
+        }
+        if (USER_VALIDATION.isValidateName(name)) {
+            return name;
+        } else {
+            System.out.println("USERNAME MUST CONTAIN 'a-z' AND 'A-Z'");
+
+            return getName();
+        }
     }
 
     /**
@@ -245,11 +264,21 @@ public class UserView {
      * @return password of the user
      */
     public String getPassword() {
-        System.out.println("PASSWORD MUST CONTAINS AT LEAST ONE CAPITAL AND SMALL LETTER, NUMBER, SPECIAL CHARACTER " +
-                           "AND NO WHITESPACE\nENTER PASSWORD :\n");
+        System.out.println("ENTER PASSWORD :");
         final String password = SCANNER.nextLine().trim();
 
-        return (USER_VALIDATION.isValidatePassword(password)) ?  password : getPassword();
+        if (password.contains("$")) {
+            printMenu();
+        }
+
+        if (USER_VALIDATION.isValidatePassword(password)) {
+            return password;
+        } else {
+            String.join("","PASSWORD MUST CONTAINS AT LEAST ONE CAPITAL AND SMALL LETTER, NUMBER, ",
+                    "SPECIAL CHARACTER") ;
+
+            return getPassword();
+        }
     }
 
     /**
@@ -261,7 +290,12 @@ public class UserView {
         System.out.println("ENTER DATE OF BIRTH :");
         final String dateOfBirth = SCANNER.nextLine().trim();
 
-        return (USER_VALIDATION.isValidateDateOfBirth(dateOfBirth)) ? dateOfBirth : getDateOfBirth();
+        if (USER_VALIDATION.isValidateDateOfBirth(dateOfBirth)) {
+            return dateOfBirth;
+        } else {
+            System.out.println("DATE OF BIRTH FORMAT --> DD/MM/YYYY");
+            return getDateOfBirth();
+        }
     }
 
     /**

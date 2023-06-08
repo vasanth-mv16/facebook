@@ -1,10 +1,5 @@
 package com.facebook.model;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-
 /**
  * Represents the given user
  *
@@ -19,6 +14,7 @@ public class User {
     private String mobileNumber;
     private String password;
     private String email;
+    private String dateOfBirth;
 
     /**
      * An enum with values MALE, FEMALE
@@ -75,13 +71,13 @@ public class User {
         this.password = password;
     }
 
-//    public String getDateOfBirth() {
-//        return dateOfBirth;
-//    }
-//
-//    public void  setDateOfBirth(final String dateOfBirth) {
-//        this.dateOfBirth = dateOfBirth;
-//    }
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void  setDateOfBirth(final String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
 
     public String toString() {
         return String.format("%d %s %s %s", id, name, email, gender);
