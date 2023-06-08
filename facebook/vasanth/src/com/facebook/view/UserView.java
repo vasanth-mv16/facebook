@@ -59,6 +59,7 @@ public class UserView {
      */
     private void signUp() {
         final User user1 = new User();
+        
         user1.setId(++id);
         user1.setName(getName());
         user1.setMobileNumber(getMobileNumber());
