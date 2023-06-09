@@ -78,7 +78,6 @@ public class PostView {
         System.out.println("ENTER YOUR LOCATION FOR YOUR POST:");
         post.setLocation(SCANNER.nextLine().trim());
         post.setDateTime(timestamp);
-        //user.getPosts().add(post);
         post.setUser(user);
         if (POST_CONTROLLER.isPostCreate(post)) {
             System.out.println("SUCCESSFULLY POSTED");

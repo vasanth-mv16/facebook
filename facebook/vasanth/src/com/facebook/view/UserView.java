@@ -175,9 +175,6 @@ public class UserView {
             case 8:
                 printMenu();
                 break;
-            case 9:
-                getUserPost(user);
-                break;
             default:
                 System.out.println("INVALID CHOICE, SELECT THE ABOVE CHOICE");
                 printUserOptions(user );
@@ -186,17 +183,6 @@ public class UserView {
         printUserOptions(user );
     }
 
-    public void getUserPost(final User user) {
-        final Long id = Long.valueOf(SCANNER.nextLine());
-        for (Post post : user.getPosts()) {
-            User get = post.getUser();
-
-            if (get.getId() .equals(id)) {
-                System.out.println(post);
-            }
-        }
-        printUserOptions(user);
-    }
     /**
      * Gets the user logout
      */
