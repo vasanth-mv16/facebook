@@ -20,7 +20,6 @@ import java.util.Map;
 public class PostServiceImpl implements PostService {
 
     private static final Collection<Post> POSTS = new ArrayList<>();
-    private static final Collection<User> USER_LIST = new ArrayList<>();
 
     /**
      * {@inheritDoc}
@@ -40,22 +39,15 @@ public class PostServiceImpl implements PostService {
      * {@inheritDoc}
      */
     public Post getPostUsingId(final Long id) {
+        final Iterator<Post> iterator = POSTS.iterator();
 
-        for (final Post post : POSTS) {
+        while (iterator.hasNext()) {
+            final Post existingPost = iterator.next();
 
-            if (post.getId() == id) {
-                return post;
+            if (existingPost.getId() == id) {
+                return existingPost;
             }
         }
-//        final Iterator<Post> iterator = POST_LIST.iterator();
-//
-//        while (iterator.hasNext()) {
-//            final Post existingPost = iterator.next();
-//
-//            if (existingPost.getId() == id) {
-//                return existingPost;
-//            }
-//        }
 
         return null;
     }

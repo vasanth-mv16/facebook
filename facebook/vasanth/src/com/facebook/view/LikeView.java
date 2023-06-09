@@ -2,6 +2,7 @@ package com.facebook.view;
 
 import com.facebook.controller.LikeController;
 import com.facebook.model.Like;
+import com.facebook.model.Post;
 import com.facebook.model.User;
 import com.facebook.view.validation.UserValidation;
 
@@ -19,7 +20,7 @@ public class LikeView {
     private static final UserView USER_VIEW = new UserView();
     private static final PostView POST_VIEW = new PostView();
     private static final UserValidation USER_VALIDATION = new UserValidation();
-    private static Long likeId = 0L;
+    private static Long likeId = 1L;
 
     public void printLikeDetails(final User user) {
         System.out.println("ENTER 1 TO CREATE LIKE, 2 TO GET ALL LIKES, 3 TO GET LIKE COUNT, 4 TO PRINT POST DETAILS");
@@ -37,6 +38,9 @@ public class LikeView {
             case 4:
                 POST_VIEW.printPostDetails(user);
                 break;
+            case 5:
+                USER_VIEW.printUserOptions(user);
+                break;
             default :
                 System.out.println("Invalid choice, select the above choice");
                 printLikeDetails(user);
@@ -50,7 +54,6 @@ public class LikeView {
     public void createLike() {
         final Like like = new Like();
 
-        like.setLikeId(++likeId);
         like.setUserId(getUserId());
         like.setPostId(getPostId());
         System.out.println(LIKE_CONTROLLER.createLike(like) ? "LIKED" : "NOT LIKED");
@@ -61,7 +64,6 @@ public class LikeView {
      */
     public void getAllLike() {
         System.out.println(LIKE_CONTROLLER.getAllLike());
-//        USER_VIEW.printUserOptions();
     }
 
     /**
@@ -74,11 +76,11 @@ public class LikeView {
             Long likeCount = LIKE_CONTROLLER.getLikeCount(userId);
 
             System.out.println("TOTAL LIKE FOR USER ID " + userId + ": " + likeCount);
-//            USER_VIEW.printUserOptions();
-        } catch (InputMismatchException | NumberFormatException exception) {
+
+        } catch (Exception exception) {
             System.out.println("PLEASE ENTER AN INTEGER");
+            getLikeCount();
         }
-        getLikeCount();
     }
 
     /**

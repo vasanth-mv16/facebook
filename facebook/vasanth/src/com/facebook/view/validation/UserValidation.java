@@ -1,5 +1,11 @@
 package com.facebook.view.validation;
 
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
+
 /**
  * Given class used for validation the user details
  *
@@ -24,7 +30,7 @@ public class UserValidation {
      * @return true, if matches the regular expression otherwise false
      */
     public boolean isValidateMobileNumber(final String mobileNumber) {
-        return mobileNumber.matches("^[6-9][0-9]{9}$");
+        return mobileNumber.matches("(^\\+(91){1,2}[6-9][0-9]{9}$)");
     }
 
     /**
@@ -34,7 +40,7 @@ public class UserValidation {
      * @return true, if matches the regular expression otherwise false
      */
     public boolean isValidateEmail(final String emailId) {
-        return emailId.matches("^[a-z0-9._]+@[a-z0-9]+\\.[a-z-]{2,3}");
+        return emailId.matches("^[a-z0-9._]+@[a-z]+\\.[a-z-]{2,3}");
     }
 
     /**
@@ -54,7 +60,24 @@ public class UserValidation {
      * @return true, if matches the regular expression otherwise false
      */
     public boolean isValidateDateOfBirth(final String dateOfBirth) {
-        return dateOfBirth.matches("^(?:(0[1-9]|[12][0-9]|3[01])[-/.](0[1-9]|1[012])[-/.](18|19|20)[0-9]{2})$");
+        //return dateOfBirth.matches("^(?:(0[1-9]|[12][0-9]|3[01])[-/.](0[1-9]|1[012])[-/.](18|19|20)[0-9]{2})$");
+        //return dateOfBirth.matches("^(?:(?:(?:0?[1-9]|1\\d|2[0-8])-(?:0?[1-9]|1[0-2]))|(?:(?:29|30)-(?:0?[13-9]|1[0-2]))|(?:(?:0?1|0?[3-9]|1[0-9]|2[0-8])-02))-(?:(?!0000)\\d{4})$");
+        try {
+            final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-uuuu").withResolverStyle(ResolverStyle.STRICT);
+            final LocalDate date = LocalDate.parse(dateOfBirth, dateFormatter);
+            final int currentYear = LocalDate.now().getYear();
+
+            if (date.getYear() < 1940 && date.getYear() > currentYear) {
+                if (date.getDayOfMonth() > date.getMonth().maxLength() ||
+                        (date.getMonth() == Month.FEBRUARY && date.getDayOfMonth() > 29 && !date.isLeapYear())) {
+                    return false;
+                }
+            }
+
+        } catch (final DateTimeParseException exception) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -96,16 +119,5 @@ public class UserValidation {
     public boolean isValidatePostId(final String postId) {
         return postId.matches("[\\d]");
     }
-
-    public boolean validateYear(final String year ) {
-        return year.matches("\\d {4}");
-    }
-
-    public boolean validateMonth(final String month) {
-        return month.matches("(0[1-9]|1[012])");
-    }
-
-    public boolean validateDate(final String date) {
-        return  date.matches("(0[1-9]|[12][0-9]|3[01])");
-    }
+    
 }

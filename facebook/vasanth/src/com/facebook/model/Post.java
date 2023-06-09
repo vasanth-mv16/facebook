@@ -1,5 +1,6 @@
 package com.facebook.model;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 /**
@@ -14,7 +15,7 @@ public class Post {
     private Long id;
     private String caption;
     private String location;
-    private LocalDateTime dateTime;
+    private Timestamp dateTime;
 
     public void setUser(final User user) {
         this.user = user;
@@ -49,11 +50,11 @@ public class Post {
 
     }
 
-    public LocalDateTime getDateTime() {
+    public Timestamp getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(final LocalDateTime dateTime) {
+    public void setDateTime(final Timestamp dateTime) {
         this.dateTime = dateTime;
     }
 

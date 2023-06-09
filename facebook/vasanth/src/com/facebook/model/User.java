@@ -1,5 +1,7 @@
 package com.facebook.model;
 
+import java.util.List;
+
 /**
  * Represents the given user
  *
@@ -15,6 +17,7 @@ public class User {
     private String password;
     private String email;
     private String dateOfBirth;
+    private List<Post> posts;
 
     /**
      * An enum with values MALE, FEMALE
@@ -23,6 +26,13 @@ public class User {
         MALE, FEMALE, OTHERS
     }
 
+    public void setPosts (final List<Post> posts ) {
+        this.posts = posts;
+    }
+
+    public List<Post> getPosts () {
+        return posts;
+    }
     public Gender getGender() {
         return gender;
     }

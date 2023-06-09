@@ -5,6 +5,8 @@ import com.facebook.model.Post;
 import com.facebook.model.User;
 import com.facebook.view.validation.UserValidation;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -23,16 +25,17 @@ public class PostView {
     private static final LikeView LIKE_VIEW = new LikeView();
     private static final PostController POST_CONTROLLER = new PostController();
     private static final UserValidation USER_VALIDATION = new UserValidation();
-    private static Long postId = 0L;
+    private static Long postId = 1L;
 
     /**
      * Shows the menu details for the user to post and edit
      *
      * @param user Represents the post
+     *
      */
     public void printPostDetails(final User user) {
-        System.out.println("CLICK 1 TO CREATE, 2 TO GET, 3 TO GET USING ID, 4 TO UPDATE, 5 TO PRINT LIKE DETAILS, " +
-                "6 TO PRINT USER OPTIONS");
+        System.out.println(String.join("\n","CLICK 1 TO CREATE","CLICK 2 TO GET","CLICK 3 TO GET USING ID",
+                "CLICK 4 TO UPDATE","CLICK 5 TO PRINT LIKE DETAILS","CLICK 6 TO PRINT USER OPTIONS"));
 
         switch (USER_VIEW.getChoice()) {
             case 1 :
@@ -66,25 +69,21 @@ public class PostView {
      * @param user Represents by the user
      */
     private void createPost(final User user) {
-        try {
-            final Post post = new Post();
+        final Post post = new Post();
+        Timestamp timestamp =Timestamp.from(Instant.now());
 
-            post.setId(++postId);
-            System.out.println("ENTER YOUR CAPTION FOR YOUR POST:");
-            post.setCaption(SCANNER.nextLine().trim());
-            System.out.println("ENTER YOUR LOCATION FOR YOUR POST:");
-            post.setLocation(SCANNER.nextLine().trim());
-            post.setDateTime(LocalDateTime.now());
-            post.setUser(user);
-
-            if (POST_CONTROLLER.isPostCreate(post)) {
-                System.out.println("SUCCESSFULLY POSTED");
-            } else {
-                System.out.println("FAILED TO POST");
-            }
-        } catch (Exception exception) {
-            System.out.println("ID NOT FOUND,ENTER CORRECT ID");
-            createPost(user);
+        post.setId(postId++);
+        System.out.println("ENTER YOUR CAPTION FOR YOUR POST:");
+        post.setCaption(SCANNER.nextLine().trim());
+        System.out.println("ENTER YOUR LOCATION FOR YOUR POST:");
+        post.setLocation(SCANNER.nextLine().trim());
+        post.setDateTime(timestamp);
+        //user.getPosts().add(post);
+        post.setUser(user);
+        if (POST_CONTROLLER.isPostCreate(post)) {
+            System.out.println("SUCCESSFULLY POSTED");
+        } else {
+            System.out.println("FAILED TO POST");
         }
     }
 
