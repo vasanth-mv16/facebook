@@ -13,7 +13,7 @@ import java.util.Scanner;
 
 
 /**
- * Represents the posts, posted by the user
+ * Manages the view for posts, including creating, retrieving, updating, and printing post details.
  *
  * @version 1.0
  * @author vasanth
@@ -64,9 +64,9 @@ public class PostView {
     }
 
     /**
-     * Shows the user post details
+     * Creates a new post with the user, caption, and location.
      *
-     * @param user Represents by the user
+     * @param user The User associated with the post
      */
     private void createPost(final User user) {
         final Post post = new Post();
@@ -87,16 +87,16 @@ public class PostView {
     }
 
     /**
-     * Gets the post details
+     * Retrieves and prints the details of the post
      */
     public void getPostDetails() {
         System.out.println(POST_CONTROLLER.getPostDetails());
     }
 
     /**
-     * Gets the post details using post id
+     * Retrieves and returns a User object based on the provided user ID
      *
-     * @return {@link Post} post
+     * @return {@link Post} The Post updated by the user
      */
     public Post getPostDetailUsingId() {
         System.out.println("ENTER YOUR POST ID:");
@@ -105,7 +105,7 @@ public class PostView {
         return null;
     }
     /**
-     * Sets the update for the post
+     * Updates the post by the user to edit the caption and location
      */
     public void updatePost() {
         final Post post = new Post();
@@ -138,9 +138,9 @@ public class PostView {
     }
 
     /**
-     * Gets the post id detail
+     * Retrieves the post ID from the user.
      *
-     * @return {@link Long} postId
+     * @return {@link Long} The post ID entered by the user.
      */
     public Long getPostId() {
         try {
@@ -150,7 +150,7 @@ public class PostView {
             if (USER_VALIDATION.isValidatePostId(String.valueOf(postId))) {
                 return postId;
             }
-        } catch (final InputMismatchException | NumberFormatException exception) {
+        } catch (final Exception exception) {
             System.out.println("PLEASE ENTER AN NUMBER");
         }
 

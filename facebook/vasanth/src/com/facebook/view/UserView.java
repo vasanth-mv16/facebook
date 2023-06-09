@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 
 /**
- * Menu option for sign up, sign in, post and edit
+ * Manages the view for Users, including creating, retrieving, updating, and printing post details.
  *
  * @version 1.0
  * @author vasanth
@@ -57,7 +57,8 @@ public class UserView {
     }
 
     /**
-     * Shows the user sign up details
+     * Handles the sign-up process for a new user, collecting and validating user information, creating a new user
+     * account, and providing options for further actions.
      */
     private void signUp() {
         final User user = new User();
@@ -80,7 +81,7 @@ public class UserView {
     }
 
     /**
-     * Shows the user delete details
+     * Deletes a user based on the provided userID
      */
     private void deleteUser() {
         System.out.println("ENTER USERID");
@@ -88,14 +89,14 @@ public class UserView {
     }
 
     /**
-     * Gets the user get details
+     * Retrieves and prints the details of the user
      */
     private void getUserDetail() {
         System.out.println(USER_CONTROLLER.getUserDetails());
     }
 
     /**
-     * Shows the user update details
+     * Updates the user's account information based on the provided ID
      */
     private void updateUser() {
         final User user = new User();
@@ -107,7 +108,8 @@ public class UserView {
     }
 
     /**
-     * Shows the user sign in details
+     * Handles the sign-in process for a user, collecting and validating user information, providing options for
+     * further actions.
      */
     private void signIn() {
         final User user = new User();
@@ -126,7 +128,7 @@ public class UserView {
     }
 
     /**
-     * Gets the user detail
+     * Retrieves and returns a User object based on the provided user ID
      */
     public User getUser() {
         System.out.println("ENTER THE USER ID");
@@ -134,7 +136,7 @@ public class UserView {
     }
 
     /**
-     * Given the user exit
+     * Exits the program by printing an exit message, closing the Scanner, and close the program.
      */
     private void exits() {
         System.out.println("EXITING");
@@ -143,7 +145,8 @@ public class UserView {
     }
 
     /**
-     * Prints the options for user
+     * Prints the user options and performs the action based on the user's choice.
+     * @param user - The User object associated with the current option
      */
     public void printUserOptions(final User user) {
         System.out.println(String.join("\n","CLICK 1 TO GET","CLICK 2 TO UPDATE","CLICK 3 TO DELETE",
@@ -184,7 +187,7 @@ public class UserView {
     }
 
     /**
-     * Gets the user logout
+     * Handles the user logout process, displaying a confirmation message, and log out the user if confirmed.
      */
     private void logout() {
         System.out.println("DO YOU WANT TO LOGOUT?,CLICK YES");
@@ -198,9 +201,9 @@ public class UserView {
     }
 
     /**
-     * Gets the user email detail
+     * Collects and validates the user's email address
      *
-     * @return emailId of the user
+     * @return The validated email address.
      */
     public String getEmail() {
         System.out.println("ENTER YOUR EMAIL ID : \nDO YOU WANT GO MENU, PRESS($)");
@@ -220,9 +223,9 @@ public class UserView {
     }
 
     /**
-     * Gets the user mobile number
+     * Collects and validates the user's mobile number
      *
-     * @return mobile number of the user
+     * @return The validated mobile number
      */
     public String getMobileNumber() {
         System.out.println("ENTER YOUR MOBILE NUMBER : \nDO YOU WANT GO MENU, PRESS($)");
@@ -242,9 +245,9 @@ public class UserView {
     }
 
     /**
-     * Gets the user name detail
+     * Collects and validates the user's name
      *
-     * @return username of the user
+     * @return The validated name
      */
     public String getName() {
         System.out.println("ENTER YOUR USERNAME :\nDO YOU WANT TO GO MENU, PRESS '$'");
@@ -263,9 +266,9 @@ public class UserView {
     }
 
     /**
-     * Gets the user password detail
+     * Collects and validates the user's password
      *
-     * @return password of the user
+     * @return The validated password
      */
     public String getPassword() {
         System.out.println("ENTER PASSWORD : \nDO YOU WANT GO MENU, PRESS($)");
@@ -286,9 +289,9 @@ public class UserView {
     }
 
     /**
-     * Gets the user date of birth detail
+     * Collects and validates the user's date of birth
      *
-     * @return date of birth of the user
+     * @return The validated date of birth
      */
     public String getDateOfBirth() {
         System.out.println("ENTER DATE OF BIRTH : \nDO YOU WANT GO MENU, PRESS($)");
@@ -307,9 +310,9 @@ public class UserView {
     }
 
     /**
-     * Gets the user gender detail
+     * Collects the user's gender choice and sets the gender value in the User object.
      *
-     * @param user to identify the user gender
+     * @param user - The User object to set the gender value
      */
     public void getGender(final User user) {
         System.out.println("ENTER GENDER\nCLICK 1 TO MALE\nCLICK 2 TO FEMALE\nCLICK 3 TO OTHERS");
@@ -332,11 +335,11 @@ public class UserView {
     }
 
     /**
-     * Gets the user choice detail
+     * Collects and validates the user's choice as an integer value
      *
-     * @return choice of the user
+     * @return The validated choice
      */
-    public int getChoice() {
+    public int getChoice()  {
         try {
             System.out.println("ENTER YOUR CHOICE :");
             final int choice = Integer.parseInt(SCANNER.nextLine());
@@ -344,7 +347,7 @@ public class UserView {
             if (USER_VALIDATION.isValidateChoice(String.valueOf(choice))) {
                 return choice;
             }
-        } catch (final InputMismatchException | NumberFormatException exception) {
+        } catch (final Exception exception) {
             System.out.println("PLEASE ENTER AN INTEGER");
         }
 
@@ -352,9 +355,9 @@ public class UserView {
     }
 
     /**
-     * Gets the user sign in choice details
+     * Collects the user's sign-in choice 
      *
-     * @param user the user has to passed for sign in
+     * @param user The User object to set the sign-in
      */
     public void getSignInChoice(final User user) {
         System.out.println("CLICK 1 TO MOBILE NUMBER\nCLICK 2 TO EMAIL ID");
@@ -374,7 +377,7 @@ public class UserView {
     }
 
     /**
-     * Gets the user update choice details
+     * Collects the user's update choices for name, email, and password, and sets the values in the User object.
      *
      * @param user the user to be passed for update
      */

@@ -15,49 +15,50 @@ import java.time.format.ResolverStyle;
 public class UserValidation {
 
     /**
-     * Sets the validation for the name
+     * Validates a name string using a regular expression pattern.
      *
-     * @return true, if matches the regular expression otherwise false
+     * @param name - The name string to be validated.
+     * @return boolean - True if the name is valid, false otherwise.
      */
     public boolean isValidateName(final String name) {
         return name.matches("^[a-zA-Z_]+\\.?");
     }
 
     /**
-     * Sets the validation for the mobile number
+     * Validates a mobile number string using a regular expression pattern.
      *
-     * @param mobileNumber the mobile number has to validate
-     * @return true, if matches the regular expression otherwise false
+     * @param mobileNumber - The mobile Number string to be validated.
+     * @return boolean - True if the mobileNumber is valid, false otherwise.
      */
     public boolean isValidateMobileNumber(final String mobileNumber) {
         return mobileNumber.matches("(^\\+(91){1,2}[6-9][0-9]{9}$)");
     }
 
     /**
-     * Sets the validation for the email
+     * Validates a email string using a regular expression pattern.
      *
-     * @param emailId the email id has to validate
-     * @return true, if matches the regular expression otherwise false
+     * @param email The email string to be validated.
+     * @return boolean - True if the email is valid, false otherwise.
      */
-    public boolean isValidateEmail(final String emailId) {
-        return emailId.matches("^[a-z0-9._]+@[a-z]+\\.[a-z-]{2,3}");
+    public boolean isValidateEmail(final String email) {
+        return email.matches("^[a-z0-9._]+@[a-z]+\\.[a-z-]{2,3}");
     }
 
     /**
-     * Sets the validation for the password
+     * Validates a password string using a regular expression pattern.
      *
-     * @param password the email id has to validate
-     * @return true, if matches the regular expression otherwise false
+     * @param password The password string to be validated.
+     * @return boolean - True if the password is valid, false otherwise.
      */
     public boolean isValidatePassword(final String password) {
         return password.matches("^(?=.*[\\d])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,20}$");
     }
 
     /**
-     * Sets the validation for the date of birth
+     * Validates a date of birth string using a regular expression pattern.
      *
-     * @param dateOfBirth the date of birth has to validate
-     * @return true, if matches the regular expression otherwise false
+     * @param dateOfBirth The date of birth has to validated
+     * @return boolean - True if the date of birth is valid, false otherwise.
      */
     public boolean isValidateDateOfBirth(final String dateOfBirth) {
         //return dateOfBirth.matches("^(?:(0[1-9]|[12][0-9]|3[01])[-/.](0[1-9]|1[012])[-/.](18|19|20)[0-9]{2})$");
@@ -81,40 +82,40 @@ public class UserValidation {
     }
 
     /**
-     * Given the user validate choice details
+     * Validates a choice string using a regular expression pattern.
      *
-     * @param choice the choice has to validate
-     * @return true, if matches the regular expression otherwise false
+     * @param choice The choice has to validated
+     * @return boolean - True if the choice is valid, false otherwise.
      */
     public boolean isValidateChoice(final String choice ) {
         return choice.matches("\\d{1,2}");
     }
 
     /**
-     * Sets the validation for the check
+     * Validates a check string using a regular expression pattern.
      *
-     * @param access the access to be validate
-     * @return true, if matches the regular expression otherwise false
+     * @param access The access to be validated
+     * @return boolean - True if the check is valid, false otherwise.
      */
     public boolean isValidateCheck(final String access) {
         return access.equalsIgnoreCase("no") || access.equalsIgnoreCase("n");
     }
 
     /**
-     * Sets the validation for the user id
+     * Validates a userId string using a regular expression pattern.
      *
-     * @param userId the user id to be validate
-     * @return true, if matches the regular expression otherwise false
+     * @param userId The user id to be validated
+     * @return boolean - True if the user id is valid, false otherwise.
      */
     public boolean isValidateUserId(final String userId) {
         return userId.matches("[\\d]");
     }
 
     /**
-     * Sets the validation for the post id
+     * Validates a post id string using a regular expression pattern.
      *
-     * @param postId the post id to be validate
-     * @return true, if matches the regular expression otherwise false
+     * @param postId The post id to be validated
+     * @return boolean - True if the user id is valid, false otherwise.
      */
     public boolean isValidatePostId(final String postId) {
         return postId.matches("[\\d]");
