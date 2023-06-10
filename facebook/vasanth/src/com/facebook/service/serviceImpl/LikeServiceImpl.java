@@ -5,8 +5,6 @@ import com.facebook.service.LikeService;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-
 
 /**
  * Implements the following services for the like
@@ -16,7 +14,7 @@ import java.util.List;
  */
 public class LikeServiceImpl implements LikeService {
 
-    private static final List<Like> LIKE_LIST = new ArrayList<>();
+    private static final Collection<Like> LIKE_LIST = new ArrayList<>();
 
     /**
      * {@inheritDoc}

@@ -1,14 +1,11 @@
 package com.facebook.service;
 
-import com.facebook.model.Post;
 import com.facebook.model.User;
 
 import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 
 /**
- * Provides service for the user
+ * Provides service for user details.
  *
  * @version 1.0
  * @author vasanth
@@ -16,49 +13,49 @@ import java.util.Map;
 public interface UserService {
 
     /**
-     * Given the user add details
+     * Adds user details.
      *
-     * @param user the user has to add
-     * @return the id of the user
+     * @param user the user to be added
+     * @return true if the user is successfully added, false otherwise
      */
     boolean add(final User user);
 
     /**
-     * Given the user get details
+     * Retrieves the collection of user details.
      *
-     * @return user detail
+     * @return the collection of users
      */
     Collection<User> getUserDetails();
 
     /**
-     * Given the user update details
+     * Updates user details.
      *
-     * @param user the user has to update
-     * @return true,if the condition is correct otherwise false
+     * @param user the user to be updated
+     * @return true if the user details are successfully updated, false otherwise
      */
     boolean updateDetail(final User user);
 
     /**
-     * Given the user delete details
+     * Deletes user details.
      *
-     * @param id the id has to delete
-     * @return true, if the condition is true otherwise false
+     * @param id the id of the user to be deleted
+     * @return true if the user details are successfully deleted, false otherwise
      */
     boolean deleteDetail(final Long id);
 
     /**
-     * Given the user sign in details
+     * Validates user sign-in details.
      *
-     * @param user the user has to sign in
-     * @return true,if the sign in success otherwise false
+     * @param id the id of the user to sign in
+     * @return true if the sign-in is successful, false otherwise
      */
-    boolean signInDetail(final User user);
+    boolean signInDetail(final Long id);
 
     /**
-     * Gets the user through id
+     * Retrieves a user by id.
      *
-     * @param id to get a user
-     * @return id of the user
+     * @param id the id of the user to retrieve
+     * @return the user with the specified id
      */
     User getUser(final Long id);
 

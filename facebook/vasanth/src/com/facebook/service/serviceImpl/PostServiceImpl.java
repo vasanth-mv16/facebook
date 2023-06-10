@@ -1,18 +1,14 @@
 package com.facebook.service.serviceImpl;
 
 import com.facebook.model.Post;
-import com.facebook.model.User;
 import com.facebook.service.PostService;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
-
 
 /**
- * Implements the following services for the post
+ * Implementation of the PostService interface for managing posts.
  *
  * @version 1.0
  * @author vasanth
@@ -24,7 +20,7 @@ public class PostServiceImpl implements PostService {
     /**
      * {@inheritDoc}
      */
-    public boolean addPost(final Post post) {
+    public boolean addPost(Post post) {
          return POSTS.add(post);
     }
 

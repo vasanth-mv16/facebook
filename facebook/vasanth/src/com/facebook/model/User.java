@@ -1,6 +1,5 @@
 package com.facebook.model;
 
-import java.util.List;
 
 /**
  * Represents the given user
@@ -22,7 +21,9 @@ public class User {
      * An enum with values MALE, FEMALE
      */
     public enum Gender {
-        MALE, FEMALE, OTHERS
+        MALE,
+        FEMALE,
+        OTHERS
     }
 
     public Gender getGender() {
@@ -82,7 +83,7 @@ public class User {
     }
 
     public String toString() {
-        return String.format("%d %s %s %s", id, name, email, gender);
+        return String.format("%d  Name = %s Email = %s Gender = %s", id, name, email, gender);
     }
 }
 

@@ -1,10 +1,5 @@
 package com.facebook.view.validation;
 
-import java.time.LocalDate;
-import java.time.Month;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.time.format.ResolverStyle;
 
 /**
  * Given class used for validation the user details
@@ -14,6 +9,17 @@ import java.time.format.ResolverStyle;
  */
 public class UserValidation {
 
+    private static UserValidation userValidation;
+
+    UserValidation() {}
+
+    public static UserValidation getUserValidation() {
+
+        if (userValidation == null) {
+            userValidation = new UserValidation();
+        }
+        return userValidation;
+    }
     /**
      * Validates a name string using a regular expression pattern.
      *
@@ -61,24 +67,7 @@ public class UserValidation {
      * @return boolean - True if the date of birth is valid, false otherwise.
      */
     public boolean isValidateDateOfBirth(final String dateOfBirth) {
-        //return dateOfBirth.matches("^(?:(0[1-9]|[12][0-9]|3[01])[-/.](0[1-9]|1[012])[-/.](18|19|20)[0-9]{2})$");
-        //return dateOfBirth.matches("^(?:(?:(?:0?[1-9]|1\\d|2[0-8])-(?:0?[1-9]|1[0-2]))|(?:(?:29|30)-(?:0?[13-9]|1[0-2]))|(?:(?:0?1|0?[3-9]|1[0-9]|2[0-8])-02))-(?:(?!0000)\\d{4})$");
-        try {
-            final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-uuuu").withResolverStyle(ResolverStyle.STRICT);
-            final LocalDate date = LocalDate.parse(dateOfBirth, dateFormatter);
-            final int currentYear = LocalDate.now().getYear();
-
-            if (date.getYear() < 1940 && date.getYear() > currentYear) {
-                if (date.getDayOfMonth() > date.getMonth().maxLength() ||
-                        (date.getMonth() == Month.FEBRUARY && date.getDayOfMonth() > 29 && !date.isLeapYear())) {
-                    return false;
-                }
-            }
-
-        } catch (final DateTimeParseException exception) {
-            return false;
-        }
-        return true;
+        return dateOfBirth.matches("^(?:(?:(?:0?[1-9]|1\\d|2[0-8])-(?:0?[1-9]|1[0-2]))|(?:(?:29|30)-(?:0?[13-9]|1[0-2]))|(?:(?:0?1|0?[3-9]|1[0-9]|2[0-8])-02))-(?:(?!0000)\\d{4})$");
     }
 
     /**
@@ -94,13 +83,16 @@ public class UserValidation {
     /**
      * Validates a check string using a regular expression pattern.
      *
-     * @param access The access to be validated
+     * @param accessForNo The access to be validated
      * @return boolean - True if the check is valid, false otherwise.
      */
-    public boolean isValidateCheck(final String access) {
-        return access.equalsIgnoreCase("no") || access.equalsIgnoreCase("n");
+    public boolean isValidateCheckForNo(final String accessForNo) {
+        return accessForNo.equalsIgnoreCase("no") || accessForNo.equalsIgnoreCase("n");
     }
 
+    public boolean isValidateCheckForYes(final String accessForYes) {
+        return accessForYes.equalsIgnoreCase("yes") || accessForYes.equalsIgnoreCase("y");
+    }
     /**
      * Validates a userId string using a regular expression pattern.
      *

@@ -5,7 +5,6 @@ import com.facebook.model.User;
 
 import java.util.Collection;
 
-
 /**
  * Provides service for the post
  *
@@ -15,34 +14,34 @@ import java.util.Collection;
 public interface PostService {
 
     /**
-     * Checks the post details are created
+     * Checks if the post details are created, and adds the post.
      *
-     * @param post Represents the user
-     * @return true, if post to get otherwise false
+     * @param post the post to be added
+     * @return true if the post is successfully added, false otherwise
      */
     boolean addPost(final Post post);
 
 
     /**
-     * Gets the post details
+     * Retrieves the collection of post details.
      *
-     * @return collection of post
+     * @return the collection of posts
      */
     Collection<Post> getPost();
 
     /**
-     * Gets the post details using post id
+     * Retrieves the post details using the post id.
      *
-     * @param id the id to get the post
-     * @return post of the user
+     * @param id the id of the post to retrieve
+     * @return the post with the specified id
      */
     Post getPostUsingId(final Long id);
 
     /**
-     * Checks the post to be updated
+     * Checks if the post details are updated, and updates the post.
      *
-     * @param post to update a post
-     * @return true, if post to be updated otherwise false
+     * @param post the post to be updated
+     * @return true if the post is successfully updated, false otherwise
      */
     boolean updatePostDetail(final Post post);
 

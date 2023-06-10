@@ -7,8 +7,7 @@ import com.facebook.view.validation.UserValidation;
 
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.util.InputMismatchException;
+import java.util.Collection;
 import java.util.Scanner;
 
 
@@ -21,19 +20,29 @@ import java.util.Scanner;
 public class PostView {
 
     private static final Scanner SCANNER = new Scanner(System.in);
-    private static final UserView USER_VIEW = new UserView();
+    private static final UserView USER_VIEW = UserView.getInstance();
     private static final LikeView LIKE_VIEW = new LikeView();
     private static final PostController POST_CONTROLLER = new PostController();
-    private static final UserValidation USER_VALIDATION = new UserValidation();
+    private static final UserValidation USER_VALIDATION = UserValidation.getUserValidation();
+    private static  PostView postView;
     private static Long postId = 1L;
 
+    PostView() {}
+
+    public static PostView getPostView() {
+
+        if (postView == null) {
+            postView= new PostView();
+        }
+        return postView;
+    }
     /**
      * Shows the menu details for the user to post and edit
      *
-     * @param user Represents the post
+     * @param user represents the post
      *
      */
-    public void printPostDetails(final User user) {
+    public void displayPostDetails(final User user) {
         System.out.println(String.join("\n","CLICK 1 TO CREATE","CLICK 2 TO GET","CLICK 3 TO GET USING ID",
                 "CLICK 4 TO UPDATE","CLICK 5 TO PRINT LIKE DETAILS","CLICK 6 TO PRINT USER OPTIONS"));
 
@@ -51,26 +60,26 @@ public class PostView {
                 updatePost();
                 break;
             case 5:
-                LIKE_VIEW.printLikeDetails(user);
+                LIKE_VIEW.displayLikeDetails(user);
                 break;
             case 6:
-                USER_VIEW.printUserOptions(user);
+                USER_VIEW.displaysUserOptions(user);
                 break;
             default :
                 System.out.println("INVALID CHOICE,SELECT THE ABOVE CHOICE");
-                printPostDetails(user);
+                displayPostDetails(user);
         }
-        printPostDetails(user);
+        displayPostDetails(user);
     }
 
     /**
      * Creates a new post with the user, caption, and location.
      *
-     * @param user The User associated with the post
+     * @param user the user associated with the post
      */
     private void createPost(final User user) {
         final Post post = new Post();
-        Timestamp timestamp =Timestamp.from(Instant.now());
+        final Timestamp timestamp = Timestamp.from(Instant.now());
 
         post.setId(postId++);
         System.out.println("ENTER YOUR CAPTION FOR YOUR POST:");
@@ -79,24 +88,21 @@ public class PostView {
         post.setLocation(SCANNER.nextLine().trim());
         post.setDateTime(timestamp);
         post.setUser(user);
-        if (POST_CONTROLLER.isPostCreate(post)) {
-            System.out.println("SUCCESSFULLY POSTED");
-        } else {
-            System.out.println("FAILED TO POST");
-        }
+        System.out.println((POST_CONTROLLER.isPostCreate(post)) ? "SUCCESSFULLY POSTED" : "FAILED TO POST");
     }
 
     /**
      * Retrieves and prints the details of the post
      */
-    public void getPostDetails() {
+    public Collection<Post> getPostDetails() {
         System.out.println(POST_CONTROLLER.getPostDetails());
+        return (POST_CONTROLLER.getPostDetails());
     }
 
     /**
      * Retrieves and returns a User object based on the provided user ID
      *
-     * @return {@link Post} The Post updated by the user
+     * @return {@link Post} the post updated by the user
      */
     public Post getPostDetailUsingId() {
         System.out.println("ENTER YOUR POST ID:");
@@ -114,19 +120,19 @@ public class PostView {
         post.setId(getPostId());
         System.out.println("DO YOU WANT TO EDIT CAPTION, PRESS ANY KEY AND DON'T WANT TO EDIT PRESS 'NO' OR 'N' ");
 
-        if (USER_VALIDATION.isValidateCheck(SCANNER.nextLine())) {
-            post.setCaption(get.getCaption());
-        } else {
+        if (USER_VALIDATION.isValidateCheckForYes(SCANNER.nextLine())) {
             System.out.println("ENTER YOUR CAPTION FOR YOUR POST:");
             post.setCaption(SCANNER.nextLine().trim());
+        } else {
+            post.setCaption(get.getCaption());
         }
         System.out.println("DO YOU WANT TO EDIT LOCATION, PRESS ANY KEY AND DON'T WANT TO EDIT PRESS 'NO' OR 'N' ");
 
-        if (USER_VALIDATION.isValidateCheck(SCANNER.nextLine())) {
-            post.setLocation(get.getLocation());
-        } else {
+        if (USER_VALIDATION.isValidateCheckForNo(SCANNER.nextLine())) {
             System.out.println("ENTER YOUR LOCATION FOR YOUR POST:");
             post.setLocation(SCANNER.nextLine().trim());
+        } else {
+            post.setLocation(get.getLocation());
         }
 
         if (POST_CONTROLLER.isPostUpdate(post)) {

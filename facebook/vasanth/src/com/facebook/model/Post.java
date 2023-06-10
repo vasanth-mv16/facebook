@@ -1,10 +1,9 @@
 package com.facebook.model;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 /**
- * Represents the user post
+ * Represents a Post made by a user
  *
  * @version 1.0
  * @author vasanth

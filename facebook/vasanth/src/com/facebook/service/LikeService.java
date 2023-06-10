@@ -4,7 +4,6 @@ import com.facebook.model.Like;
 
 import java.util.Collection;
 
-
 /**
  * Provides the service for the like
  *

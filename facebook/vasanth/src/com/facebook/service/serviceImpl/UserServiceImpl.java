@@ -6,7 +6,6 @@ import com.facebook.service.UserService;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 /**
  * Implements the following services for the user
@@ -16,7 +15,7 @@ import java.util.List;
  */
 public class UserServiceImpl implements UserService {
 
-    private static final List<User> USER_LIST = new ArrayList<>();
+    private static final Collection<User> USER_LIST = new ArrayList<>();
 
     /**
      * {@inheritDoc}
@@ -56,19 +55,25 @@ public class UserServiceImpl implements UserService {
     /**
      * {@inheritDoc}
      */
-    public boolean signInDetail(final User user) {
-        final Iterator<User> iterator = USER_LIST.iterator();
+    public boolean signInDetail(Long id) {
+//        final Iterator<User> iterator = USER_LIST.iterator();
+//
+//        while (iterator.hasNext()) {
+//            final User existingUser = iterator.next();
+//
+//            if (existingUser.getMobileNumber().equals(user.getMobileNumber()) ||
+//                    existingUser.getEmail().equals(user.getEmail()) &&
+//                            (existingUser.getPassword().equals(user.getPassword()))) {
+//                return true;
+//            }
+//        }
+//
+//        return false;
+        final User get = getUser(id);
 
-        while (iterator.hasNext()) {
-            final User existingUser = iterator.next();
-
-            if (existingUser.getMobileNumber().equals(user.getMobileNumber()) ||
-                    existingUser.getEmail().equals(user.getEmail()) &&
-                            (existingUser.getPassword().equals(user.getPassword()))) {
-                return true;
-            }
+        if (get != null) {
+            return USER_LIST.contains(get);
         }
-
         return false;
     }
 

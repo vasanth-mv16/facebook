@@ -2,7 +2,6 @@ package com.facebook.view;
 
 import com.facebook.controller.LikeController;
 import com.facebook.model.Like;
-import com.facebook.model.Post;
 import com.facebook.model.User;
 import com.facebook.view.validation.UserValidation;
 
@@ -19,10 +18,9 @@ public class LikeView {
     private static final LikeController LIKE_CONTROLLER = new LikeController();
     private static final UserView USER_VIEW = new UserView();
     private static final PostView POST_VIEW = new PostView();
-    private static final UserValidation USER_VALIDATION = new UserValidation();
-    private static Long likeId = 1L;
+    private static final UserValidation USER_VALIDATION = UserValidation.getUserValidation();
 
-    public void printLikeDetails(final User user) {
+    public void displayLikeDetails(final User user) {
         System.out.println("ENTER 1 TO CREATE LIKE, 2 TO GET ALL LIKES, 3 TO GET LIKE COUNT, 4 TO PRINT POST DETAILS");
 
         switch (USER_VIEW.getChoice()) {
@@ -36,16 +34,16 @@ public class LikeView {
                 getLikeCount();
                 break;
             case 4:
-                POST_VIEW.printPostDetails(user);
+                POST_VIEW.displayPostDetails(user);
                 break;
             case 5:
-                USER_VIEW.printUserOptions(user);
+                USER_VIEW.displaysUserOptions(user);
                 break;
             default :
                 System.out.println("Invalid choice, select the above choice");
-                printLikeDetails(user);
+                displayLikeDetails(user);
         }
-        printLikeDetails(user);
+        displayLikeDetails(user);
     }
 
     /**
