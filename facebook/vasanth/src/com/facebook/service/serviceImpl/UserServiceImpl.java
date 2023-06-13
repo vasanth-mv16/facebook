@@ -3,9 +3,7 @@ package com.facebook.service.serviceImpl;
 import com.facebook.model.User;
 import com.facebook.service.UserService;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
+import java.util.*;
 
 /**
  * <p>
@@ -17,10 +15,10 @@ import java.util.Iterator;
  */
 public class UserServiceImpl implements UserService {
 
-    private static final Collection<User> USER_LIST = new ArrayList<>();
+    private static final List<User> USER_LIST = new ArrayList<>();
     private static UserServiceImpl USER_SERVICE_IMPL;
 
-    public UserServiceImpl() {}
+    private UserServiceImpl() {}
 
     public static UserServiceImpl getUserServiceImpl() {
 
@@ -55,10 +53,10 @@ public class UserServiceImpl implements UserService {
      * {@inheritDoc}
      */
     public boolean updateDetail(final User user) {
-        final Iterator<User> iterator = USER_LIST.iterator();
+        final ListIterator<User> listIterator = USER_LIST.listIterator();
 
-        while (iterator.hasNext()) {
-            final User existingUser = iterator.next();
+        while (listIterator.hasNext()) {
+            final User existingUser = listIterator.next();
 
             if (existingUser.getId().equals(user.getId())) {
                 existingUser.setName(user.getName());

@@ -20,7 +20,7 @@ public class LikeView {
     private static final PostView POST_VIEW = PostView.getPostView();
     private static final UserValidation USER_VALIDATION = UserValidation.getUserValidation();
 
-    public LikeView() {}
+    private LikeView() {}
 
     public static LikeView getLikeView() {
 

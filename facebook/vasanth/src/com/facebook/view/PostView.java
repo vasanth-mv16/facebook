@@ -28,7 +28,7 @@ public class PostView {
     private static  PostView postView;
     private static Long postId = 1L;
 
-    public PostView() {}
+    private PostView() {}
 
     public static PostView getPostView() {
         if (postView == null) {
@@ -50,7 +50,7 @@ public class PostView {
 
         switch (USER_VIEW.getChoice()) {
             case 1 :
-                createPost(user);
+                createPost();
                 break;
             case 2 :
                 getPostDetails();
@@ -76,23 +76,22 @@ public class PostView {
 
     /**
      * <p>
-     *     Creates a new post with the user, caption, and location.
+     * Creates a new post with the user, caption, and location.
      * </p>
-     *
-     * @param user the user associated with the post
      */
-    private void createPost(final User user) {
+    private void createPost() {
         final Post post = new Post();
         final Timestamp timestamp = Timestamp.from(Instant.now());
 
+        System.out.println("ENTER YOUR USER ID:");
+        post.setUserId(Long.valueOf(SCANNER.nextLine()));
         post.setId(postId++);
         System.out.println("ENTER YOUR CAPTION FOR YOUR POST:");
         post.setCaption(SCANNER.nextLine().trim());
         System.out.println("ENTER YOUR LOCATION FOR YOUR POST:");
         post.setLocation(SCANNER.nextLine().trim());
         post.setDateTime(timestamp);
-        post.setUser(user);
-        System.out.println((POST_CONTROLLER.isPostCreate(post)) ? "SUCCESSFULLY POSTED" : "FAILED TO POST");
+        System.out.println((POST_CONTROLLER.Create(post)) ? "SUCCESSFULLY POSTED" : "FAILED TO POST");
     }
 
     /**
@@ -101,8 +100,8 @@ public class PostView {
      * </p>
      */
     public Collection<Post> getPostDetails() {
-        System.out.println(POST_CONTROLLER.getPostDetails());
-        return (POST_CONTROLLER.getPostDetails());
+        System.out.println(POST_CONTROLLER.get());
+        return (POST_CONTROLLER.get());
     }
 
     /**
@@ -114,7 +113,7 @@ public class PostView {
      */
     public Post getPostDetailUsingId() {
         System.out.println("ENTER YOUR POST ID:");
-        final Post post = POST_CONTROLLER.getPostDetailUsingId(Long.valueOf(SCANNER.nextLine()));
+        final Post post = POST_CONTROLLER.getUsingId(Long.valueOf(SCANNER.nextLine()));
         System.out.println(post);
 
         return post;
@@ -153,27 +152,4 @@ public class PostView {
             updatePost();
         }
     }
-
-    /**
-     * <p>
-     *     Retrieves the post ID from the user.
-     * </p>
-     *
-     * @return {@link Long} The post ID entered by the user.
-     */
-    public Long getPostId() {
-        try {
-            System.out.println("ENTER THE POST ID:");
-            final Long postId = Long.valueOf(SCANNER.nextLine());
-
-            if (USER_VALIDATION.isValidatePostId(String.valueOf(postId))) {
-                return postId;
-            }
-        } catch (final Exception exception) {
-            System.out.println("PLEASE ENTER AN NUMBER");
-        }
-
-        return getPostId();
-    }
-
 }

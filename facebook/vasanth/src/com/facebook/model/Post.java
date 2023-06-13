@@ -10,18 +10,18 @@ import java.sql.Timestamp;
  */
 public class Post {
 
-    private User user;
+    private Long userId;
     private Long id;
     private String caption;
     private String location;
     private Timestamp dateTime;
 
-    public void setUser(final User user) {
-        this.user = user;
+    public void setUserId(final Long userId) {
+        this.userId = userId;
     }
 
-    public User getUser() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
     public Long getId() {
@@ -58,7 +58,7 @@ public class Post {
     }
 
     public String toString() {
-        return String.format("%d Caption =%s  Location =%s  %s [User =%s]", id, caption, location, dateTime, user);
+        return String.format("User Id =%d Post Id =%d Caption =%s  Location =%s  %s",userId, id, caption, location, dateTime);
     }
 
 }

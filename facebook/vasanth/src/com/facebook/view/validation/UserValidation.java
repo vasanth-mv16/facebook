@@ -19,7 +19,7 @@ public class UserValidation {
 
     private static UserValidation userValidation;
 
-    UserValidation() {}
+    private UserValidation() {}
 
     public static UserValidation getUserValidation() {
 

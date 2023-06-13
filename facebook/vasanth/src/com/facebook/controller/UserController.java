@@ -19,7 +19,7 @@ public class UserController {
     private static UserController USER_CONTROLLER;
     private static final UserService USER_SERVICE = UserServiceImpl.getUserServiceImpl();
 
-    public UserController() {}
+    private UserController() {}
 
     public static UserController getUserController() {
 

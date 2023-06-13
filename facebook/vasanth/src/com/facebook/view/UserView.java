@@ -4,6 +4,7 @@ import com.facebook.controller.UserController;
 import com.facebook.model.User;
 import com.facebook.view.validation.UserValidation;
 
+import java.util.Collection;
 import java.util.Scanner;
 
 /**
@@ -29,7 +30,7 @@ public class UserView {
         userView.displayMenu();
     }
 
-    public UserView() {}
+    private UserView() {}
 
     public static UserView getUserView() {
         if (userView == null) {
@@ -114,8 +115,11 @@ public class UserView {
      *     Retrieves and prints the details of the user
      * </p>
      */
-    private void getUserDetails() {
-        System.out.println(USER_CONTROLLER.getUserDetails());
+    private Collection<User> getUserDetails() {
+       final Collection<User> getUser = USER_CONTROLLER.getUserDetails();
+
+       System.out.println(getUser);
+       return getUser;
     }
 
     /**

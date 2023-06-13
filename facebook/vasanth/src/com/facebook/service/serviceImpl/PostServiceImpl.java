@@ -3,9 +3,7 @@ package com.facebook.service.serviceImpl;
 import com.facebook.model.Post;
 import com.facebook.service.PostService;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
+import java.util.*;
 
 /**
  * Implementation of the PostService interface for managing posts.
@@ -15,10 +13,10 @@ import java.util.Iterator;
  */
 public class PostServiceImpl implements PostService {
 
-    private static final Collection<Post> POSTS = new ArrayList<>();
+    private static final List<Post> POSTS = new ArrayList<>();
     private static PostServiceImpl POST_SERVICE_IMPL;
 
-    public PostServiceImpl() {}
+    private PostServiceImpl() {}
 
     public static PostServiceImpl getPostServiceImpl() {
         if (POST_SERVICE_IMPL == null) {
@@ -30,27 +28,27 @@ public class PostServiceImpl implements PostService {
     /**
      * {@inheritDoc}
      */
-    public boolean addPost(Post post) {
+    public boolean create(Post post) {
          return POSTS.add(post);
     }
 
     /**
      * {@inheritDoc}
      */
-    public Collection<Post> getPost() {
+    public Collection<Post> get() {
         return POSTS;
     }
 
     /**
      * {@inheritDoc}
      */
-    public Post getPostUsingId(final Long id) {
-        final Iterator<Post> iterator = POSTS.iterator();
+    public Post getUsingId(final Long id) {
+        final ListIterator<Post> iterator = POSTS.listIterator();
 
         while (iterator.hasNext()) {
             final Post existingPost = iterator.next();
 
-            if (existingPost.getId() == id) {
+            if (existingPost.getId().equals(id)) {
                 return existingPost;
             }
         }
@@ -61,7 +59,7 @@ public class PostServiceImpl implements PostService {
     /**
      * {@inheritDoc}
      */
-    public boolean updatePostDetail(final Post post) {
+    public boolean update(final Post post) {
         final Iterator<Post> iterator = POSTS.iterator();
 
         while (iterator.hasNext()) {

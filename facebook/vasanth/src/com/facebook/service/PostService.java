@@ -22,7 +22,7 @@ public interface PostService {
      * @param post the post to be added
      * @return true if the post is successfully added, false otherwise
      */
-    boolean addPost(final Post post);
+    boolean create(final Post post);
 
 
     /**
@@ -32,7 +32,7 @@ public interface PostService {
      *
      * @return the collection of posts
      */
-    Collection<Post> getPost();
+    Collection<Post> get();
 
     /**
      * <p>
@@ -42,7 +42,7 @@ public interface PostService {
      * @param id the id of the post to retrieve
      * @return the post with the specified id
      */
-    Post getPostUsingId(final Long id);
+    Post getUsingId(final Long id);
 
     /**
      * <p>
@@ -52,6 +52,6 @@ public interface PostService {
      * @param post the post to be updated
      * @return true if the post is successfully updated, false otherwise
      */
-    boolean updatePostDetail(final Post post);
+    boolean update(final Post post);
 
 }

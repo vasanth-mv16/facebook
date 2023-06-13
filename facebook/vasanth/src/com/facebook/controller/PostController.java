@@ -19,7 +19,7 @@ public class PostController {
     private static PostController POST_CONTROLLER;
     private static final PostService POST_SERVICE = PostServiceImpl.getPostServiceImpl();
 
-    public PostController() {}
+    private PostController() {}
 
     public static PostController getPostController() {
         if (POST_CONTROLLER == null) {
@@ -36,8 +36,8 @@ public class PostController {
      * @param post to create the post
      * @return post of the user
      */
-    public boolean isPostCreate(final Post post) {
-        return POST_SERVICE.addPost(post);
+    public boolean Create(final Post post) {
+        return POST_SERVICE.create(post);
     }
 
     /**
@@ -47,8 +47,8 @@ public class PostController {
      *
      * @return post of the user
      */
-    public Collection<Post> getPostDetails() {
-        return POST_SERVICE.getPost();
+    public Collection<Post> get() {
+        return POST_SERVICE.get();
     }
 
     /**
@@ -59,8 +59,8 @@ public class PostController {
      * @param id the id has to get the post
      * @return get post for specific id
      */
-    public Post getPostDetailUsingId(final Long id) {
-        return POST_SERVICE.getPostUsingId(id);
+    public Post getUsingId(final Long id) {
+        return POST_SERVICE.getUsingId(id);
     }
 
     /**
@@ -72,7 +72,7 @@ public class PostController {
      * @return updated post
      */
     public boolean isPostUpdate(final Post post) {
-        return POST_SERVICE.updatePostDetail(post);
+        return POST_SERVICE.update(post);
     }
 
 }
