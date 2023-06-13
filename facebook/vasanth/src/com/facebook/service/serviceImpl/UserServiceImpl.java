@@ -8,7 +8,9 @@ import java.util.Collection;
 import java.util.Iterator;
 
 /**
- * Implements the following services for the user
+ * <p>
+ *     Implements the following services for the user
+ * </p>
  *
  * @author vasanth
  * @version 1.0
@@ -16,11 +18,29 @@ import java.util.Iterator;
 public class UserServiceImpl implements UserService {
 
     private static final Collection<User> USER_LIST = new ArrayList<>();
+    private static UserServiceImpl USER_SERVICE_IMPL;
+
+    public UserServiceImpl() {}
+
+    public static UserServiceImpl getUserServiceImpl() {
+
+        if (USER_SERVICE_IMPL == null) {
+            USER_SERVICE_IMPL = new UserServiceImpl();
+        }
+        return USER_SERVICE_IMPL;
+    }
+
 
     /**
      * {@inheritDoc}
      */
     public boolean add(final User user) {
+        for (final User existingUser : USER_LIST) {
+
+            if (existingUser.getName().equals(user.getName())) {
+                return false;
+            }
+        }
         return USER_LIST.add(user);
     }
 
@@ -55,25 +75,19 @@ public class UserServiceImpl implements UserService {
     /**
      * {@inheritDoc}
      */
-    public boolean signInDetail(Long id) {
-//        final Iterator<User> iterator = USER_LIST.iterator();
-//
-//        while (iterator.hasNext()) {
-//            final User existingUser = iterator.next();
-//
-//            if (existingUser.getMobileNumber().equals(user.getMobileNumber()) ||
-//                    existingUser.getEmail().equals(user.getEmail()) &&
-//                            (existingUser.getPassword().equals(user.getPassword()))) {
-//                return true;
-//            }
-//        }
-//
-//        return false;
-        final User get = getUser(id);
+    public boolean signInDetail(final User user) {
+        final Iterator<User> iterator = USER_LIST.iterator();
 
-        if (get != null) {
-            return USER_LIST.contains(get);
+        while (iterator.hasNext()) {
+            final User existingUser = iterator.next();
+
+            if (existingUser.getMobileNumber().equals(user.getMobileNumber()) ||
+                    existingUser.getEmail().equals(user.getEmail()) &&
+                            (existingUser.getPassword().equals(user.getPassword()))) {
+                return true;
+            }
         }
+
         return false;
     }
 

@@ -58,7 +58,7 @@ public class Post {
     }
 
     public String toString() {
-        return String.format("%d Caption=%s  Location=%s  %s User=%s", id, caption, location, dateTime, user);
+        return String.format("%d Caption =%s  Location =%s  %s [User =%s]", id, caption, location, dateTime, user);
     }
 
 }

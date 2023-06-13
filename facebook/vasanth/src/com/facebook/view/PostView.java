@@ -10,9 +10,10 @@ import java.time.Instant;
 import java.util.Collection;
 import java.util.Scanner;
 
-
 /**
- * Manages the view for posts, including creating, retrieving, updating, and printing post details.
+ * <p>
+ *     Manages the view for posts, including creating, retrieving, updating, and printing post details.
+ * </p>
  *
  * @version 1.0
  * @author vasanth
@@ -20,31 +21,32 @@ import java.util.Scanner;
 public class PostView {
 
     private static final Scanner SCANNER = new Scanner(System.in);
-    private static final UserView USER_VIEW = UserView.getInstance();
-    private static final LikeView LIKE_VIEW = new LikeView();
-    private static final PostController POST_CONTROLLER = new PostController();
+    private static final UserView USER_VIEW = UserView.getUserView();
+    private static final LikeView LIKE_VIEW = LikeView.getLikeView();
+    private static final PostController POST_CONTROLLER = PostController.getPostController();
     private static final UserValidation USER_VALIDATION = UserValidation.getUserValidation();
     private static  PostView postView;
     private static Long postId = 1L;
 
-    PostView() {}
+    public PostView() {}
 
     public static PostView getPostView() {
-
         if (postView == null) {
             postView= new PostView();
         }
         return postView;
     }
     /**
-     * Shows the menu details for the user to post and edit
+     * <p>
+     *     Shows the menu details for the user to post and edit
+     * </p>
      *
      * @param user represents the post
      *
      */
     public void displayPostDetails(final User user) {
         System.out.println(String.join("\n","CLICK 1 TO CREATE","CLICK 2 TO GET","CLICK 3 TO GET USING ID",
-                "CLICK 4 TO UPDATE","CLICK 5 TO PRINT LIKE DETAILS","CLICK 6 TO PRINT USER OPTIONS"));
+                "CLICK 4 TO UPDATE","CLICK 5 TO DISPLAY LIKE DETAILS","CLICK 6 TO DISPLAY USER OPTIONS"));
 
         switch (USER_VIEW.getChoice()) {
             case 1 :
@@ -73,7 +75,9 @@ public class PostView {
     }
 
     /**
-     * Creates a new post with the user, caption, and location.
+     * <p>
+     *     Creates a new post with the user, caption, and location.
+     * </p>
      *
      * @param user the user associated with the post
      */
@@ -92,7 +96,9 @@ public class PostView {
     }
 
     /**
-     * Retrieves and prints the details of the post
+     * <p>
+     *     Retrieves and prints the details of the post
+     * </p>
      */
     public Collection<Post> getPostDetails() {
         System.out.println(POST_CONTROLLER.getPostDetails());
@@ -100,24 +106,29 @@ public class PostView {
     }
 
     /**
-     * Retrieves and returns a User object based on the provided user ID
+     * <p>
+     *     Retrieves and returns a User object based on the provided user ID
+     * </p>
      *
      * @return {@link Post} the post updated by the user
      */
     public Post getPostDetailUsingId() {
         System.out.println("ENTER YOUR POST ID:");
-        System.out.println(POST_CONTROLLER.getPostDetailUsingId(SCANNER.nextLong()));
+        final Post post = POST_CONTROLLER.getPostDetailUsingId(Long.valueOf(SCANNER.nextLine()));
+        System.out.println(post);
 
-        return null;
+        return post;
     }
     /**
-     * Updates the post by the user to edit the caption and location
+     * <p>
+     *     Updates the post by the user to edit the caption and location
+     * </p>
      */
     public void updatePost() {
         final Post post = new Post();
         final Post get = getPostDetailUsingId();
 
-        post.setId(getPostId());
+        post.setId(get.getId());
         System.out.println("DO YOU WANT TO EDIT CAPTION, PRESS ANY KEY AND DON'T WANT TO EDIT PRESS 'NO' OR 'N' ");
 
         if (USER_VALIDATION.isValidateCheckForYes(SCANNER.nextLine())) {
@@ -128,7 +139,7 @@ public class PostView {
         }
         System.out.println("DO YOU WANT TO EDIT LOCATION, PRESS ANY KEY AND DON'T WANT TO EDIT PRESS 'NO' OR 'N' ");
 
-        if (USER_VALIDATION.isValidateCheckForNo(SCANNER.nextLine())) {
+        if (USER_VALIDATION.isValidateCheckForYes(SCANNER.nextLine())) {
             System.out.println("ENTER YOUR LOCATION FOR YOUR POST:");
             post.setLocation(SCANNER.nextLine().trim());
         } else {
@@ -144,7 +155,9 @@ public class PostView {
     }
 
     /**
-     * Retrieves the post ID from the user.
+     * <p>
+     *     Retrieves the post ID from the user.
+     * </p>
      *
      * @return {@link Long} The post ID entered by the user.
      */

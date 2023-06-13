@@ -8,20 +8,29 @@ import com.facebook.view.validation.UserValidation;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-
 /**
  * Represents the like by the user
  */
 public class LikeView {
 
+    private static LikeView LIKE_VIEW;
     private static final Scanner SCANNER = new Scanner(System.in);
-    private static final LikeController LIKE_CONTROLLER = new LikeController();
-    private static final UserView USER_VIEW = new UserView();
-    private static final PostView POST_VIEW = new PostView();
+    private static final LikeController LIKE_CONTROLLER = LikeController.getLikeController();
+    private static final UserView USER_VIEW = UserView.getUserView();
+    private static final PostView POST_VIEW = PostView.getPostView();
     private static final UserValidation USER_VALIDATION = UserValidation.getUserValidation();
 
+    public LikeView() {}
+
+    public static LikeView getLikeView() {
+
+        if (LIKE_VIEW == null) {
+            LIKE_VIEW = new LikeView();
+        }
+        return LIKE_VIEW;
+    }
     public void displayLikeDetails(final User user) {
-        System.out.println("ENTER 1 TO CREATE LIKE, 2 TO GET ALL LIKES, 3 TO GET LIKE COUNT, 4 TO PRINT POST DETAILS");
+        System.out.println("ENTER 1 TO CREATE LIKE, 2 TO GET ALL LIKES, 3 TO GET LIKE COUNT, 4 TO DISPLAY POST DETAILS");
 
         switch (USER_VIEW.getChoice()) {
             case 1:

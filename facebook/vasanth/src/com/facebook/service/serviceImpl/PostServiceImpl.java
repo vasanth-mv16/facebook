@@ -16,6 +16,16 @@ import java.util.Iterator;
 public class PostServiceImpl implements PostService {
 
     private static final Collection<Post> POSTS = new ArrayList<>();
+    private static PostServiceImpl POST_SERVICE_IMPL;
+
+    public PostServiceImpl() {}
+
+    public static PostServiceImpl getPostServiceImpl() {
+        if (POST_SERVICE_IMPL == null) {
+            POST_SERVICE_IMPL = new PostServiceImpl();
+        }
+        return POST_SERVICE_IMPL;
+    }
 
     /**
      * {@inheritDoc}

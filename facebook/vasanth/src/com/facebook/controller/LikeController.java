@@ -14,8 +14,18 @@ import java.util.Collection;
  */
 public class LikeController {
 
+    private static LikeController LIKE_CONTROLLER;
     private static final LikeService LIKE_SERVICE = new LikeServiceImpl();
 
+    public LikeController() {}
+
+    public static LikeController getLikeController() {
+
+        if (LIKE_CONTROLLER == null) {
+            LIKE_CONTROLLER = new LikeController();
+        }
+        return LIKE_CONTROLLER;
+    }
     /**
      * Checks the like to be created
      *

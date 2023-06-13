@@ -7,7 +7,9 @@ import com.facebook.service.serviceImpl.UserServiceImpl;
 import java.util.Collection;
 
 /**
- * Given controller act us for request and respond
+ * <p>
+ *     Given controller act us for request and respond
+ * </p>
  *
  * @version 1.0
  * @author vasanth
@@ -15,10 +17,9 @@ import java.util.Collection;
 public class UserController {
 
     private static UserController USER_CONTROLLER;
-    private static final UserService USER_SERVICE = new UserServiceImpl();
+    private static final UserService USER_SERVICE = UserServiceImpl.getUserServiceImpl();
 
-
-    UserController() {}
+    public UserController() {}
 
     public static UserController getUserController() {
 
@@ -28,11 +29,10 @@ public class UserController {
         return USER_CONTROLLER;
     }
 
-
-
-
     /**
-     * Checks the user to be created
+     * <p>
+     *     Checks the user to be created
+     * </p>
      *
      * @param user the user has to created
      * @return returns the userService object through addUser
@@ -42,7 +42,9 @@ public class UserController {
     }
 
     /**
-     * Retrieves the user details.
+     * <p>
+     *     Retrieves the user details.
+     * </p>
      *
      * @return collection of user details.
      */
@@ -51,7 +53,9 @@ public class UserController {
     }
 
     /**
-     * Updates the user details.
+     * <p>
+     *     Updates the user details.
+     * </p>
      *
      * @param user the user has to updated
      * @return returns the userService object through updateUser
@@ -61,17 +65,21 @@ public class UserController {
     }
 
     /**
-     * Checks the user sign in
+     * <p>
+     *     Checks the user sign in
+     * </p>
      *
-     * @param id the user id has to sign in
+     * @param user the user has to sign in
      * @return returns the userService object through signInUser
      */
-    public boolean isSignIn(final Long id) {
-        return USER_SERVICE.signInDetail(id);
+    public boolean isSignIn(final User user) {
+        return USER_SERVICE.signInDetail(user);
     }
 
     /**
-     * Gets the user delete details
+     * <p>
+     *     Gets the user delete details
+     * </p>
      *
      * @param id the id has to delete
      * @return returns the userService object through deleteUser
@@ -81,7 +89,9 @@ public class UserController {
     }
 
     /**
-     * Gets the user detail
+     * <p>
+     *     Gets the user detail
+     * </p>
      *
      * @param id to get the user through id
      * @return user detail

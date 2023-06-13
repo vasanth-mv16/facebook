@@ -1,12 +1,13 @@
 package com.facebook.service;
 
 import com.facebook.model.Post;
-import com.facebook.model.User;
 
 import java.util.Collection;
 
 /**
- * Provides service for the post
+ * <p>
+ *     Provides service for the post
+ * </p>
  *
  * @version 1.0
  * @author vasanth
@@ -14,7 +15,9 @@ import java.util.Collection;
 public interface PostService {
 
     /**
-     * Checks if the post details are created, and adds the post.
+     * <p>
+     *     Checks if the post details are created, and adds the post.
+     * </p>
      *
      * @param post the post to be added
      * @return true if the post is successfully added, false otherwise
@@ -23,14 +26,18 @@ public interface PostService {
 
 
     /**
-     * Retrieves the collection of post details.
+     * <p>
+     *     Retrieves the collection of post details.
+     * </p>
      *
      * @return the collection of posts
      */
     Collection<Post> getPost();
 
     /**
-     * Retrieves the post details using the post id.
+     * <p>
+     *     Retrieves the post details using the post id.
+     * </p>
      *
      * @param id the id of the post to retrieve
      * @return the post with the specified id
@@ -38,7 +45,9 @@ public interface PostService {
     Post getPostUsingId(final Long id);
 
     /**
-     * Checks if the post details are updated, and updates the post.
+     * <p>
+     *     Checks if the post details are updated, and updates the post.
+     * </p>
      *
      * @param post the post to be updated
      * @return true if the post is successfully updated, false otherwise

@@ -1,24 +1,37 @@
 package com.facebook.controller;
 
 import com.facebook.model.Post;
-import com.facebook.model.User;
 import com.facebook.service.PostService;
 import com.facebook.service.serviceImpl.PostServiceImpl;
 
 import java.util.Collection;
 
 /**
- * Given controller acts as request and respond
+ * <p>
+ *     Given controller acts as request and respond
+ * </p>
  *
  * @version 1.0
  * @author vasanth
  */
 public class PostController {
 
-    private static final PostService POST_SERVICE = new PostServiceImpl();
+    private static PostController POST_CONTROLLER;
+    private static final PostService POST_SERVICE = PostServiceImpl.getPostServiceImpl();
+
+    public PostController() {}
+
+    public static PostController getPostController() {
+        if (POST_CONTROLLER == null) {
+            POST_CONTROLLER = new PostController();
+        }
+        return POST_CONTROLLER;
+    }
 
     /**
-     * Checks the post to be created
+     * <p>
+     *     Checks the post to be created
+     * </p>
      *
      * @param post to create the post
      * @return post of the user
@@ -28,7 +41,9 @@ public class PostController {
     }
 
     /**
-     * Gets the post details
+     * <p>
+     *     Gets the post details
+     * </p>
      *
      * @return post of the user
      */
@@ -37,7 +52,9 @@ public class PostController {
     }
 
     /**
-     * Gets the post detail using id
+     * <p>
+     *     Gets the post detail using id
+     * </p>
      *
      * @param id the id has to get the post
      * @return get post for specific id
@@ -47,7 +64,9 @@ public class PostController {
     }
 
     /**
-     * Checks the post is updated
+     * <p>
+     *     Checks the post is updated
+     * </p>
      *
      * @param post to update the post
      * @return updated post

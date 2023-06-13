@@ -7,7 +7,9 @@ import com.facebook.view.validation.UserValidation;
 import java.util.Scanner;
 
 /**
- * Manages the view for Users, including creating, retrieving, updating, and printing post details.
+ * <p>
+ *     Manages the view for Users, including creating, retrieving, updating, and printing post details.
+ * </p>
  *
  * @version 1.0
  * @author vasanth
@@ -22,23 +24,26 @@ public class UserView {
     private static Long id = 1L;
 
     public static void main(String[] args) {
-        final UserView userView = getInstance();
+        final UserView userView = getUserView();
 
         userView.displayMenu();
     }
 
-    UserView() {}
+    public UserView() {}
 
-    public static UserView getInstance() {
+    public static UserView getUserView() {
         if (userView == null) {
             userView = new UserView();
         }
+
         return userView;
     }
 
 
     /**
-     * Prints the menu details
+     * <p>
+     *     Displays the menu details
+     * </p>
      */
     public void displayMenu() {
         System.out.println("\tFACEBOOK\nCLICK 1 TO SIGN UP\nCLICK 2 TO SIGN IN");
@@ -64,8 +69,10 @@ public class UserView {
     }
 
     /**
-     * Handles the sign-up process for a new user, collecting and validating user information, creating a new user
-     * account, and providing options for actions.
+     * <p>
+     *     Handles the sign-up process for a new user, collecting and validating user information, creating a new user
+     *     account, and providing options for actions.
+     * </p>
      */
     private void signUp() {
         final User user = new User();
@@ -88,61 +95,74 @@ public class UserView {
     }
 
     /**
-     * Deletes a user based on the provided userID
+     * <p>
+     *     Deletes a user based on the provided userID
+     * </p>
      */
     private void deleteUser() {
-        System.out.println("ENTER USERID");
-        System.out.println(USER_CONTROLLER.isDelete(Long.valueOf(SCANNER.nextLine())));
+        try {
+            System.out.println("ENTER USERID");
+            System.out.println(USER_CONTROLLER.isDelete(Long.valueOf(SCANNER.nextLine())));
+        } catch (Exception exception) {
+            System.out.println("ENTER AN CORRECT USER ID");
+        }
+        deleteUser();
     }
 
     /**
-     * Retrieves and prints the details of the user
+     * <p>
+     *     Retrieves and prints the details of the user
+     * </p>
      */
-    private void getUserDetail() {
+    private void getUserDetails() {
         System.out.println(USER_CONTROLLER.getUserDetails());
     }
 
     /**
-     * Updates the user's account information based on the provided ID
+     * <p>
+     *     Updates the user's account information based on the provided ID
+     * </p>
      */
     private void updateUser() {
         final User user = new User();
-
-        System.out.println("ENTER ID TO UPDATE:");
-        user.setId(Long.valueOf(SCANNER.nextLine()));
         final User get = getUser();
 
+        user.setId(get.getId());
         System.out.println("DO YOU WANT TO EDIT NAME, PRESS 'YES' OR 'Y' AND DON'T WANT TO EDIT PRESS 'NO' OR 'N' ");
         user.setName(USER_VALIDATION.isValidateCheckForYes(SCANNER.nextLine()) ? getName() : get.getName());
         System.out.println("DO YOU WANT TO EDIT EMAIL, PRESS 'YES' OR 'Y' AND DON'T WANT TO EDIT PRESS 'NO' OR 'N' ");
         user.setEmail(USER_VALIDATION.isValidateCheckForYes(SCANNER.nextLine()) ? getEmail() : get.getEmail());
         System.out.println("DO YOU WANT TO EDIT PASSWORD, PRESS ANY KEY AND DON'T WANT TO EDIT PRESS 'NO' OR 'N' ");
         user.setPassword(USER_VALIDATION.isValidateCheckForYes(SCANNER.nextLine()) ? getPassword() : get.getPassword());
-        System.out.println("DO YOU WANT TO EDIT NAME, PRESS 'YES' OR 'Y' AND DON'T WANT TO EDIT PRESS 'NO' OR 'N' ");
         System.out.println((USER_CONTROLLER.isUpdate(user)) ? "DETAILS SUCCESSFULLY UPDATED" : "NOT UPDATED");
     }
 
     /**
-     * Handles the sign-in process for a user, collecting and validating user information, providing options for
-     * further actions.
+     * <p>
+     *     Handles the sign-in process for a user, collecting and validating user information, providing options for
+     *     further actions.
+     * </p>
      */
     private void signIn() {
         final User user = new User();
 
-        System.out.println("ENTER USERID");
-        System.out.println((USER_CONTROLLER.isSignIn(Long.valueOf(SCANNER.nextLine()))) ? "ACCOUNT SIGN IN" : "INCORRECT EMAIL OR PASSWORD");
+        getSignInChoice(user);
+        user.setPassword(getPassword());
+        System.out.println((USER_CONTROLLER.isSignIn(user)) ? "ACCOUNT SIGN IN" : "INCORRECT EMAIL OR MOBILE NUMBER AND PASSWORD");
         System.out.println(String.join("","DO YOU WANT TO EDIT,GET,DELETE THE USER DETAILS,PRESS 'YES' ",
                 "FOR PRINT OPTION AND PRESS 'NO' FOR MANI MENU"));
 
         if (USER_VALIDATION.isValidateCheckForYes(SCANNER.nextLine())) {
-            displaysUserOptions(user );
+            displaysUserOptions(user);
         } else {
             displayMenu();
         }
     }
 
     /**
-     * Retrieves and returns a User object based on the provided user ID
+     * <p>
+     *     Retrieves and returns a User object based on the provided user ID
+     * </p>
      */
     public User getUser() {
         System.out.println("ENTER THE USER ID");
@@ -150,7 +170,9 @@ public class UserView {
     }
 
     /**
-     * Exits the program by printing an exit message, closing the Scanner, and close the program.
+     * <p>
+     *     Exits the program by printing an exit message, closing the Scanner, and close the program.
+     * </p>
      */
     private void exits() {
         System.out.println("EXITING");
@@ -159,17 +181,19 @@ public class UserView {
     }
 
     /**
-     * Prints the user options and performs the action based on the user's choice.
-     * @param user - The User object associated with the current option
+     * <p>
+     *     Displays the user options and performs the action based on the user's choice.
+     * </p>
+     *
+     * @param user the user object associated with the current option
      */
     public void displaysUserOptions(final User user) {
         System.out.println(String.join("\n","CLICK 1 TO GET","CLICK 2 TO UPDATE","CLICK 3 TO DELETE",
-                "CLICK 4 TO GET USERS","CLICK 5 TO PRINT POST DETAILS","CLICK 6 TO LOGOUT","CLICK 7 TO EXIT",
-                "CLICK 8 TO PRINT MENU"));
+                "CLICK 4 TO GET USERS","CLICK 5 TO DISPLAY POST DETAILS","CLICK 6 TO LOGOUT","CLICK 7 TO EXIT"));
 
         switch (getChoice()) {
             case 1:
-                getUserDetail();
+                getUserDetails();
                 break;
             case 2:
                 updateUser();
@@ -189,9 +213,6 @@ public class UserView {
             case 7:
                 exits();
                 break;
-            case 8:
-                displayMenu();
-                break;
             default:
                 System.out.println("INVALID CHOICE, SELECT THE ABOVE CHOICE");
                 displaysUserOptions(user );
@@ -201,7 +222,9 @@ public class UserView {
     }
 
     /**
-     * Handles the user logout process, displaying a confirmation message, and log out the user if confirmed.
+     * <p>
+     *     Handles the user logout process, displaying a confirmation message, and log out the user if confirmed
+     * </p>
      */
     private void logout() {
         System.out.println("DO YOU WANT TO LOGOUT?,CLICK YES");
@@ -214,7 +237,9 @@ public class UserView {
     }
 
     /**
-     * Collects and validates the user's email address
+     * <p>
+     *     Collects and validates the user's email address
+     * </p>
      *
      * @return The validated email address.
      */
@@ -236,7 +261,9 @@ public class UserView {
     }
 
     /**
-     * Collects and validates the user's mobile number
+     * <p>
+     *     Collects and validates the user's mobile number
+     * </p>
      *
      * @return The validated mobile number
      */
@@ -251,14 +278,16 @@ public class UserView {
         if (USER_VALIDATION.isValidateMobileNumber(mobileNumber)) {
             return mobileNumber;
         } else {
-            System.out.println(String.join("","INDIA MOBILE NUMBER MUST CONTAINS '+91' FOLLOWED BY ",
+            System.out.println(String.join("","MOBILE NUMBER MUST CONTAINS '+91' FOLLOWED BY ",
                     "10 DIGITS AND STARTS, WITH RANGE (6-9)"));
             return getMobileNumber();
         }
     }
 
     /**
-     * Collects and validates the user's name
+     * <p>
+     *     Collects and validates the user's name
+     * </p>
      *
      * @return The validated name
      */
@@ -279,7 +308,9 @@ public class UserView {
     }
 
     /**
-     * Collects and validates the user's password
+     * <p>
+     *     Collects and validates the user's password
+     * </p>
      *
      * @return The validated password
      */
@@ -302,7 +333,9 @@ public class UserView {
     }
 
     /**
-     * Collects and validates the user's date of birth
+     * <p>
+     *     Collects and validates the user's date of birth
+     * </p>
      *
      * @return The validated date of birth
      */
@@ -323,7 +356,9 @@ public class UserView {
     }
 
     /**
-     * Collects the user's gender choice and sets the gender value in the User object.
+     * <p>
+     *     Collects the user's gender choice and sets the gender value in the User object.
+     * </p>
      *
      * @param user - The User object to set the gender value
      */
@@ -348,7 +383,9 @@ public class UserView {
     }
 
     /**
-     * Collects and validates the user's choice as an integer value
+     * <p>
+     *     Collects and validates the user's choice as an integer value
+     * </p>
      *
      * @return The validated choice
      */
@@ -365,5 +402,28 @@ public class UserView {
         }
 
         return getChoice();
+    }
+
+    /**
+     * Collects the user's sign-in choice
+     *
+     * @param user The User object to set the sign-in
+     */
+    public User getSignInChoice(final User user) {
+        System.out.println("CLICK 1 TO MOBILE NUMBER\nCLICK 2 TO EMAIL ID");
+
+        switch (getChoice()) {
+            case 1:
+                user.setMobileNumber(getMobileNumber());
+                break;
+            case 2:
+                user.setEmail(getEmail());
+                break;
+            default:
+                System.out.println("INVALID CHOICE, SELECT 1 OR 2");
+                getSignInChoice(user);
+                break;
+        }
+        return user;
     }
 }
