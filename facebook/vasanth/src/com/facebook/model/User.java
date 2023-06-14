@@ -2,7 +2,7 @@ package com.facebook.model;
 
 
 /**
- * Represents the given user
+ * Represents the given user for storing information
  *
  * @version 1.0
  * @author vasanth
@@ -21,13 +21,10 @@ public class User {
      * An enum with values MALE, FEMALE
      */
     public enum Gender {
+        
         MALE,
         FEMALE,
         OTHERS
-    }
-
-    public Gender getGender() {
-        return gender;
     }
 
     public void setGender(final Gender gender) {

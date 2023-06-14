@@ -22,11 +22,7 @@ public class UserController {
     private UserController() {}
 
     public static UserController getUserController() {
-
-        if (USER_CONTROLLER == null) {
-            USER_CONTROLLER = new UserController();
-        }
-        return USER_CONTROLLER;
+        return (null == USER_CONTROLLER) ? USER_CONTROLLER = new UserController() : USER_CONTROLLER;
     }
 
     /**
@@ -34,8 +30,8 @@ public class UserController {
      *     Checks the user to be created
      * </p>
      *
-     * @param user the user has to created
-     * @return returns the userService object through addUser
+     * @param user Represents user has to created
+     * @return boolean - True if the user is created, false otherwise.
      */
     public boolean create(final User user) {
         return USER_SERVICE.add(user);
@@ -57,8 +53,8 @@ public class UserController {
      *     Updates the user details.
      * </p>
      *
-     * @param user the user has to updated
-     * @return returns the userService object through updateUser
+     * @param user Represents user has to updated
+     * @return boolean - True if the user is updated, false otherwise.
      */
     public boolean isUpdate(final User user) {
         return USER_SERVICE.updateDetail(user);
@@ -69,8 +65,8 @@ public class UserController {
      *     Checks the user sign in
      * </p>
      *
-     * @param user the user has to sign in
-     * @return returns the userService object through signInUser
+     * @param user Represents user has to sign in
+     * @return boolean - True if the user is sign in, false otherwise.
      */
     public boolean isSignIn(final User user) {
         return USER_SERVICE.signInDetail(user);
@@ -78,11 +74,11 @@ public class UserController {
 
     /**
      * <p>
-     *     Gets the user delete details
+     *     Checks the user delete details
      * </p>
      *
-     * @param id the id has to delete
-     * @return returns the userService object through deleteUser
+     * @param id Represents the user id to delete
+     * @return boolean - True if the user is deleted, false otherwise.
      */
     public boolean isDelete(final Long id) {
         return USER_SERVICE.deleteDetail(id);
@@ -93,8 +89,8 @@ public class UserController {
      *     Gets the user detail
      * </p>
      *
-     * @param id to get the user through id
-     * @return user detail
+     * @param id Represents the user through id
+     * @return {@link User}
      */
     public User getUser(final Long id) {
         return USER_SERVICE.getUser(id);

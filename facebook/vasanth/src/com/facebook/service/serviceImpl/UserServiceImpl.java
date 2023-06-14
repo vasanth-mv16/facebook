@@ -3,7 +3,12 @@ package com.facebook.service.serviceImpl;
 import com.facebook.model.User;
 import com.facebook.service.UserService;
 
-import java.util.*;
+import java.util.List;
+import java.util.Collection;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.ListIterator;
+
 
 /**
  * <p>
@@ -20,17 +25,20 @@ public class UserServiceImpl implements UserService {
 
     private UserServiceImpl() {}
 
+    /**
+     * 
+     * @return
+     */
     public static UserServiceImpl getUserServiceImpl() {
-
-        if (USER_SERVICE_IMPL == null) {
-            USER_SERVICE_IMPL = new UserServiceImpl();
-        }
-        return USER_SERVICE_IMPL;
+        return (null == USER_SERVICE_IMPL) ? USER_SERVICE_IMPL = new UserServiceImpl() : USER_SERVICE_IMPL;
     }
 
 
     /**
      * {@inheritDoc}
+     *
+     * @param user Represents the user to be add
+     * @return true if the user is successfully added, false otherwise
      */
     public boolean add(final User user) {
         for (final User existingUser : USER_LIST) {
@@ -44,6 +52,8 @@ public class UserServiceImpl implements UserService {
 
     /**
      * {@inheritDoc}
+     *
+     *  @return the collection of users
      */
     public Collection<User> getUserDetails() {
         return USER_LIST;
@@ -51,6 +61,9 @@ public class UserServiceImpl implements UserService {
 
     /**
      * {@inheritDoc}
+     *
+     * @param user Represents the user to be update
+     * @return true if the user details are updated, false otherwise
      */
     public boolean updateDetail(final User user) {
         final ListIterator<User> listIterator = USER_LIST.listIterator();
@@ -72,6 +85,9 @@ public class UserServiceImpl implements UserService {
 
     /**
      * {@inheritDoc}
+     *
+     *  @param user Represents user to sign in
+     *  @return true if the sign-in is successful, false otherwise
      */
     public boolean signInDetail(final User user) {
         final Iterator<User> iterator = USER_LIST.iterator();
@@ -92,6 +108,9 @@ public class UserServiceImpl implements UserService {
 
     /**
      * {@inheritDoc}
+     *
+     * @param id Represents the id of the user to be deleted
+     * @return true if the user details are successfully deleted, false otherwise
      */
     public boolean deleteDetail(final Long id) {
         final User user = getUser(id);
@@ -105,6 +124,9 @@ public class UserServiceImpl implements UserService {
 
     /**
      * {@inheritDoc}
+     *
+     * @param id Represents the id of the user to retrieve
+     * @return {@link User}
      */
     public User getUser(final Long id) {
         final Iterator<User> iterator = USER_LIST.iterator();

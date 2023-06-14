@@ -1,5 +1,7 @@
 package com.facebook.view.validation;
 
+import com.facebook.model.User;
+
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.YearMonth;
@@ -22,11 +24,7 @@ public class UserValidation {
     private UserValidation() {}
 
     public static UserValidation getUserValidation() {
-
-        if (userValidation == null) {
-            userValidation = new UserValidation();
-        }
-        return userValidation;
+        return (null == userValidation) ? userValidation = new UserValidation() : userValidation;
     }
     /**
      * <p>
@@ -36,7 +34,7 @@ public class UserValidation {
      * @param name - The name string to be validated.
      * @return boolean - True if the name is valid, false otherwise.
      */
-    public boolean isValidateName(final String name) {
+    public boolean validateName(final String name) {
         return name.matches("^[a-zA-Z_]+\\.?");
     }
 
@@ -48,7 +46,7 @@ public class UserValidation {
      * @param mobileNumber - The mobile Number string to be validated.
      * @return boolean - True if the mobileNumber is valid, false otherwise.
      */
-    public boolean isValidateMobileNumber(final String mobileNumber) {
+    public boolean validateMobileNumber(final String mobileNumber) {
         return mobileNumber.matches("(^\\+(91){1,2}[6-9][0-9]{9}$)");
     }
 
@@ -60,7 +58,7 @@ public class UserValidation {
      * @param email The email string to be validated.
      * @return boolean - True if the email is valid, false otherwise.
      */
-    public boolean isValidateEmail(final String email) {
+    public boolean validateEmail(final String email) {
         return email.matches("^[a-z0-9._]+@[a-z]+\\.[a-z-]{2,3}");
     }
 
@@ -72,7 +70,7 @@ public class UserValidation {
      * @param password The password string to be validated.
      * @return boolean - True if the password is valid, false otherwise.
      */
-    public boolean isValidatePassword(final String password) {
+    public boolean validatePassword(final String password) {
         return password.matches("^(?=.*[\\d])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,20}$");
     }
 
@@ -84,7 +82,7 @@ public class UserValidation {
      * @param dateOfBirth The date of birth has to validated
      * @return boolean - True if the date of birth is valid, false otherwise.
      */
-    public boolean isValidateDateOfBirth(final String dateOfBirth) {
+    public boolean validateDateOfBirth(final String dateOfBirth) {
         try {
             final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-uuuu")
                     .withResolverStyle(ResolverStyle.STRICT);
@@ -116,7 +114,7 @@ public class UserValidation {
      * @param choice The choice has to validated
      * @return boolean - True if the choice is valid, false otherwise.
      */
-    public boolean isValidateChoice(final String choice ) {
+    public boolean validateChoice(final String choice ) {
         return choice.matches("\\d{1,2}");
     }
 
@@ -128,7 +126,7 @@ public class UserValidation {
      * @param accessForYes The access to be validated
      * @return boolean - True if the check is valid, false otherwise.
      */
-    public boolean isValidateCheckForYes(final String accessForYes) {
+    public boolean validateForYes(final String accessForYes) {
         return accessForYes.equalsIgnoreCase("yes") || accessForYes.equalsIgnoreCase("y");
     }
     /**
@@ -139,7 +137,7 @@ public class UserValidation {
      * @param userId The user id to be validated
      * @return boolean - True if the user id is valid, false otherwise.
      */
-    public boolean isValidateUserId(final String userId) {
+    public boolean validateUserId(final String userId) {
         return userId.matches("[\\d]");
     }
 
@@ -151,8 +149,19 @@ public class UserValidation {
      * @param postId The post id to be validated
      * @return boolean - True if the user id is valid, false otherwise.
      */
-    public boolean isValidatePostId(final String postId) {
+    public boolean validatePostId(final String postId) {
         return postId.matches("[\\d]");
     }
-    
+
+    /**
+     * <p>
+     *     Validates the gender of the user
+     * </p>
+     *
+     * @param gender Represents the gender of the user
+     * @return {@link User.Gender}
+     */
+    public User.Gender validateGender(final String gender) {
+        return User.Gender.valueOf(gender);
+    }
 }

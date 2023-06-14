@@ -19,7 +19,7 @@ public interface PostService {
      *     Checks if the post details are created, and adds the post.
      * </p>
      *
-     * @param post the post to be added
+     * @param post Represents post to be added
      * @return true if the post is successfully added, false otherwise
      */
     boolean create(final Post post);
@@ -39,17 +39,17 @@ public interface PostService {
      *     Retrieves the post details using the post id.
      * </p>
      *
-     * @param id the id of the post to retrieve
-     * @return the post with the specified id
+     * @param id Represents the id of the post to retrieve
+     * @return {@link Post}
      */
     Post getUsingId(final Long id);
 
     /**
      * <p>
-     *     Checks if the post details are updated, and updates the post.
+     *     Checks if the post details are updated.
      * </p>
      *
-     * @param post the post to be updated
+     * @param post Represents the post to be updated
      * @return true if the post is successfully updated, false otherwise
      */
     boolean update(final Post post);

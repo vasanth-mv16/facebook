@@ -5,7 +5,9 @@ import com.facebook.model.Like;
 import java.util.Collection;
 
 /**
- * Provides the service for the like
+ * <p>
+ *    Provides the service for the like
+ * </p>
  *
  * @version 1.0
  * @author vasanth
@@ -13,25 +15,31 @@ import java.util.Collection;
 public interface LikeService {
 
     /**
-     * Checks the like is created
+     * <p>
+     *    Checks the like is created
+     * </p>
      *
-     * @param like to create the like
-     * @return like of the post
+     * @param like Represents the like to create
+     * @return boolean - True if the like is created, false otherwise.
      */
     boolean createLike(final Like like);
 
     /**
-     * Gets the like list details
+     * <p>
+     *    Gets the like list details
+     * </p>
      *
-     * @return collection of likes
+     * @return Collection of likes
      */
     Collection<Like> getLikeList();
 
     /**
-     * Gets the like count for the user
+     * <p>
+     *    Gets the like count for the user
+     * </p>
      *
-     * @param userId to get the like count
-     * @return get the like count of the user
+     * @param postId Represents the user id to get the like count
+     * @return Gets the like count of the user
      */
-    Long getLikeCount(final Long userId);
+    Long getLikeCount(final Long postId);
 }

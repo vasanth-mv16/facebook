@@ -7,7 +7,9 @@ import com.facebook.service.serviceImpl.LikeServiceImpl;
 import java.util.Collection;
 
 /**
- * Given controller acts as request and respond
+ * <p>
+ *    Given controller acts as request and respond
+ * </p>
  *
  * @version 1.0
  * @author vasanth
@@ -15,43 +17,45 @@ import java.util.Collection;
 public class LikeController {
 
     private static LikeController LIKE_CONTROLLER;
-    private static final LikeService LIKE_SERVICE = new LikeServiceImpl();
+    private static final LikeService LIKE_SERVICE = LikeServiceImpl.getInstance();
 
     private LikeController() {}
 
     public static LikeController getLikeController() {
-
-        if (LIKE_CONTROLLER == null) {
-            LIKE_CONTROLLER = new LikeController();
-        }
-        return LIKE_CONTROLLER;
+        return (LIKE_CONTROLLER == null) ? LIKE_CONTROLLER = new LikeController() : LIKE_CONTROLLER;
     }
     /**
-     * Checks the like to be created
+     * <p>
+     *    Checks the like to be created
+     * </p>
      *
-     * @param like to create the like
-     * @return like of the post
+     * @param like Represents like to created
+     * @return boolean - True if the like is created, false otherwise.
      */
     public boolean createLike(final Like like) {
         return LIKE_SERVICE.createLike(like);
     }
 
     /**
-     * Gets the like details
+     * <p>
+     *    Gets the like details
+     * </p>
      *
-     * @return like of the post
+     * @return Collection of like of the post
      */
     public Collection<Like> getAllLike() {
         return LIKE_SERVICE.getLikeList();
     }
 
     /**
-     * Gets the like count details
+     * <p>
+     *    Gets the like count details
+     * </p>
      *
-     * @param userId the user id has to get the post
-     * @return get the like count of the post
+     * @param postId Represents the user id has to get the post
+     * @return returns the like count of the post
      */
-    public long getLikeCount(final Long userId) {
-        return LIKE_SERVICE.getLikeCount(userId);
+    public Long getLikeCount(final Long postId) {
+        return LIKE_SERVICE.getLikeCount(postId);
     }
 }

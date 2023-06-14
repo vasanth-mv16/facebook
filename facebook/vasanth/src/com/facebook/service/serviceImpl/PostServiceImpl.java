@@ -3,7 +3,11 @@ package com.facebook.service.serviceImpl;
 import com.facebook.model.Post;
 import com.facebook.service.PostService;
 
-import java.util.*;
+import java.util.ListIterator;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 
 /**
  * Implementation of the PostService interface for managing posts.
@@ -19,14 +23,14 @@ public class PostServiceImpl implements PostService {
     private PostServiceImpl() {}
 
     public static PostServiceImpl getPostServiceImpl() {
-        if (POST_SERVICE_IMPL == null) {
-            POST_SERVICE_IMPL = new PostServiceImpl();
-        }
-        return POST_SERVICE_IMPL;
+        return (null == POST_SERVICE_IMPL) ? POST_SERVICE_IMPL = new PostServiceImpl() : POST_SERVICE_IMPL;
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @param post Represents post to be added
+     * @return true if the post is successfully added, false otherwise
      */
     public boolean create(Post post) {
          return POSTS.add(post);
@@ -34,6 +38,8 @@ public class PostServiceImpl implements PostService {
 
     /**
      * {@inheritDoc}
+     *
+     * @return the collection of posts
      */
     public Collection<Post> get() {
         return POSTS;
@@ -41,6 +47,9 @@ public class PostServiceImpl implements PostService {
 
     /**
      * {@inheritDoc}
+     *
+     * @param id Represents the id of the post to retrieve
+     * @return {@link Post}
      */
     public Post getUsingId(final Long id) {
         final ListIterator<Post> iterator = POSTS.listIterator();
@@ -58,6 +67,9 @@ public class PostServiceImpl implements PostService {
 
     /**
      * {@inheritDoc}
+     *
+     * @param post Represents the post to be updated
+     * @return true if the post is successfully updated, false otherwise
      */
     public boolean update(final Post post) {
         final Iterator<Post> iterator = POSTS.iterator();

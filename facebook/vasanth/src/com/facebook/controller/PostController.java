@@ -22,10 +22,7 @@ public class PostController {
     private PostController() {}
 
     public static PostController getPostController() {
-        if (POST_CONTROLLER == null) {
-            POST_CONTROLLER = new PostController();
-        }
-        return POST_CONTROLLER;
+        return (null == POST_CONTROLLER) ? POST_CONTROLLER = new PostController() : POST_CONTROLLER;
     }
 
     /**
@@ -34,7 +31,7 @@ public class PostController {
      * </p>
      *
      * @param post to create the post
-     * @return post of the user
+     * @return boolean - True if the post is created, false otherwise.
      */
     public boolean Create(final Post post) {
         return POST_SERVICE.create(post);
@@ -45,7 +42,7 @@ public class PostController {
      *     Gets the post details
      * </p>
      *
-     * @return post of the user
+     * @return Collection of post of the user
      */
     public Collection<Post> get() {
         return POST_SERVICE.get();
@@ -56,8 +53,8 @@ public class PostController {
      *     Gets the post detail using id
      * </p>
      *
-     * @param id the id has to get the post
-     * @return get post for specific id
+     * @param id Represents the id of the post
+     * @return {@link Post}
      */
     public Post getUsingId(final Long id) {
         return POST_SERVICE.getUsingId(id);
@@ -68,8 +65,8 @@ public class PostController {
      *     Checks the post is updated
      * </p>
      *
-     * @param post to update the post
-     * @return updated post
+     * @param post Represents the post to update
+     * @return boolean - True if the post is updated, false otherwise.
      */
     public boolean isPostUpdate(final Post post) {
         return POST_SERVICE.update(post);

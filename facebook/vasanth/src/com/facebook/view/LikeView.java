@@ -2,14 +2,15 @@ package com.facebook.view;
 
 import com.facebook.controller.LikeController;
 import com.facebook.model.Like;
-import com.facebook.model.User;
 import com.facebook.view.validation.UserValidation;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
- * Represents the like by the user
+ * <p>
+ *    Represents the like for the post by user
+ * </p>
  */
 public class LikeView {
 
@@ -23,14 +24,12 @@ public class LikeView {
     private LikeView() {}
 
     public static LikeView getLikeView() {
-
-        if (LIKE_VIEW == null) {
-            LIKE_VIEW = new LikeView();
-        }
-        return LIKE_VIEW;
+        return (null == LIKE_VIEW) ? LIKE_VIEW = new LikeView() : LIKE_VIEW;
     }
-    public void displayLikeDetails(final User user) {
-        System.out.println("ENTER 1 TO CREATE LIKE, 2 TO GET ALL LIKES, 3 TO GET LIKE COUNT, 4 TO DISPLAY POST DETAILS");
+
+    public void displayLikeDetails() {
+        System.out.println(String.join("\n","CLICK 1 TO CREATE LIKE", "CLICK 2 TO GET ALL LIKES",
+                "CLICK 3 TO GET LIKE COUNT","CLICK 4 TO DISPLAY POST DETAILS"));
 
         switch (USER_VIEW.getChoice()) {
             case 1:
@@ -43,20 +42,22 @@ public class LikeView {
                 getLikeCount();
                 break;
             case 4:
-                POST_VIEW.displayPostDetails(user);
+                POST_VIEW.displayPostDetails();
                 break;
             case 5:
-                USER_VIEW.displaysUserOptions(user);
+                USER_VIEW.displaysUserOptions();
                 break;
             default :
                 System.out.println("Invalid choice, select the above choice");
-                displayLikeDetails(user);
+                displayLikeDetails();
         }
-        displayLikeDetails(user);
+        displayLikeDetails();
     }
 
     /**
-     * Shows the like details
+     * <p>
+     *     Shows the like details
+     * </p>
      */
     public void createLike() {
         final Like like = new Like();
@@ -67,40 +68,45 @@ public class LikeView {
     }
 
     /**
-     * Gets the likes by the user
+     * <p>
+     *     Gets the likes by the user
+     * </p>
      */
     public void getAllLike() {
         System.out.println(LIKE_CONTROLLER.getAllLike());
     }
 
     /**
-     * Gets the likes count for the user
+     * <p>
+     *     Gets the likes count for the post
+     * </p>
      */
     public void getLikeCount() {
         try {
-            System.out.println("ENTER THE USER ID:");
-            Long userId = Long.parseLong(SCANNER.nextLine());
-            Long likeCount = LIKE_CONTROLLER.getLikeCount(userId);
+            System.out.println("ENTER THE POST ID:");
+            Long postId = Long.parseLong(SCANNER.nextLine());
+            Long likeCount = LIKE_CONTROLLER.getLikeCount(postId);
 
-            System.out.println("TOTAL LIKE FOR USER ID " + userId + ": " + likeCount);
-
-        } catch (Exception exception) {
+            System.out.println("TOTAL LIKE FOR POST ID " + postId + ": " + likeCount);
+        } catch (final Exception exception) {
             System.out.println("PLEASE ENTER AN INTEGER");
             getLikeCount();
         }
     }
 
     /**
-     * Gets the post id detail
+     * <p>
+     *     Gets the user id detail
+     * </p>
      *
-     * @return {@link Long} postId
+     * @return Returns the user id of the user
      */
     public Long getUserId() {
         try {
             System.out.println("ENTER THE USER ID:");
             final Long userId = Long.valueOf(SCANNER.nextLine());
 
-            if (USER_VALIDATION.isValidateUserId(String.valueOf(userId))) {
+            if (USER_VALIDATION.validateUserId(String.valueOf(userId))) {
                 return userId;
             }
         } catch (final InputMismatchException | NumberFormatException exception) {
@@ -110,12 +116,19 @@ public class LikeView {
         return getUserId();
     }
 
+    /**
+     * <p>
+     *     Gets the post id detail
+     * </p>
+     *
+     * @return Returns the post id of the user
+     */
     public Long getPostId() {
         try {
             System.out.println("ENTER THE POST ID:");
             final Long postId = Long.valueOf(SCANNER.nextLine());
 
-            if (USER_VALIDATION.isValidatePostId(String.valueOf(postId))) {
+            if (USER_VALIDATION.validatePostId(String.valueOf(postId))) {
                 return postId;
             }
         } catch (final InputMismatchException | NumberFormatException exception) {
