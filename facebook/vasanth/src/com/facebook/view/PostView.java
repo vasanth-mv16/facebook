@@ -20,25 +20,25 @@ import java.util.Scanner;
 public class PostView {
 
     private static final Scanner SCANNER = new Scanner(System.in);
-    private static final UserView USER_VIEW = UserView.getUserView();
-    private static final LikeView LIKE_VIEW = LikeView.getLikeView();
-    private static final PostController POST_CONTROLLER = PostController.getPostController();
-    private static final UserValidation USER_VALIDATION = UserValidation.getUserValidation();
+    private static final UserView USER_VIEW = UserView.getInstance();
+    private static final LikeView LIKE_VIEW = LikeView.getInstance();
+    private static final PostController POST_CONTROLLER = PostController.getInstance();
+    private static final UserValidation USER_VALIDATION = UserValidation.getInstance();
     private static  PostView postView;
     private static Long postId = 1L;
 
     private PostView() {}
 
-    public static PostView getPostView() {
+    public static PostView getInstance() {
         return (null == postView) ? postView = new PostView() : postView;
     }
 
     /**
      * <p>
-     * Shows the menu details for the user to post and edit
+     *    Shows the menu details for the user to post and edit
      * </p>
      */
-    public void displayPostDetails() {
+    public void displayPostDetails(final Long id) {
         System.out.println(String.join("\n","CLICK 1 TO CREATE","CLICK 2 TO GET","CLICK 3 TO GET USING ID",
                 "CLICK 4 TO UPDATE","CLICK 5 TO DISPLAY LIKE DETAILS","CLICK 6 TO DISPLAY USER OPTIONS"));
 
@@ -56,33 +56,33 @@ public class PostView {
                 updatePost();
                 break;
             case 5:
-                LIKE_VIEW.displayLikeDetails();
+                LIKE_VIEW.displayLikeDetails(id);
                 break;
             case 6:
-                USER_VIEW.displaysUserOptions();
+                USER_VIEW.displaysUserOptions(id);
                 break;
             default :
                 System.out.println("INVALID CHOICE,SELECT THE ABOVE CHOICE");
-                displayPostDetails();
+                displayPostDetails(id);
         }
-        displayPostDetails();
+        displayPostDetails(id);
     }
 
     /**
      * <p>
-     * Creates a new post with the user, caption, and location.
+     *    Creates a new post with the user, caption, and location.
      * </p>
      */
     private void createPost() {
         final Post post = new Post();
-        final Timestamp timestamp = Timestamp.from(Instant.now());
+        final Timestamp postUploadTime = Timestamp.from(Instant.now());
 
         System.out.println("ENTER YOUR USER ID:");
         post.setUserId(Long.valueOf(SCANNER.nextLine()));
         post.setId(postId++);
         post.setCaption(getCaption());
         post.setLocation(getLocation());
-        post.setDateTime(timestamp);
+        post.setUploadTime(postUploadTime);
         System.out.println((POST_CONTROLLER.Create(post)) ? "SUCCESSFULLY POSTED" : "FAILED TO POST");
     }
 
@@ -103,8 +103,9 @@ public class PostView {
      * </p>
      */
     public Collection<Post> getPostDetails() {
-        System.out.println(POST_CONTROLLER.get());
-        return (POST_CONTROLLER.get());
+        final Collection<Post> getPost = POST_CONTROLLER.get();
+        System.out.println(getPost);
+        return getPost;
     }
 
     /**

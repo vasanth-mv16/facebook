@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
      * 
      * @return
      */
-    public static UserServiceImpl getUserServiceImpl() {
+    public static UserServiceImpl getInstance() {
         return (null == USER_SERVICE_IMPL) ? USER_SERVICE_IMPL = new UserServiceImpl() : USER_SERVICE_IMPL;
     }
 
@@ -48,6 +48,17 @@ public class UserServiceImpl implements UserService {
             }
         }
         return USER_LIST.add(user);
+    }
+
+    public Long getUserId(final User user) {
+        for (final User existingUser : USER_LIST) {
+
+            if (existingUser.getName().equals(user.getName())) {
+                return existingUser.getId();
+            }
+        }
+        return null;
+
     }
 
     /**
@@ -115,7 +126,7 @@ public class UserServiceImpl implements UserService {
     public boolean deleteDetail(final Long id) {
         final User user = getUser(id);
 
-        if (user != null) {
+        if (null != user) {
             return USER_LIST.remove(user);
         }
 
@@ -134,7 +145,7 @@ public class UserServiceImpl implements UserService {
         while (iterator.hasNext()) {
             final User existingUser = iterator.next();
 
-            if (existingUser.getId() == id) {
+            if (existingUser.getId().equals(id)) {
                 return existingUser;
             }
         }

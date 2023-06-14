@@ -21,7 +21,7 @@ public class LikeController {
 
     private LikeController() {}
 
-    public static LikeController getLikeController() {
+    public static LikeController getInstance() {
         return (LIKE_CONTROLLER == null) ? LIKE_CONTROLLER = new LikeController() : LIKE_CONTROLLER;
     }
     /**

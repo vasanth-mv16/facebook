@@ -17,11 +17,11 @@ import java.util.Collection;
 public class PostController {
 
     private static PostController POST_CONTROLLER;
-    private static final PostService POST_SERVICE = PostServiceImpl.getPostServiceImpl();
+    private static final PostService POST_SERVICE = PostServiceImpl.getInstance();
 
     private PostController() {}
 
-    public static PostController getPostController() {
+    public static PostController getInstance() {
         return (null == POST_CONTROLLER) ? POST_CONTROLLER = new PostController() : POST_CONTROLLER;
     }
 

@@ -73,5 +73,7 @@ public interface UserService {
      */
     User getUser(final Long id);
 
+    Long getUserId(final User user);
+
 }
 

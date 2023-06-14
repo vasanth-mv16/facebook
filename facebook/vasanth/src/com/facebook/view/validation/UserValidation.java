@@ -23,7 +23,7 @@ public class UserValidation {
 
     private UserValidation() {}
 
-    public static UserValidation getUserValidation() {
+    public static UserValidation getInstance() {
         return (null == userValidation) ? userValidation = new UserValidation() : userValidation;
     }
     /**

@@ -16,18 +16,18 @@ public class LikeView {
 
     private static LikeView LIKE_VIEW;
     private static final Scanner SCANNER = new Scanner(System.in);
-    private static final LikeController LIKE_CONTROLLER = LikeController.getLikeController();
-    private static final UserView USER_VIEW = UserView.getUserView();
-    private static final PostView POST_VIEW = PostView.getPostView();
-    private static final UserValidation USER_VALIDATION = UserValidation.getUserValidation();
+    private static final LikeController LIKE_CONTROLLER = LikeController.getInstance();
+    private static final UserView USER_VIEW = UserView.getInstance();
+    private static final PostView POST_VIEW = PostView.getInstance();
+    private static final UserValidation USER_VALIDATION = UserValidation.getInstance();
 
     private LikeView() {}
 
-    public static LikeView getLikeView() {
+    public static LikeView getInstance() {
         return (null == LIKE_VIEW) ? LIKE_VIEW = new LikeView() : LIKE_VIEW;
     }
 
-    public void displayLikeDetails() {
+    public void displayLikeDetails(final Long id) {
         System.out.println(String.join("\n","CLICK 1 TO CREATE LIKE", "CLICK 2 TO GET ALL LIKES",
                 "CLICK 3 TO GET LIKE COUNT","CLICK 4 TO DISPLAY POST DETAILS"));
 
@@ -42,16 +42,16 @@ public class LikeView {
                 getLikeCount();
                 break;
             case 4:
-                POST_VIEW.displayPostDetails();
+                POST_VIEW.displayPostDetails(id);
                 break;
             case 5:
-                USER_VIEW.displaysUserOptions();
+                USER_VIEW.displaysUserOptions(id);
                 break;
             default :
                 System.out.println("Invalid choice, select the above choice");
-                displayLikeDetails();
+                displayLikeDetails(id);
         }
-        displayLikeDetails();
+        displayLikeDetails(id);
     }
 
     /**

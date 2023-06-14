@@ -14,7 +14,7 @@ public class Post {
     private Long id;
     private String caption;
     private String location;
-    private Timestamp dateTime;
+    private Timestamp uploadTime;
 
     public void setUserId(final Long userId) {
         this.userId = userId;
@@ -49,16 +49,16 @@ public class Post {
 
     }
 
-    public Timestamp getDateTime() {
-        return dateTime;
+    public Timestamp getUploadTime() {
+        return uploadTime;
     }
 
-    public void setDateTime(final Timestamp dateTime) {
-        this.dateTime = dateTime;
+    public void setUploadTime(final Timestamp uploadTime) {
+        this.uploadTime = uploadTime;
     }
 
     public String toString() {
-        return String.format("User Id =%d Post Id =%d Caption =%s  Location =%s  %s",userId, id, caption, location, dateTime);
+        return String.format("User Id =%d Post Id =%d Caption =%s  Location =%s  %s",userId, id, caption, location, uploadTime);
     }
 
 }

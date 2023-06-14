@@ -22,7 +22,7 @@ public class PostServiceImpl implements PostService {
 
     private PostServiceImpl() {}
 
-    public static PostServiceImpl getPostServiceImpl() {
+    public static PostServiceImpl getInstance() {
         return (null == POST_SERVICE_IMPL) ? POST_SERVICE_IMPL = new PostServiceImpl() : POST_SERVICE_IMPL;
     }
 

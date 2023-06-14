@@ -17,11 +17,11 @@ import java.util.Collection;
 public class UserController {
 
     private static UserController USER_CONTROLLER;
-    private static final UserService USER_SERVICE = UserServiceImpl.getUserServiceImpl();
+    private static final UserService USER_SERVICE = UserServiceImpl.getInstance();
 
     private UserController() {}
 
-    public static UserController getUserController() {
+    public static UserController getInstance() {
         return (null == USER_CONTROLLER) ? USER_CONTROLLER = new UserController() : USER_CONTROLLER;
     }
 
@@ -94,6 +94,10 @@ public class UserController {
      */
     public User getUser(final Long id) {
         return USER_SERVICE.getUser(id);
+    }
+
+    public Long getUserId(final User user) {
+        return USER_SERVICE.getUserId(user);
     }
 
 }
