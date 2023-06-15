@@ -1,4 +1,4 @@
-package com.facebook.service.serviceImpl;
+package com.facebook.service.Impl;
 
 import com.facebook.model.Post;
 import com.facebook.service.PostService;
@@ -15,15 +15,15 @@ import java.util.Iterator;
  * @version 1.0
  * @author vasanth
  */
-public class PostServiceImpl implements PostService {
+public class PostImpl implements PostService {
 
     private static final List<Post> POSTS = new ArrayList<>();
-    private static PostServiceImpl POST_SERVICE_IMPL;
+    private static PostImpl POST_IMPL;
 
-    private PostServiceImpl() {}
+    private PostImpl() {}
 
-    public static PostServiceImpl getInstance() {
-        return (null == POST_SERVICE_IMPL) ? POST_SERVICE_IMPL = new PostServiceImpl() : POST_SERVICE_IMPL;
+    public static PostImpl getInstance() {
+        return null == POST_IMPL ? POST_IMPL = new PostImpl() : POST_IMPL;
     }
 
     /**
@@ -61,7 +61,6 @@ public class PostServiceImpl implements PostService {
                 return existingPost;
             }
         }
-
         return null;
     }
 
@@ -84,9 +83,6 @@ public class PostServiceImpl implements PostService {
                 return true;
             }
         }
-
         return false;
-
     }
-
 }

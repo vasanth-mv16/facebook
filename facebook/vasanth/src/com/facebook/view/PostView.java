@@ -30,7 +30,7 @@ public class PostView {
     private PostView() {}
 
     public static PostView getInstance() {
-        return (null == postView) ? postView = new PostView() : postView;
+        return null == postView ? postView = new PostView() : postView;
     }
 
     /**
@@ -44,16 +44,16 @@ public class PostView {
 
         switch (USER_VIEW.getChoice()) {
             case 1 :
-                createPost();
+                create();
                 break;
             case 2 :
-                getPostDetails();
+                getDetails();
                 break;
             case 3 :
-                getPostDetailUsingId();
+                getDetailById();
                 break;
             case 4:
-                updatePost();
+                updateDetail();
                 break;
             case 5:
                 LIKE_VIEW.displayLikeDetails(id);
@@ -73,7 +73,7 @@ public class PostView {
      *    Creates a new post with the user, caption, and location.
      * </p>
      */
-    private void createPost() {
+    private void create() {
         final Post post = new Post();
         final Timestamp postUploadTime = Timestamp.from(Instant.now());
 
@@ -83,7 +83,7 @@ public class PostView {
         post.setCaption(getCaption());
         post.setLocation(getLocation());
         post.setUploadTime(postUploadTime);
-        System.out.println((POST_CONTROLLER.Create(post)) ? "SUCCESSFULLY POSTED" : "FAILED TO POST");
+        System.out.println((POST_CONTROLLER.isCreate(post)) ? "SUCCESSFULLY POSTED" : "FAILED TO POST");
     }
 
     private String getCaption() {
@@ -102,10 +102,10 @@ public class PostView {
      *     Retrieves and prints the details of the post
      * </p>
      */
-    public Collection<Post> getPostDetails() {
-        final Collection<Post> getPost = POST_CONTROLLER.get();
-        System.out.println(getPost);
-        return getPost;
+    public Collection<Post> getDetails() {
+        System.out.println(POST_CONTROLLER.get());
+
+        return POST_CONTROLLER.get();
     }
 
     /**
@@ -115,11 +115,15 @@ public class PostView {
      *
      * @return {@link Post} the post updated by the user
      */
-    public Post getPostDetailUsingId() {
+    public Post getDetailById() {
         System.out.println("ENTER YOUR POST ID:");
         final Post post = POST_CONTROLLER.getUsingId(Long.valueOf(SCANNER.nextLine()));
         System.out.println(post);
 
+        if (null == post) {
+            System.out.println("ENTER AN VALID POST ID");
+            return getDetailById();
+        }
         return post;
     }
     
@@ -128,21 +132,21 @@ public class PostView {
      *     Updates the post by the user to edit the caption and location
      * </p>
      */
-    public void updatePost() {
+    public void updateDetail() {
         final Post post = new Post();
-        final Post get = getPostDetailUsingId();
+        final Post get = getDetailById();
 
         post.setId(get.getId());
         System.out.println("DO YOU WANT TO EDIT CAPTION, PRESS ANY KEY AND DON'T WANT TO EDIT PRESS 'NO' OR 'N' ");
-        post.setCaption((USER_VALIDATION.validateForYes(SCANNER.nextLine())) ? getCaption() : get.getCaption());
+        post.setCaption((USER_VALIDATION.validateAccess(SCANNER.nextLine())) ? getCaption() : get.getCaption());
         System.out.println("DO YOU WANT TO EDIT LOCATION, PRESS ANY KEY AND DON'T WANT TO EDIT PRESS 'NO' OR 'N' ");
-        post.setLocation((USER_VALIDATION.validateForYes(SCANNER.nextLine())) ? getLocation() : get.getLocation());
+        post.setLocation((USER_VALIDATION.validateAccess(SCANNER.nextLine())) ? getLocation() : get.getLocation());
 
-        if (POST_CONTROLLER.isPostUpdate(post)) {
+        if (POST_CONTROLLER.isUpdate(post)) {
             System.out.println("POST UPDATED");
         } else {
             System.out.println("NOT UPDATED");
-            updatePost();
+            updateDetail();
         }
     }
 }

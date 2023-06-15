@@ -1,6 +1,5 @@
 package com.facebook.model;
 
-
 /**
  * Represents the given user for storing information
  *
@@ -80,7 +79,7 @@ public class User {
     }
 
     public String toString() {
-        return String.format("%d  Name = %s Email = %s Gender = %s", id, name, email, gender);
+        return String.format("%d  Name = %s Email = %s Phone Number = %s Gender = %s", id, name, email, mobileNumber, gender);
     }
 }
 

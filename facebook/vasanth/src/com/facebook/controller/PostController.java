@@ -2,7 +2,7 @@ package com.facebook.controller;
 
 import com.facebook.model.Post;
 import com.facebook.service.PostService;
-import com.facebook.service.serviceImpl.PostServiceImpl;
+import com.facebook.service.Impl.PostImpl;
 
 import java.util.Collection;
 
@@ -17,12 +17,12 @@ import java.util.Collection;
 public class PostController {
 
     private static PostController POST_CONTROLLER;
-    private static final PostService POST_SERVICE = PostServiceImpl.getInstance();
+    private static final PostService POST_SERVICE = PostImpl.getInstance();
 
     private PostController() {}
 
     public static PostController getInstance() {
-        return (null == POST_CONTROLLER) ? POST_CONTROLLER = new PostController() : POST_CONTROLLER;
+        return null == POST_CONTROLLER ? POST_CONTROLLER = new PostController() : POST_CONTROLLER;
     }
 
     /**
@@ -33,7 +33,7 @@ public class PostController {
      * @param post to create the post
      * @return boolean - True if the post is created, false otherwise.
      */
-    public boolean Create(final Post post) {
+    public boolean isCreate(final Post post) {
         return POST_SERVICE.create(post);
     }
 
@@ -68,7 +68,7 @@ public class PostController {
      * @param post Represents the post to update
      * @return boolean - True if the post is updated, false otherwise.
      */
-    public boolean isPostUpdate(final Post post) {
+    public boolean isUpdate(final Post post) {
         return POST_SERVICE.update(post);
     }
 

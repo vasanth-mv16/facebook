@@ -2,7 +2,7 @@ package com.facebook.controller;
 
 import com.facebook.model.Like;
 import com.facebook.service.LikeService;
-import com.facebook.service.serviceImpl.LikeServiceImpl;
+import com.facebook.service.Impl.LikeImpl;
 
 import java.util.Collection;
 
@@ -17,13 +17,14 @@ import java.util.Collection;
 public class LikeController {
 
     private static LikeController LIKE_CONTROLLER;
-    private static final LikeService LIKE_SERVICE = LikeServiceImpl.getInstance();
+    private static final LikeService LIKE_SERVICE = LikeImpl.getInstance();
 
     private LikeController() {}
 
     public static LikeController getInstance() {
-        return (LIKE_CONTROLLER == null) ? LIKE_CONTROLLER = new LikeController() : LIKE_CONTROLLER;
+        return LIKE_CONTROLLER == null ? LIKE_CONTROLLER = new LikeController() : LIKE_CONTROLLER;
     }
+
     /**
      * <p>
      *    Checks the like to be created
@@ -32,8 +33,8 @@ public class LikeController {
      * @param like Represents like to created
      * @return boolean - True if the like is created, false otherwise.
      */
-    public boolean createLike(final Like like) {
-        return LIKE_SERVICE.createLike(like);
+    public boolean isCreate(final Like like) {
+        return LIKE_SERVICE.create(like);
     }
 
     /**
@@ -43,8 +44,8 @@ public class LikeController {
      *
      * @return Collection of like of the post
      */
-    public Collection<Like> getAllLike() {
-        return LIKE_SERVICE.getLikeList();
+    public Collection<Like> get() {
+        return LIKE_SERVICE.get();
     }
 
     /**
@@ -55,7 +56,7 @@ public class LikeController {
      * @param postId Represents the user id has to get the post
      * @return returns the like count of the post
      */
-    public Long getLikeCount(final Long postId) {
-        return LIKE_SERVICE.getLikeCount(postId);
+    public Long getCount(final Long postId) {
+        return LIKE_SERVICE.getCount(postId);
     }
 }

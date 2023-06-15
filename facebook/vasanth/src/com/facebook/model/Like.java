@@ -9,8 +9,17 @@ package com.facebook.model;
  */
 public class Like {
 
+    private Long id;
     private Long userId;
     private Long postId;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        id = id;
+    }
 
     public Long getUserId() {
         return userId;
@@ -29,6 +38,6 @@ public class Like {
     }
 
     public String toString() {
-        return String.format(" USER ID =%d POST ID =%d", userId,postId);
+        return String.format("LIKE ID =%d USER ID =%d POST ID =%d",id, userId,postId);
     }
 }

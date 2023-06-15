@@ -24,7 +24,7 @@ public class UserValidation {
     private UserValidation() {}
 
     public static UserValidation getInstance() {
-        return (null == userValidation) ? userValidation = new UserValidation() : userValidation;
+        return null == userValidation ? userValidation = new UserValidation() : userValidation;
     }
     /**
      * <p>
@@ -126,7 +126,7 @@ public class UserValidation {
      * @param accessForYes The access to be validated
      * @return boolean - True if the check is valid, false otherwise.
      */
-    public boolean validateForYes(final String accessForYes) {
+    public boolean validateAccess(final String accessForYes) {
         return accessForYes.equalsIgnoreCase("yes") || accessForYes.equalsIgnoreCase("y");
     }
     /**

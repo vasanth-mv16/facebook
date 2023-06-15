@@ -31,7 +31,7 @@ public interface UserService {
      *
      * @return the collection of users
      */
-    Collection<User> getUserDetails();
+    Collection<User> get();
 
     /**
      * <p>
@@ -41,7 +41,7 @@ public interface UserService {
      * @param user Represents the user to be update
      * @return true if the user details are updated, false otherwise
      */
-    boolean updateDetail(final User user);
+    boolean update(final User user);
 
     /**
      * <p>
@@ -51,7 +51,7 @@ public interface UserService {
      * @param id Represents the id of the user to be deleted
      * @return true if the user details are successfully deleted, false otherwise
      */
-    boolean deleteDetail(final Long id);
+    boolean delete(final Long id);
 
     /**
      * <p>
@@ -61,7 +61,7 @@ public interface UserService {
      * @param user Represents user to sign in
      * @return true if the sign-in is successful, false otherwise
      */
-    boolean signInDetail(final User user);
+    boolean signIn(final User user);
 
     /**
      * <p>
@@ -71,9 +71,16 @@ public interface UserService {
      * @param id Represents the id of the user to retrieve
      * @return {@link User}
      */
-    User getUser(final Long id);
+    User getById(final Long id);
 
+    /**
+     * <p>
+     *     Retrieves user id
+     * </p>
+     *
+     * @param user Refers the user to get the id
+     * @return Returns the id of the user
+     */
     Long getUserId(final User user);
-
 }
 

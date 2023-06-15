@@ -33,7 +33,7 @@ public class UserView {
     private UserView() {}
 
     public static UserView getInstance() {
-        return (null == userView) ? userView = new UserView() : userView;
+        return null == userView ? userView = new UserView() : userView;
     }
 
     /**
@@ -48,14 +48,14 @@ public class UserView {
             case 1:
                 System.out.println("PRESS YES FOR SIGN UP AND PRESS NO FOR MENU");
 
-                if (USER_VALIDATION.validateForYes(SCANNER.nextLine())) {
+                if (USER_VALIDATION.validateAccess(SCANNER.nextLine())) {
                     signUp();
                 } else {
                     displayMenu();
                 }
                 break;
             case 2:
-                signIn();
+                signInDetail();
                 break;
             default :
                 System.out.println("INVALID CHOICE, SELECT 1 OR 2");
@@ -80,15 +80,15 @@ public class UserView {
         user.setPassword(getPassword());
         user.setGender(getGender());
         user.setDateOfBirth(getDateOfBirth());
+
         if ((USER_CONTROLLER.create(user))) {
             System.out.println("ACCOUNT SUCCESSFULLY SIGN UP");
-            System.out.println(USER_CONTROLLER.getUserId(user));
         } else {
             System.out.println("ACCOUNT ALREADY EXIST");
         }
         System.out.println("PRESS YES FOR EDIT USER DETAILS AND PRESS NO FOR MENU ");
 
-        if (USER_VALIDATION.validateForYes(SCANNER.nextLine())) {
+        if (USER_VALIDATION.validateAccess(SCANNER.nextLine())) {
             displaysUserOptions((USER_CONTROLLER.getUserId(user)));
         } else {
             displayMenu();
@@ -100,16 +100,11 @@ public class UserView {
      *     Deletes a user based on the provided userID
      * </p>
      */
-    private void delete(final Long id) {
-        try {
-            if (USER_CONTROLLER.isDelete(id)) {
-                System.out.println("SUCCESSFULLY DELETED");
-            } else {
-                System.out.println("NOT DELETED");
-            }
-        } catch (final Exception exception) {
-            System.out.println("ENTER AN CORRECT USER ID");
-            delete(id);
+    private void deleteDetail(final Long id) {
+        if (USER_CONTROLLER.isDelete(id)) {
+            System.out.println("SUCCESSFULLY DELETED");
+        } else {
+            System.out.println("NOT DELETED");
         }
     }
 
@@ -118,11 +113,10 @@ public class UserView {
      *     Retrieves and prints the details of the user
      * </p>
      */
-    private Collection<User> get() {
-       final Collection<User> getUser = USER_CONTROLLER.getUserDetails();
+    private Collection<User> getDetail() {
+        System.out.println(USER_CONTROLLER.get());
 
-       System.out.println(getUser);
-       return getUser;
+        return USER_CONTROLLER.get();
     }
 
     /**
@@ -130,18 +124,23 @@ public class UserView {
      *     Updates the user's account information based on the provided ID
      * </p>
      */
-    private void update(final Long id) {
-        final User user = new User();
-        final User existingUser = getById(id);
+    private void updateDetail(final Long id) {
+        try {
+            final User user = new User();
+            final User existingUser = getById(id);
 
-        user.setId(existingUser.getId());
-        System.out.println("DO YOU WANT TO EDIT NAME, PRESS 'YES' OR 'Y' AND DON'T WANT TO EDIT PRESS 'NO' OR 'N' ");
-        user.setName(USER_VALIDATION.validateForYes(SCANNER.nextLine()) ? getName() : existingUser.getName());
-        System.out.println("DO YOU WANT TO EDIT EMAIL, PRESS 'YES' OR 'Y' AND DON'T WANT TO EDIT PRESS 'NO' OR 'N' ");
-        user.setEmail(USER_VALIDATION.validateForYes(SCANNER.nextLine()) ? getEmail() : existingUser.getEmail());
-        System.out.println("DO YOU WANT TO EDIT PASSWORD, PRESS ANY KEY AND DON'T WANT TO EDIT PRESS 'NO' OR 'N' ");
-        user.setPassword(USER_VALIDATION.validateForYes(SCANNER.nextLine()) ? getPassword() : existingUser.getPassword());
-        System.out.println((USER_CONTROLLER.isUpdate(user)) ? "DETAILS SUCCESSFULLY UPDATED" : "NOT UPDATED");
+            user.setId(existingUser.getId());
+            System.out.println("DO YOU WANT TO EDIT NAME, PRESS 'YES' OR 'Y' AND DON'T WANT TO EDIT PRESS 'NO' OR 'N' ");
+            user.setName(USER_VALIDATION.validateAccess(SCANNER.nextLine()) ? getName() : existingUser.getName());
+            System.out.println("DO YOU WANT TO EDIT EMAIL, PRESS 'YES' OR 'Y' AND DON'T WANT TO EDIT PRESS 'NO' OR 'N' ");
+            user.setEmail(USER_VALIDATION.validateAccess(SCANNER.nextLine()) ? getEmail() : existingUser.getEmail());
+            System.out.println("DO YOU WANT TO EDIT PASSWORD, PRESS ANY KEY AND DON'T WANT TO EDIT PRESS 'NO' OR 'N' ");
+            user.setPassword(USER_VALIDATION.validateAccess(SCANNER.nextLine()) ? getPassword() : existingUser.getPassword());
+            System.out.println((USER_CONTROLLER.isUpdate(user)) ? "DETAILS SUCCESSFULLY UPDATED" : "NOT UPDATED");
+        } catch(final NullPointerException nullPointerException) {
+            System.out.println("ACCOUNT ALREADY EXISTS");
+            displayMenu();
+        }
     }
 
     /**
@@ -150,7 +149,7 @@ public class UserView {
      *     further actions.
      * </p>
      */
-    private void signIn() {
+    private void signInDetail() {
         final User user = new User();
 
         getSignInChoice(user);
@@ -159,7 +158,7 @@ public class UserView {
         System.out.println(String.join("","DO YOU WANT TO EDIT,GET,DELETE THE USER DETAILS,PRESS 'YES' ",
                 "FOR PRINT OPTION AND PRESS 'NO' FOR MANI MENU"));
 
-        if (USER_VALIDATION.validateForYes(SCANNER.nextLine())) {
+        if (USER_VALIDATION.validateAccess(SCANNER.nextLine())) {
             displaysUserOptions((USER_CONTROLLER.getUserId(user)));
         } else {
             displayMenu();
@@ -168,19 +167,20 @@ public class UserView {
 
     /**
      * <p>
-     *     Retrieves and returns a User object based on the provided user ID
+     *     Retrieves and returns a user object based on the provided user id
      * </p>
      * 
      * @return {@link User}
      */
     public User getById(final Long id) {
-        System.out.println(USER_CONTROLLER.getUser(id));
-        return (USER_CONTROLLER.getUser(id));
+        System.out.println(USER_CONTROLLER.getById(id));
+
+        return (USER_CONTROLLER.getById(id));
     }
 
     /**
      * <p>
-     *     Exits the program by printing an exit message, closing the Scanner, and close the program.
+     *     Exits the program by printing an exit message and closing the scanner.
      * </p>
      */
     private void exits() {
@@ -200,13 +200,13 @@ public class UserView {
 
         switch (getChoice()) {
             case 1:
-                get();
+                getDetail();
                 break;
             case 2:
-                update(id);
+                updateDetail(id);
                 break;
             case 3:
-                delete(id);
+                deleteDetail(id);
                 break;
             case 4:
                 getById(id);
@@ -234,12 +234,10 @@ public class UserView {
      * </p>
      */
     private void logout() {
-        System.out.println("DO YOU WANT TO LOGOUT?,CLICK YES");
+        System.out.println("DO YOU WANT TO LOGOUT?,CLICK YES AND OTHERWISE CLICK NO");
 
-        if (USER_VALIDATION.validateForYes(SCANNER.nextLine())) {
+        if (USER_VALIDATION.validateAccess(SCANNER.nextLine())) {
             displayMenu();
-        } else {
-            logout();
         }
     }
 

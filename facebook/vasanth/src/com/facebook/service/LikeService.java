@@ -22,7 +22,7 @@ public interface LikeService {
      * @param like Represents the like to create
      * @return boolean - True if the like is created, false otherwise.
      */
-    boolean createLike(final Like like);
+    boolean create(final Like like);
 
     /**
      * <p>
@@ -31,7 +31,7 @@ public interface LikeService {
      *
      * @return Collection of likes
      */
-    Collection<Like> getLikeList();
+    Collection<Like> get();
 
     /**
      * <p>
@@ -41,5 +41,5 @@ public interface LikeService {
      * @param postId Represents the user id to get the like count
      * @return Gets the like count of the user
      */
-    Long getLikeCount(final Long postId);
+    Long getCount(final Long postId);
 }

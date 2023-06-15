@@ -20,11 +20,12 @@ public class LikeView {
     private static final UserView USER_VIEW = UserView.getInstance();
     private static final PostView POST_VIEW = PostView.getInstance();
     private static final UserValidation USER_VALIDATION = UserValidation.getInstance();
+    private static Long id = 1L;
 
     private LikeView() {}
 
     public static LikeView getInstance() {
-        return (null == LIKE_VIEW) ? LIKE_VIEW = new LikeView() : LIKE_VIEW;
+        return null == LIKE_VIEW ? LIKE_VIEW = new LikeView() : LIKE_VIEW;
     }
 
     public void displayLikeDetails(final Long id) {
@@ -33,13 +34,13 @@ public class LikeView {
 
         switch (USER_VIEW.getChoice()) {
             case 1:
-                createLike();
+                create();
                 break;
             case 2:
-                getAllLike();
+                getDetail();
                 break;
             case 3:
-                getLikeCount();
+                getLikeCountDetail();
                 break;
             case 4:
                 POST_VIEW.displayPostDetails(id);
@@ -48,7 +49,7 @@ public class LikeView {
                 USER_VIEW.displaysUserOptions(id);
                 break;
             default :
-                System.out.println("Invalid choice, select the above choice");
+                System.out.println("INVALID CHOICE, SELECT THE ABOVE CHOICE");
                 displayLikeDetails(id);
         }
         displayLikeDetails(id);
@@ -59,12 +60,13 @@ public class LikeView {
      *     Shows the like details
      * </p>
      */
-    public void createLike() {
+    private void create() {
         final Like like = new Like();
 
+        like.setId(id++);
         like.setUserId(getUserId());
         like.setPostId(getPostId());
-        System.out.println(LIKE_CONTROLLER.createLike(like) ? "LIKED" : "NOT LIKED");
+        System.out.println(LIKE_CONTROLLER.isCreate(like) ? "LIKED" : "NOT LIKED");
     }
 
     /**
@@ -72,8 +74,8 @@ public class LikeView {
      *     Gets the likes by the user
      * </p>
      */
-    public void getAllLike() {
-        System.out.println(LIKE_CONTROLLER.getAllLike());
+    public void getDetail() {
+        System.out.println(LIKE_CONTROLLER.get());
     }
 
     /**
@@ -81,16 +83,16 @@ public class LikeView {
      *     Gets the likes count for the post
      * </p>
      */
-    public void getLikeCount() {
+    public void getLikeCountDetail() {
         try {
             System.out.println("ENTER THE POST ID:");
             Long postId = Long.parseLong(SCANNER.nextLine());
-            Long likeCount = LIKE_CONTROLLER.getLikeCount(postId);
+            Long likeCount = LIKE_CONTROLLER.getCount(postId);
 
             System.out.println("TOTAL LIKE FOR POST ID " + postId + ": " + likeCount);
         } catch (final Exception exception) {
             System.out.println("PLEASE ENTER AN INTEGER");
-            getLikeCount();
+            getLikeCountDetail();
         }
     }
 

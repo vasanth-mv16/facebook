@@ -24,7 +24,6 @@ public interface PostService {
      */
     boolean create(final Post post);
 
-
     /**
      * <p>
      *     Retrieves the collection of post details.

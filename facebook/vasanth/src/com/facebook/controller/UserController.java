@@ -2,7 +2,7 @@ package com.facebook.controller;
 
 import com.facebook.model.User;
 import com.facebook.service.UserService;
-import com.facebook.service.serviceImpl.UserServiceImpl;
+import com.facebook.service.Impl.UserImpl;
 
 import java.util.Collection;
 
@@ -17,12 +17,12 @@ import java.util.Collection;
 public class UserController {
 
     private static UserController USER_CONTROLLER;
-    private static final UserService USER_SERVICE = UserServiceImpl.getInstance();
+    private static final UserService USER_SERVICE = UserImpl.getInstance();
 
     private UserController() {}
 
     public static UserController getInstance() {
-        return (null == USER_CONTROLLER) ? USER_CONTROLLER = new UserController() : USER_CONTROLLER;
+        return null == USER_CONTROLLER ? USER_CONTROLLER = new UserController() : USER_CONTROLLER;
     }
 
     /**
@@ -44,8 +44,8 @@ public class UserController {
      *
      * @return collection of user details.
      */
-    public Collection<User> getUserDetails() {
-        return USER_SERVICE.getUserDetails();
+    public Collection<User> get() {
+        return USER_SERVICE.get();
     }
 
     /**
@@ -57,7 +57,7 @@ public class UserController {
      * @return boolean - True if the user is updated, false otherwise.
      */
     public boolean isUpdate(final User user) {
-        return USER_SERVICE.updateDetail(user);
+        return USER_SERVICE.update(user);
     }
 
     /**
@@ -69,7 +69,7 @@ public class UserController {
      * @return boolean - True if the user is sign in, false otherwise.
      */
     public boolean isSignIn(final User user) {
-        return USER_SERVICE.signInDetail(user);
+        return USER_SERVICE.signIn(user);
     }
 
     /**
@@ -81,7 +81,7 @@ public class UserController {
      * @return boolean - True if the user is deleted, false otherwise.
      */
     public boolean isDelete(final Long id) {
-        return USER_SERVICE.deleteDetail(id);
+        return USER_SERVICE.delete(id);
     }
 
     /**
@@ -92,8 +92,8 @@ public class UserController {
      * @param id Represents the user through id
      * @return {@link User}
      */
-    public User getUser(final Long id) {
-        return USER_SERVICE.getUser(id);
+    public User getById(final Long id) {
+        return USER_SERVICE.getById(id);
     }
 
     public Long getUserId(final User user) {
