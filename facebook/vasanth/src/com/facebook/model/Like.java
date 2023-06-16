@@ -18,7 +18,7 @@ public class Like {
     }
 
     public void setId(Long id) {
-        id = id;
+        this.id = id;
     }
 
     public Long getUserId() {
@@ -38,6 +38,6 @@ public class Like {
     }
 
     public String toString() {
-        return String.format("LIKE ID =%d USER ID =%d POST ID =%d",id, userId,postId);
+        return String.format("LIKE ID =%d USER ID =%d POST ID =%d", id, userId,postId);
     }
 }

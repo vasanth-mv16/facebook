@@ -6,36 +6,36 @@ import java.util.Collection;
 
 /**
  * <p>
- *     Provides service for the post
+ * Provides service for the post
  * </p>
  *
- * @version 1.0
  * @author vasanth
+ * @version 1.0
  */
 public interface PostService {
 
     /**
      * <p>
-     *     Checks if the post details are created, and adds the post.
+     * Checks if the post details are created, and adds the post.
      * </p>
      *
      * @param post Represents post to be added
-     * @return true if the post is successfully added, false otherwise
+     * @return True if the post is successfully added, false otherwise
      */
     boolean create(final Post post);
 
     /**
      * <p>
-     *     Retrieves the collection of post details.
+     * Retrieves the collection of post details.
      * </p>
      *
-     * @return the collection of posts
+     * @return The collection of posts
      */
     Collection<Post> get();
 
     /**
      * <p>
-     *     Retrieves the post details using the post id.
+     * Retrieves the post details using the post id.
      * </p>
      *
      * @param id Represents the id of the post to retrieve
@@ -45,11 +45,11 @@ public interface PostService {
 
     /**
      * <p>
-     *     Checks if the post details are updated.
+     * Checks if the post details are updated.
      * </p>
      *
      * @param post Represents the post to be updated
-     * @return true if the post is successfully updated, false otherwise
+     * @return True if the post is successfully updated, false otherwise
      */
     boolean update(final Post post);
 

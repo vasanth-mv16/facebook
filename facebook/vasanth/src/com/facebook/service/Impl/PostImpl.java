@@ -10,39 +10,48 @@ import java.util.Collection;
 import java.util.Iterator;
 
 /**
+ * <p>
  * Implementation of the PostService interface for managing posts.
+ * </p>
  *
- * @version 1.0
  * @author vasanth
+ * @version 1.0
  */
 public class PostImpl implements PostService {
 
     private static final List<Post> POSTS = new ArrayList<>();
-    private static PostImpl POST_IMPL;
+    private static PostImpl postImpl;
 
-    private PostImpl() {}
+    /**
+     * <p>
+     * Default constructor for post service implementation
+     * </p>
+     */
+    private PostImpl() {
+    }
 
+    /**
+     * <p>
+     * Gets the instance of post service implementation
+     * </p>
+     *
+     * @return Returns the singleton instance of the post service implementation class.
+     */
     public static PostImpl getInstance() {
-        return null == POST_IMPL ? POST_IMPL = new PostImpl() : POST_IMPL;
+        if (null == postImpl) {
+            postImpl = new PostImpl();
+        }
+        return postImpl;
     }
 
     /**
      * {@inheritDoc}
      *
-     * @param post Represents post to be added
-     * @return true if the post is successfully added, false otherwise
+     * @param post {@link Post}Represents post to be added
+     * @return True if the post is successfully added, false otherwise
      */
     public boolean create(Post post) {
-         return POSTS.add(post);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return the collection of posts
-     */
-    public Collection<Post> get() {
-        return POSTS;
+        return POSTS.add(post);
     }
 
     /**
@@ -61,14 +70,24 @@ public class PostImpl implements PostService {
                 return existingPost;
             }
         }
+
         return null;
     }
 
     /**
      * {@inheritDoc}
      *
-     * @param post Represents the post to be updated
-     * @return true if the post is successfully updated, false otherwise
+     * @return The collection of posts
+     */
+    public Collection<Post> get() {
+        return POSTS;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param post {@link Post}Represents the post to be updated
+     * @return True if the post is successfully updated, false otherwise
      */
     public boolean update(final Post post) {
         final Iterator<Post> iterator = POSTS.iterator();
@@ -83,6 +102,7 @@ public class PostImpl implements PostService {
                 return true;
             }
         }
+
         return false;
     }
 }

@@ -6,17 +6,17 @@ import java.util.Collection;
 
 /**
  * <p>
- *    Provides the service for the like
+ * Provides the service for the like
  * </p>
  *
- * @version 1.0
  * @author vasanth
+ * @version 1.0
  */
 public interface LikeService {
 
     /**
      * <p>
-     *    Checks the like is created
+     * Checks the like is created
      * </p>
      *
      * @param like Represents the like to create
@@ -26,7 +26,7 @@ public interface LikeService {
 
     /**
      * <p>
-     *    Gets the like list details
+     * Gets the like list details
      * </p>
      *
      * @return Collection of likes
@@ -35,7 +35,7 @@ public interface LikeService {
 
     /**
      * <p>
-     *    Gets the like count for the user
+     * Gets the like count for the user
      * </p>
      *
      * @param postId Represents the user id to get the like count

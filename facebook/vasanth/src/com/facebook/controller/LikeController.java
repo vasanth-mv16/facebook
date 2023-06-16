@@ -16,13 +16,29 @@ import java.util.Collection;
  */
 public class LikeController {
 
-    private static LikeController LIKE_CONTROLLER;
+    private static LikeController likeController;
     private static final LikeService LIKE_SERVICE = LikeImpl.getInstance();
 
+    /**
+     * <p>
+     * Default constructor for like controller
+     * </p>
+     */
     private LikeController() {}
 
+    /**
+     * <p>
+     * Gets the instance of like controller
+     * </p>
+     *
+     * @return Returns the singleton instance of the like controller class.
+     */
     public static LikeController getInstance() {
-        return LIKE_CONTROLLER == null ? LIKE_CONTROLLER = new LikeController() : LIKE_CONTROLLER;
+        if (null == likeController) {
+            likeController = new LikeController();
+        }
+
+        return likeController;
     }
 
     /**
@@ -30,8 +46,8 @@ public class LikeController {
      *    Checks the like to be created
      * </p>
      *
-     * @param like Represents like to created
-     * @return boolean - True if the like is created, false otherwise.
+     * @param like {@link Like}Represents like to created
+     * @return True if the like is created, false otherwise.
      */
     public boolean isCreate(final Like like) {
         return LIKE_SERVICE.create(like);

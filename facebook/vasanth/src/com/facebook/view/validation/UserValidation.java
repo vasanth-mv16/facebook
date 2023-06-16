@@ -11,24 +11,42 @@ import java.time.format.ResolverStyle;
 
 /**
  * <p>
- *     Given class used for validation the user details
+ * Given class used for validation the user details
  * </p>
  *
- * @version 1.0
  * @author vasanth
+ * @version 1.0
  */
 public class UserValidation {
 
     private static UserValidation userValidation;
 
-    private UserValidation() {}
-
-    public static UserValidation getInstance() {
-        return null == userValidation ? userValidation = new UserValidation() : userValidation;
-    }
     /**
      * <p>
-     *     Validates a name string using a regular expression pattern.
+     * Default constructor for validation
+     * </p>
+     */
+    private UserValidation() {
+    }
+
+    /**
+     * <p>
+     * Gets the instance of the user validation
+     * </p>
+     *
+     * @return Returns the singleton instance of the user validation class.
+     */
+    public static UserValidation getInstance() {
+        if (null == userValidation) {
+            userValidation = new UserValidation();
+        }
+
+        return userValidation;
+    }
+
+    /**
+     * <p>
+     * Validates a name string using a regular expression pattern.
      * </p>
      *
      * @param name - The name string to be validated.
@@ -40,7 +58,7 @@ public class UserValidation {
 
     /**
      * <p>
-     *     Validates a mobile number string using a regular expression pattern.
+     * Validates a mobile number string using a regular expression pattern.
      * </p>
      *
      * @param mobileNumber - The mobile Number string to be validated.
@@ -52,7 +70,7 @@ public class UserValidation {
 
     /**
      * <p>
-     *     Validates a email string using a regular expression pattern.
+     * Validates a email string using a regular expression pattern.
      * </p>
      *
      * @param email The email string to be validated.
@@ -64,7 +82,7 @@ public class UserValidation {
 
     /**
      * <p>
-     *     Validates a password string using a regular expression pattern.
+     * Validates a password string using a regular expression pattern.
      * </p>
      *
      * @param password The password string to be validated.
@@ -76,7 +94,7 @@ public class UserValidation {
 
     /**
      * <p>
-     *     Validates a date of birth string using a regular expression pattern.
+     * Validates a date of birth string using a regular expression pattern.
      * </p>
      *
      * @param dateOfBirth The date of birth has to validated
@@ -94,7 +112,7 @@ public class UserValidation {
             if (dateToCheck.isBefore(YearMonth.of(1900, 1)) || dateToCheck.isAfter(currentDate)) {
                 return false;
             }
-            
+
             if (date.getDayOfMonth() > date.getMonth().maxLength() ||
                     (date.getMonth() == Month.FEBRUARY && date.getDayOfMonth() > 29 && !date.isLeapYear())) {
                 return false;
@@ -108,30 +126,35 @@ public class UserValidation {
 
     /**
      * <p>
-     *     Validates a choice string using a regular expression pattern.
+     * Validates a choice string using a regular expression pattern.
      * </p>
      *
      * @param choice The choice has to validated
      * @return boolean - True if the choice is valid, false otherwise.
      */
-    public boolean validateChoice(final String choice ) {
+    public boolean validateChoice(final String choice) {
         return choice.matches("\\d{1,2}");
     }
 
     /**
      * <p>
-     *     Validates a check string using a regular expression pattern.
+     * Validates a check string using a regular expression pattern.
      * </p>
      *
-     * @param accessForYes The access to be validated
+     * @param access The access to be validated
      * @return boolean - True if the check is valid, false otherwise.
      */
-    public boolean validateAccess(final String accessForYes) {
-        return accessForYes.equalsIgnoreCase("yes") || accessForYes.equalsIgnoreCase("y");
+    public boolean validateAccess(final String access) {
+        return (access.equalsIgnoreCase("yes") || access.equalsIgnoreCase("y"));
     }
+
+    public boolean validateAccessNo(final String access) {
+        return (access.equalsIgnoreCase("no") || access.equalsIgnoreCase("n"));
+    }
+
     /**
      * <p>
-     *     Validates a userId string using a regular expression pattern.
+     * Validates a userId string using a regular expression pattern.
      * </p>
      *
      * @param userId The user id to be validated
@@ -143,7 +166,7 @@ public class UserValidation {
 
     /**
      * <p>
-     *     Validates a post id string using a regular expression pattern
+     * Validates a post id string using a regular expression pattern
      * </p>
      *
      * @param postId The post id to be validated
@@ -155,7 +178,7 @@ public class UserValidation {
 
     /**
      * <p>
-     *     Validates the gender of the user
+     * Validates the gender of the user
      * </p>
      *
      * @param gender Represents the gender of the user

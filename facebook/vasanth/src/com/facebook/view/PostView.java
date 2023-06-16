@@ -11,11 +11,11 @@ import java.util.Scanner;
 
 /**
  * <p>
- *     Manages the view for posts, including creating, retrieving, updating, and printing post details.
+ * Manages the view for posts, including creating, retrieving, updating, and printing post details.
  * </p>
  *
- * @version 1.0
  * @author vasanth
+ * @version 1.0
  */
 public class PostView {
 
@@ -24,85 +24,125 @@ public class PostView {
     private static final LikeView LIKE_VIEW = LikeView.getInstance();
     private static final PostController POST_CONTROLLER = PostController.getInstance();
     private static final UserValidation USER_VALIDATION = UserValidation.getInstance();
-    private static  PostView postView;
+    private static PostView postView;
     private static Long postId = 1L;
 
-    private PostView() {}
-
-    public static PostView getInstance() {
-        return null == postView ? postView = new PostView() : postView;
+    /**
+     * <p>
+     * Default constructor for post view
+     * </p>
+     */
+    private PostView() {
     }
 
     /**
      * <p>
-     *    Shows the menu details for the user to post and edit
+     * Gets the instance of the post view
+     * </p>
+     *
+     * @return Returns the singleton instance of the post view class.
+     */
+    public static PostView getInstance() {
+        if (null == postView) {
+            postView = new PostView();
+        }
+
+        return postView;
+    }
+
+    /**
+     * <p>
+     * Shows the menu details for the user to post and edit
      * </p>
      */
-    public void displayPostDetails(final Long id) {
-        System.out.println(String.join("\n","CLICK 1 TO CREATE","CLICK 2 TO GET","CLICK 3 TO GET USING ID",
-                "CLICK 4 TO UPDATE","CLICK 5 TO DISPLAY LIKE DETAILS","CLICK 6 TO DISPLAY USER OPTIONS"));
+    public void displayPostDetails(final Long userId) {
+        System.out.println(String.join("\n", "CLICK 1 TO CREATE", "CLICK 2 TO GET", "CLICK 3 TO GET USING ID",
+                "CLICK 4 TO UPDATE", "CLICK 5 TO DISPLAY LIKE DETAILS", "CLICK 6 TO DISPLAY USER OPTIONS"));
 
         switch (USER_VIEW.getChoice()) {
-            case 1 :
-                create();
+            case 1:
+                create(userId);
                 break;
-            case 2 :
+            case 2:
                 getDetails();
                 break;
-            case 3 :
+            case 3:
                 getDetailById();
                 break;
             case 4:
                 updateDetail();
                 break;
             case 5:
-                LIKE_VIEW.displayLikeDetails(id);
+                LIKE_VIEW.displayLikeDetails(userId);
                 break;
             case 6:
-                USER_VIEW.displaysUserOptions(id);
+                USER_VIEW.displaysUserOptions(userId);
                 break;
-            default :
+            default:
                 System.out.println("INVALID CHOICE,SELECT THE ABOVE CHOICE");
-                displayPostDetails(id);
+                displayPostDetails(userId);
         }
-        displayPostDetails(id);
+        displayPostDetails(userId);
     }
 
     /**
      * <p>
-     *    Creates a new post with the user, caption, and location.
+     * Creates a new post with the user, caption, and location.
      * </p>
      */
-    private void create() {
+    public void create(final Long userId) {
         final Post post = new Post();
         final Timestamp postUploadTime = Timestamp.from(Instant.now());
 
-        System.out.println("ENTER YOUR USER ID:");
-        post.setUserId(Long.valueOf(SCANNER.nextLine()));
+        post.setUserId(userId);
         post.setId(postId++);
         post.setCaption(getCaption());
         post.setLocation(getLocation());
         post.setUploadTime(postUploadTime);
-        System.out.println((POST_CONTROLLER.isCreate(post)) ? "SUCCESSFULLY POSTED" : "FAILED TO POST");
+
+        if (POST_CONTROLLER.create(post)) {
+            System.out.println("SUCCESSFULLY POSTED");
+            System.out.println(post.getId());
+        } else {
+            System.out.println("FAILED TO POST");
+            create(userId);
+        }
     }
 
+    /**
+     * <p>
+     * Collects the post caption
+     * </p>
+     *
+     * @return The caption of the post
+     */
     private String getCaption() {
         System.out.println("ENTER YOUR CAPTION FOR YOUR POST:");
 
         return SCANNER.nextLine().trim();
     }
 
+    /**
+     * <p>
+     * Collects the post location
+     * </p>
+     *
+     * @return Tha location of the post
+     */
     private String getLocation() {
         System.out.println("ENTER YOUR LOCATION FOR YOUR POST:");
 
         return SCANNER.nextLine().trim();
     }
+
     /**
      * <p>
-     *     Retrieves and prints the details of the post
+     * Retrieves and prints the details of the post
      * </p>
+     *
+     * @return Collection of post
      */
-    public Collection<Post> getDetails() {
+    private Collection<Post> getDetails() {
         System.out.println(POST_CONTROLLER.get());
 
         return POST_CONTROLLER.get();
@@ -110,12 +150,12 @@ public class PostView {
 
     /**
      * <p>
-     *     Retrieves and returns a User object based on the provided user ID
+     * Retrieves and returns a User object based on the provided user ID
      * </p>
      *
-     * @return {@link Post} the post updated by the user
+     * @return {@link Post}
      */
-    public Post getDetailById() {
+    private Post getDetailById() {
         System.out.println("ENTER YOUR POST ID:");
         final Post post = POST_CONTROLLER.getUsingId(Long.valueOf(SCANNER.nextLine()));
         System.out.println(post);
@@ -126,13 +166,13 @@ public class PostView {
         }
         return post;
     }
-    
+
     /**
      * <p>
-     *     Updates the post by the user to edit the caption and location
+     * Updates the post by the user to edit the caption and location
      * </p>
      */
-    public void updateDetail() {
+    private void updateDetail() {
         final Post post = new Post();
         final Post get = getDetailById();
 
@@ -142,7 +182,7 @@ public class PostView {
         System.out.println("DO YOU WANT TO EDIT LOCATION, PRESS ANY KEY AND DON'T WANT TO EDIT PRESS 'NO' OR 'N' ");
         post.setLocation((USER_VALIDATION.validateAccess(SCANNER.nextLine())) ? getLocation() : get.getLocation());
 
-        if (POST_CONTROLLER.isUpdate(post)) {
+        if (POST_CONTROLLER.update(post)) {
             System.out.println("POST UPDATED");
         } else {
             System.out.println("NOT UPDATED");

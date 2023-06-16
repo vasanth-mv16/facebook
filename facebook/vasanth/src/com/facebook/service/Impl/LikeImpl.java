@@ -8,7 +8,7 @@ import java.util.Collection;
 
 /**
  * <p>
- *    Implements the following services for the like
+ * Implements the following services for the like
  * </p>
  *
  * @version 1.0
@@ -16,19 +16,35 @@ import java.util.Collection;
  */
 public class LikeImpl implements LikeService {
 
-    private static LikeImpl LIKE_IMPL;
+    private static LikeImpl likeImpl;
     private static final Collection<Like> LIKE_LIST = new ArrayList<>();
 
+    /**
+     * <p>
+     * Default constructor for like service implementation
+     * </p>
+     */
     private LikeImpl() {}
 
+    /**
+     * <p>
+     * Gets the instance of like service implementation
+     * </p>
+     *
+     * @return Returns the singleton instance of the like service implementation class.
+     */
     public static LikeImpl getInstance() {
-        return null == LIKE_IMPL ? LIKE_IMPL = new LikeImpl() : LIKE_IMPL;
+        if (null == likeImpl) {
+            likeImpl = new LikeImpl();
+        }
+
+        return likeImpl;
     }
 
     /**
      * {@inheritDoc}
      *
-     * @param like Represents the like to create
+     * @param like {@link Like}Represents the like to create
      * @return boolean - True if the like is created, false otherwise.
      */
     public boolean create(final Like like) {

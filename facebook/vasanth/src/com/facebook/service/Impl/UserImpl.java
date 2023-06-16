@@ -4,14 +4,13 @@ import com.facebook.model.User;
 import com.facebook.service.UserService;
 
 import java.util.List;
-import java.util.Collection;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.ListIterator;
 
 /**
  * <p>
- *     Implements the following services for the user
+ * Implements the following services for the user
  * </p>
  *
  * @author vasanth
@@ -19,20 +18,37 @@ import java.util.ListIterator;
  */
 public class UserImpl implements UserService {
 
+    private static UserImpl userImpl;
     private static final List<User> USER_LIST = new ArrayList<>();
-    private static UserImpl USER_IMPL;
 
-    private UserImpl() {}
+    /**
+     * <p>
+     * Default constructor for user service
+     * </p>
+     */
+    private UserImpl() {
+    }
 
+    /**
+     * <p>
+     * Gets the instance of user service implementation
+     * </p>
+     *
+     * @return Returns the singleton instance of the user service implementation class.
+     */
     public static UserImpl getInstance() {
-        return null == USER_IMPL ? USER_IMPL = new UserImpl() : USER_IMPL;
+        if (null == userImpl) {
+            userImpl = new UserImpl();
+        }
+
+        return userImpl;
     }
 
     /**
      * {@inheritDoc}
      *
-     * @param user Represents the user to be add
-     * @return true if the user is successfully added, false otherwise
+     * @param user {@link User}Represents the user to be add
+     * @return True if the user is successfully added, false otherwise
      */
     public boolean add(final User user) {
         for (final User existingUser : USER_LIST) {
@@ -47,7 +63,7 @@ public class UserImpl implements UserService {
     /**
      * {@inheritDoc}
      *
-     * @param user Refers the user to get the id
+     * @param user {@link User}Refers the user to get the id
      * @return Returns the id of the user
      */
     public Long getUserId(final User user) {
@@ -63,40 +79,34 @@ public class UserImpl implements UserService {
     /**
      * {@inheritDoc}
      *
-     *  @return the collection of users
+     * @param user {@link User}Represents the user to be update
+     * @param id Represents the user id
+     * @return True if the user details are updated, false otherwise
      */
-    public Collection<User> get() {
-        return USER_LIST;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @param user Represents the user to be update
-     * @return true if the user details are updated, false otherwise
-     */
-    public boolean update(final User user) {
+    public boolean update(final User user, Long id) {
         final ListIterator<User> listIterator = USER_LIST.listIterator();
 
         while (listIterator.hasNext()) {
             final User existingUser = listIterator.next();
 
-            if (existingUser.getId().equals(user.getId())) {
+            if (existingUser.getId().equals(id)) {
                 existingUser.setName(user.getName());
                 existingUser.setEmail(user.getEmail());
                 existingUser.setPassword(user.getPassword());
+                existingUser.setMobileNumber(user.getMobileNumber());
 
                 return true;
             }
         }
+
         return false;
     }
 
     /**
      * {@inheritDoc}
      *
-     *  @param user Represents user to sign in
-     *  @return true if the sign-in is successful, false otherwise
+     * @param user {@link User}Represents user to sign in
+     * @return True if the sign-in is successful, false otherwise
      */
     public boolean signIn(final User user) {
         final Iterator<User> iterator = USER_LIST.iterator();
@@ -117,7 +127,7 @@ public class UserImpl implements UserService {
      * {@inheritDoc}
      *
      * @param id Represents the id of the user to be deleted
-     * @return true if the user details are successfully deleted, false otherwise
+     * @return True if the user details are successfully deleted, false otherwise
      */
     public boolean delete(final Long id) {
         final User user = getById(id);
@@ -144,6 +154,7 @@ public class UserImpl implements UserService {
                 return existingUser;
             }
         }
+
         return null;
     }
 }

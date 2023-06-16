@@ -9,12 +9,12 @@ import java.util.Scanner;
 
 /**
  * <p>
- *    Represents the like for the post by user
+ * Represents the like for the post by user
  * </p>
  */
 public class LikeView {
 
-    private static LikeView LIKE_VIEW;
+    private static LikeView likeView;
     private static final Scanner SCANNER = new Scanner(System.in);
     private static final LikeController LIKE_CONTROLLER = LikeController.getInstance();
     private static final UserView USER_VIEW = UserView.getInstance();
@@ -22,15 +22,32 @@ public class LikeView {
     private static final UserValidation USER_VALIDATION = UserValidation.getInstance();
     private static Long id = 1L;
 
-    private LikeView() {}
+    /**
+     * <p>
+     * Default constructor for like view
+     * </p>
+     */
+    private LikeView() {
+    }
 
+    /**
+     * <p>
+     * Gets the instance of the like view
+     * </p>
+     *
+     * @return Returns the singleton instance of the like view class.
+     */
     public static LikeView getInstance() {
-        return null == LIKE_VIEW ? LIKE_VIEW = new LikeView() : LIKE_VIEW;
+        if (null == likeView) {
+            likeView = new LikeView();
+        }
+
+        return likeView;
     }
 
     public void displayLikeDetails(final Long id) {
-        System.out.println(String.join("\n","CLICK 1 TO CREATE LIKE", "CLICK 2 TO GET ALL LIKES",
-                "CLICK 3 TO GET LIKE COUNT","CLICK 4 TO DISPLAY POST DETAILS"));
+        System.out.println(String.join("\n", "CLICK 1 TO CREATE LIKE", "CLICK 2 TO GET ALL LIKES",
+                "CLICK 3 TO GET LIKE COUNT", "CLICK 4 TO DISPLAY POST DETAILS"));
 
         switch (USER_VIEW.getChoice()) {
             case 1:
@@ -48,7 +65,7 @@ public class LikeView {
             case 5:
                 USER_VIEW.displaysUserOptions(id);
                 break;
-            default :
+            default:
                 System.out.println("INVALID CHOICE, SELECT THE ABOVE CHOICE");
                 displayLikeDetails(id);
         }
@@ -57,7 +74,7 @@ public class LikeView {
 
     /**
      * <p>
-     *     Shows the like details
+     * Shows the like details
      * </p>
      */
     private void create() {
@@ -71,26 +88,26 @@ public class LikeView {
 
     /**
      * <p>
-     *     Gets the likes by the user
+     * Gets the likes by the user
      * </p>
      */
-    public void getDetail() {
+    private void getDetail() {
         System.out.println(LIKE_CONTROLLER.get());
     }
 
     /**
      * <p>
-     *     Gets the likes count for the post
+     * Gets the likes count for the post
      * </p>
      */
-    public void getLikeCountDetail() {
+    private void getLikeCountDetail() {
         try {
             System.out.println("ENTER THE POST ID:");
             Long postId = Long.parseLong(SCANNER.nextLine());
             Long likeCount = LIKE_CONTROLLER.getCount(postId);
 
             System.out.println("TOTAL LIKE FOR POST ID " + postId + ": " + likeCount);
-        } catch (final Exception exception) {
+        } catch (final NumberFormatException exception) {
             System.out.println("PLEASE ENTER AN INTEGER");
             getLikeCountDetail();
         }
@@ -98,12 +115,12 @@ public class LikeView {
 
     /**
      * <p>
-     *     Gets the user id detail
+     * Gets the user id detail
      * </p>
      *
      * @return Returns the user id of the user
      */
-    public Long getUserId() {
+    private Long getUserId() {
         try {
             System.out.println("ENTER THE USER ID:");
             final Long userId = Long.valueOf(SCANNER.nextLine());
@@ -111,8 +128,8 @@ public class LikeView {
             if (USER_VALIDATION.validateUserId(String.valueOf(userId))) {
                 return userId;
             }
-        } catch (final InputMismatchException | NumberFormatException exception) {
-            System.out.println("PLEASE ENTER AN NUMBER");
+        } catch (final NumberFormatException exception) {
+            System.out.println("PLEASE ENTER AN INTEGER");
         }
 
         return getUserId();
@@ -120,12 +137,12 @@ public class LikeView {
 
     /**
      * <p>
-     *     Gets the post id detail
+     * Gets the post id detail
      * </p>
      *
      * @return Returns the post id of the user
      */
-    public Long getPostId() {
+    private Long getPostId() {
         try {
             System.out.println("ENTER THE POST ID:");
             final Long postId = Long.valueOf(SCANNER.nextLine());
@@ -133,8 +150,8 @@ public class LikeView {
             if (USER_VALIDATION.validatePostId(String.valueOf(postId))) {
                 return postId;
             }
-        } catch (final InputMismatchException | NumberFormatException exception) {
-            System.out.println("PLEASE ENTER AN NUMBER");
+        } catch (final NumberFormatException exception) {
+            System.out.println("PLEASE ENTER AN INTEGER");
         }
 
         return getPostId();

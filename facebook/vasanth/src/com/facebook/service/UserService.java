@@ -2,70 +2,60 @@ package com.facebook.service;
 
 import com.facebook.model.User;
 
-import java.util.Collection;
-
 /**
  * <p>
- *     Provides service for the user details.
+ * Provides service for the user details.
  * </p>
  *
- * @version 1.0
  * @author vasanth
+ * @version 1.0
  */
 public interface UserService {
 
     /**
      * <p>
-     *     Adds user details.
+     * Adds user details.
      * </p>
      *
-     * @param user Represents the user to be add
-     * @return true if the user is successfully added, false otherwise
+     * @param user {@link User}Represents the user to be add
+     * @return True if the user is successfully added, false otherwise
      */
     boolean add(final User user);
 
     /**
      * <p>
-     *     Retrieves the collection of user details.
+     * Updates user details
      * </p>
      *
-     * @return the collection of users
+     * @param user {@link User}Represents the user to be update
+     * @param id Represents id of the user
+     * @return True if the user details are updated, false otherwise
      */
-    Collection<User> get();
+    boolean update(final User user, final Long id);
 
     /**
      * <p>
-     *     Updates user details
-     * </p>
-     *
-     * @param user Represents the user to be update
-     * @return true if the user details are updated, false otherwise
-     */
-    boolean update(final User user);
-
-    /**
-     * <p>
-     *     Deletes user details.
+     * Deletes user details.
      * </p>
      *
      * @param id Represents the id of the user to be deleted
-     * @return true if the user details are successfully deleted, false otherwise
+     * @return True if the user details are successfully deleted, false otherwise
      */
     boolean delete(final Long id);
 
     /**
      * <p>
-     *     Validates user sign-in details.
+     * Validates user sign-in details.
      * </p>
      *
      * @param user Represents user to sign in
-     * @return true if the sign-in is successful, false otherwise
+     * @return True if the sign-in is successful, false otherwise
      */
     boolean signIn(final User user);
 
     /**
      * <p>
-     *     Retrieves a user by id
+     * Retrieves a user by id
      * </p>
      *
      * @param id Represents the id of the user to retrieve
@@ -75,7 +65,7 @@ public interface UserService {
 
     /**
      * <p>
-     *     Retrieves user id
+     * Retrieves user id
      * </p>
      *
      * @param user Refers the user to get the id

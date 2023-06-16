@@ -79,7 +79,7 @@ public class User {
     }
 
     public String toString() {
-        return String.format("%d  Name = %s Email = %s Phone Number = %s Gender = %s", id, name, email, mobileNumber, gender);
+        return String.format("%d  Name = %s Email = %s Phone Number = %s Gender = %s", id, name, email, mobileNumber,  gender);
     }
 }
 

@@ -8,38 +8,55 @@ import java.util.Collection;
 
 /**
  * <p>
- *     Given controller acts as request and respond
+ * Given controller acts as request and respond
  * </p>
  *
- * @version 1.0
  * @author vasanth
+ * @version 1.0
  */
 public class PostController {
 
-    private static PostController POST_CONTROLLER;
+    private static PostController postController;
     private static final PostService POST_SERVICE = PostImpl.getInstance();
 
-    private PostController() {}
-
-    public static PostController getInstance() {
-        return null == POST_CONTROLLER ? POST_CONTROLLER = new PostController() : POST_CONTROLLER;
+    /**
+     * <p>
+     * Default constructor for post controller
+     * </p>
+     */
+    private PostController() {
     }
 
     /**
      * <p>
-     *     Checks the post to be created
+     * Gets the instance of post controller
      * </p>
      *
-     * @param post to create the post
-     * @return boolean - True if the post is created, false otherwise.
+     * @return Returns the singleton instance of the post controller class.
      */
-    public boolean isCreate(final Post post) {
+    public static PostController getInstance() {
+        if (null == postController) {
+            postController = new PostController();
+        }
+
+        return postController;
+    }
+
+    /**
+     * <p>
+     * Checks the post to be created
+     * </p>
+     *
+     * @param post {@link Post}To create the post
+     * @return True if the post is created, false otherwise.
+     */
+    public boolean create(final Post post) {
         return POST_SERVICE.create(post);
     }
 
     /**
      * <p>
-     *     Gets the post details
+     * Gets the post details
      * </p>
      *
      * @return Collection of post of the user
@@ -50,7 +67,7 @@ public class PostController {
 
     /**
      * <p>
-     *     Gets the post detail using id
+     * Gets the post detail using id
      * </p>
      *
      * @param id Represents the id of the post
@@ -62,14 +79,13 @@ public class PostController {
 
     /**
      * <p>
-     *     Checks the post is updated
+     * Checks the post is updated
      * </p>
      *
-     * @param post Represents the post to update
-     * @return boolean - True if the post is updated, false otherwise.
+     * @param post {@link Post}Represents the post to update
+     * @return True if the post is updated, false otherwise.
      */
-    public boolean isUpdate(final Post post) {
+    public boolean update(final Post post) {
         return POST_SERVICE.update(post);
     }
-
 }
