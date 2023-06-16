@@ -96,8 +96,8 @@ public class UserController {
      * @param id Represents the user through id
      * @return {@link User}
      */
-    public User getById(final Long id) {
-        return USER_SERVICE.getById(id);
+    public User get(final Long id) {
+        return USER_SERVICE.get(id);
     }
 
     /**

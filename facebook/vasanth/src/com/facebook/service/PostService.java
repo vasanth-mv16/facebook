@@ -41,7 +41,7 @@ public interface PostService {
      * @param id Represents the id of the post to retrieve
      * @return {@link Post}
      */
-    Post getUsingId(final Long id);
+    Post getById(final Long id);
 
     /**
      * <p>

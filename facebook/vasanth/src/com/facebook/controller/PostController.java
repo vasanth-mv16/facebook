@@ -73,8 +73,8 @@ public class PostController {
      * @param id Represents the id of the post
      * @return {@link Post}
      */
-    public Post getUsingId(final Long id) {
-        return POST_SERVICE.getUsingId(id);
+    public Post getById(final Long id) {
+        return POST_SERVICE.getById(id);
     }
 
     /**

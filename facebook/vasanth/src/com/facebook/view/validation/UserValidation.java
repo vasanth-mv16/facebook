@@ -102,19 +102,14 @@ public class UserValidation {
      */
     public boolean validateDateOfBirth(final String dateOfBirth) {
         try {
-            final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-uuuu")
-                    .withResolverStyle(ResolverStyle.STRICT);
+            final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-uuuu").withResolverStyle(ResolverStyle.STRICT);
             final LocalDate date = LocalDate.parse(dateOfBirth, dateFormatter);
-
-            final YearMonth currentDate = YearMonth.now();
+            final YearMonth presentDate = YearMonth.now();
             final YearMonth dateToCheck = YearMonth.of(date.getYear(), date.getMonth());
 
-            if (dateToCheck.isBefore(YearMonth.of(1900, 1)) || dateToCheck.isAfter(currentDate)) {
-                return false;
-            }
-
-            if (date.getDayOfMonth() > date.getMonth().maxLength() ||
-                    (date.getMonth() == Month.FEBRUARY && date.getDayOfMonth() > 29 && !date.isLeapYear())) {
+            if ((dateToCheck.isBefore(YearMonth.of(1900, 1)) || dateToCheck.isAfter(presentDate)) &&
+                    (date.getDayOfMonth() > date.getMonth().maxLength() ||
+                    (date.getMonth() == Month.FEBRUARY && date.getDayOfMonth() > 29 && !date.isLeapYear()))) {
                 return false;
             }
 

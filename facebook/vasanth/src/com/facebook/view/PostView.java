@@ -54,6 +54,8 @@ public class PostView {
      * <p>
      * Shows the menu details for the user to post and edit
      * </p>
+     *
+     * @param userId Refer the user id for the post
      */
     public void displayPostDetails(final Long userId) {
         System.out.println(String.join("\n", "CLICK 1 TO CREATE", "CLICK 2 TO GET", "CLICK 3 TO GET USING ID",
@@ -64,13 +66,13 @@ public class PostView {
                 create(userId);
                 break;
             case 2:
-                getDetails();
+                get();
                 break;
             case 3:
-                getDetailById();
+                getById();
                 break;
             case 4:
-                updateDetail();
+                update();
                 break;
             case 5:
                 LIKE_VIEW.displayLikeDetails(userId);
@@ -89,8 +91,10 @@ public class PostView {
      * <p>
      * Creates a new post with the user, caption, and location.
      * </p>
+     *
+     * @param userId Refer the user id for the post
      */
-    public void create(final Long userId) {
+    private void create(final Long userId) {
         final Post post = new Post();
         final Timestamp postUploadTime = Timestamp.from(Instant.now());
 
@@ -142,7 +146,7 @@ public class PostView {
      *
      * @return Collection of post
      */
-    private Collection<Post> getDetails() {
+    private Collection<Post> get() {
         System.out.println(POST_CONTROLLER.get());
 
         return POST_CONTROLLER.get();
@@ -155,15 +159,16 @@ public class PostView {
      *
      * @return {@link Post}
      */
-    private Post getDetailById() {
+    private Post getById() {
         System.out.println("ENTER YOUR POST ID:");
-        final Post post = POST_CONTROLLER.getUsingId(Long.valueOf(SCANNER.nextLine()));
+        final Post post = POST_CONTROLLER.getById(Long.valueOf(SCANNER.nextLine()));
         System.out.println(post);
 
         if (null == post) {
             System.out.println("ENTER AN VALID POST ID");
-            return getDetailById();
+            return getById();
         }
+
         return post;
     }
 
@@ -172,9 +177,9 @@ public class PostView {
      * Updates the post by the user to edit the caption and location
      * </p>
      */
-    private void updateDetail() {
+    private void update() {
         final Post post = new Post();
-        final Post get = getDetailById();
+        final Post get = getById();
 
         post.setId(get.getId());
         System.out.println("DO YOU WANT TO EDIT CAPTION, PRESS ANY KEY AND DON'T WANT TO EDIT PRESS 'NO' OR 'N' ");
@@ -186,7 +191,7 @@ public class PostView {
             System.out.println("POST UPDATED");
         } else {
             System.out.println("NOT UPDATED");
-            updateDetail();
+            update();
         }
     }
 }

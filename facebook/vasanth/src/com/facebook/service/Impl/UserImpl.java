@@ -53,9 +53,7 @@ public class UserImpl implements UserService {
     public boolean add(final User user) {
         for (final User existingUser : USER_LIST) {
 
-            if (existingUser.getMobileNumber().equals(user.getMobileNumber())) {
-                return false;
-            }
+            return !(existingUser.getMobileNumber().equals(user.getMobileNumber()));
         }
         return USER_LIST.add(user);
     }
@@ -130,7 +128,7 @@ public class UserImpl implements UserService {
      * @return True if the user details are successfully deleted, false otherwise
      */
     public boolean delete(final Long id) {
-        final User user = getById(id);
+        final User user = get(id);
 
         if (null != user) {
             return USER_LIST.remove(user);
@@ -144,7 +142,7 @@ public class UserImpl implements UserService {
      * @param id Represents the id of the user to retrieve
      * @return {@link User}
      */
-    public User getById(final Long id) {
+    public User get(final Long id) {
         final Iterator<User> iterator = USER_LIST.iterator();
 
         while (iterator.hasNext()) {

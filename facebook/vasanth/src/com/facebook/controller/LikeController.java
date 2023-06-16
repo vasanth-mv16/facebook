@@ -49,7 +49,7 @@ public class LikeController {
      * @param like {@link Like}Represents like to created
      * @return True if the like is created, false otherwise.
      */
-    public boolean isCreate(final Like like) {
+    public boolean create(final Like like) {
         return LIKE_SERVICE.create(like);
     }
 

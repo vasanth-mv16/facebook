@@ -60,7 +60,7 @@ public class PostImpl implements PostService {
      * @param id Represents the id of the post to retrieve
      * @return {@link Post}
      */
-    public Post getUsingId(final Long id) {
+    public Post getById(final Long id) {
         final ListIterator<Post> iterator = POSTS.listIterator();
 
         while (iterator.hasNext()) {

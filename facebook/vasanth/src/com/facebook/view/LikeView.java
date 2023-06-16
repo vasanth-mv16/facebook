@@ -4,7 +4,6 @@ import com.facebook.controller.LikeController;
 import com.facebook.model.Like;
 import com.facebook.view.validation.UserValidation;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -45,6 +44,13 @@ public class LikeView {
         return likeView;
     }
 
+    /**
+     * <p>
+     * Shows the menu details for the user to like the post
+     * </p>
+     *
+     * @param id Refer the user id for the like
+     */
     public void displayLikeDetails(final Long id) {
         System.out.println(String.join("\n", "CLICK 1 TO CREATE LIKE", "CLICK 2 TO GET ALL LIKES",
                 "CLICK 3 TO GET LIKE COUNT", "CLICK 4 TO DISPLAY POST DETAILS"));
@@ -54,10 +60,10 @@ public class LikeView {
                 create();
                 break;
             case 2:
-                getDetail();
+                get();
                 break;
             case 3:
-                getLikeCountDetail();
+                getCount();
                 break;
             case 4:
                 POST_VIEW.displayPostDetails(id);
@@ -83,7 +89,7 @@ public class LikeView {
         like.setId(id++);
         like.setUserId(getUserId());
         like.setPostId(getPostId());
-        System.out.println(LIKE_CONTROLLER.isCreate(like) ? "LIKED" : "NOT LIKED");
+        System.out.println(LIKE_CONTROLLER.create(like) ? "LIKED" : "NOT LIKED");
     }
 
     /**
@@ -91,7 +97,7 @@ public class LikeView {
      * Gets the likes by the user
      * </p>
      */
-    private void getDetail() {
+    private void get() {
         System.out.println(LIKE_CONTROLLER.get());
     }
 
@@ -100,7 +106,7 @@ public class LikeView {
      * Gets the likes count for the post
      * </p>
      */
-    private void getLikeCountDetail() {
+    private void getCount() {
         try {
             System.out.println("ENTER THE POST ID:");
             Long postId = Long.parseLong(SCANNER.nextLine());
@@ -109,7 +115,7 @@ public class LikeView {
             System.out.println("TOTAL LIKE FOR POST ID " + postId + ": " + likeCount);
         } catch (final NumberFormatException exception) {
             System.out.println("PLEASE ENTER AN INTEGER");
-            getLikeCountDetail();
+            getCount();
         }
     }
 

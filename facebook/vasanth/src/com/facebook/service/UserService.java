@@ -61,7 +61,7 @@ public interface UserService {
      * @param id Represents the id of the user to retrieve
      * @return {@link User}
      */
-    User getById(final Long id);
+    User get(final Long id);
 
     /**
      * <p>

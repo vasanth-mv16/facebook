@@ -42,7 +42,7 @@ public class UserView {
      * Gets the instance of the user view
      * </p>
      *
-     * @return Returns the singleton instance of the UserView class.
+     * @return Returns the singleton instance of the UserView class
      */
     public static UserView getInstance() {
         if (null == userView) {
@@ -57,7 +57,7 @@ public class UserView {
      * Displays the menu details
      * </p>
      */
-    public void displayMenu() {
+    private void displayMenu() {
         System.out.println("\tFACEBOOK\nCLICK 1 TO SIGN UP\nCLICK 2 TO SIGN IN");
 
         switch (getChoice()) {
@@ -65,7 +65,7 @@ public class UserView {
                 signUp();
                 break;
             case 2:
-                signInDetail();
+                signIn();
                 break;
             default:
                 System.out.println("INVALID CHOICE");
@@ -89,7 +89,7 @@ public class UserView {
         user.setGender(getGender());
         user.setDateOfBirth(getDateOfBirth());
 
-        if ((USER_CONTROLLER.create(user))) {
+        if (USER_CONTROLLER.create(user)) {
             System.out.println("ACCOUNT SUCCESSFULLY SIGN UP");
         } else {
             System.out.println("ACCOUNT ALREADY EXIST");
@@ -98,6 +98,7 @@ public class UserView {
         System.out.println("PRESS YES FOR EDIT USER DETAILS AND PRESS ANY KEY FOR MENU ");
 
         if (USER_VALIDATION.validateAccess(SCANNER.nextLine())) {
+            System.out.println(user.getId());
             displaysUserOptions(user.getId());
         } else {
             displayMenu();
@@ -109,9 +110,9 @@ public class UserView {
      * Deletes a user based on the provided userID
      * </p>
      *
-     * @param id The user id to delete
+     * @param id Refer user id to delete
      */
-    private void deleteDetail(final Long id) {
+    private void delete(final Long id) {
         if (USER_CONTROLLER.delete(id)) {
             System.out.println("SUCCESSFULLY DELETED");
             displayMenu();
@@ -127,9 +128,9 @@ public class UserView {
      *
      * @param id The user id to update
      */
-    private void updateDetail(final Long id) {
+    private void update(final Long id) {
         final User user = new User();
-        final User existingUser = getById(id);
+        final User existingUser = get(id);
 
         System.out.println("DO YOU WANT TO EDIT NAME, PRESS 'YES' OR 'Y' AND DON'T WANT TO EDIT PRESS ANY KEY ");
         user.setName(USER_VALIDATION.validateAccess(SCANNER.nextLine()) ? getName() : existingUser.getName());
@@ -148,7 +149,7 @@ public class UserView {
      * user edit details.
      * </p>
      */
-    private void signInDetail() {
+    private void signIn() {
         final User user = new User();
 
         SignInChoice(user);
@@ -169,13 +170,13 @@ public class UserView {
      * Retrieves and returns a user object based on the provided user id
      * </p>
      *
-     * @param id The user id to retrieve
+     * @param id Refer the user id to retrieve
      * @return {@link User}
      */
-    private User getById(final Long id) {
-        System.out.println(USER_CONTROLLER.getById(id));
+    private User get(final Long id) {
+        System.out.println(USER_CONTROLLER.get(id));
 
-        return (USER_CONTROLLER.getById(id));
+        return (USER_CONTROLLER.get(id));
     }
 
     /**
@@ -191,13 +192,13 @@ public class UserView {
 
         switch (getChoice()) {
             case 1:
-                updateDetail(id);
+                update(id);
                 break;
             case 2:
-                deleteDetail(id);
+                delete(id);
                 break;
             case 3:
-                getById(id);
+                get(id);
                 break;
             case 4:
                 POST_VIEW.displayPostDetails(id);
