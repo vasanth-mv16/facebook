@@ -2,7 +2,7 @@ package com.facebook.controller;
 
 import com.facebook.model.User;
 import com.facebook.service.UserService;
-import com.facebook.service.Impl.UserImpl;
+import com.facebook.service.Impl.UserServiceImpl;
 
 /**
  * <p>
@@ -15,7 +15,7 @@ import com.facebook.service.Impl.UserImpl;
 public class UserController {
 
     private static UserController userController;
-    private static final UserService USER_SERVICE = UserImpl.getInstance();
+    private static final UserService USER_SERVICE = UserServiceImpl.getInstance();
 
     /**
      * <p>

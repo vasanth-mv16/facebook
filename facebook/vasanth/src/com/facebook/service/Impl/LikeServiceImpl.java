@@ -14,9 +14,9 @@ import java.util.Collection;
  * @version 1.0
  * @author vasanth
  */
-public class LikeImpl implements LikeService {
+public class LikeServiceImpl implements LikeService {
 
-    private static LikeImpl likeImpl;
+    private static LikeService likeServiceImpl;
     private static final Collection<Like> LIKE_LIST = new ArrayList<>();
 
     /**
@@ -24,7 +24,7 @@ public class LikeImpl implements LikeService {
      * Default constructor for like service implementation
      * </p>
      */
-    private LikeImpl() {}
+    private LikeServiceImpl() {}
 
     /**
      * <p>
@@ -33,12 +33,12 @@ public class LikeImpl implements LikeService {
      *
      * @return Returns the singleton instance of the like service implementation class.
      */
-    public static LikeImpl getInstance() {
-        if (null == likeImpl) {
-            likeImpl = new LikeImpl();
+    public static LikeService getInstance() {
+        if (null == likeServiceImpl) {
+            likeServiceImpl = new LikeServiceImpl();
         }
 
-        return likeImpl;
+        return likeServiceImpl;
     }
 
     /**

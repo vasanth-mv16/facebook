@@ -2,6 +2,7 @@ package com.facebook.view;
 
 import com.facebook.controller.LikeController;
 import com.facebook.model.Like;
+import com.facebook.view.validation.PostValidation;
 import com.facebook.view.validation.UserValidation;
 
 import java.util.Scanner;
@@ -18,6 +19,7 @@ public class LikeView {
     private static final LikeController LIKE_CONTROLLER = LikeController.getInstance();
     private static final UserView USER_VIEW = UserView.getInstance();
     private static final PostView POST_VIEW = PostView.getInstance();
+    private static final PostValidation POST_VALIDATION = PostValidation.getInstance();
     private static final UserValidation USER_VALIDATION = UserValidation.getInstance();
     private static Long id = 1L;
 
@@ -107,16 +109,11 @@ public class LikeView {
      * </p>
      */
     private void getCount() {
-        try {
-            System.out.println("ENTER THE POST ID:");
-            Long postId = Long.parseLong(SCANNER.nextLine());
-            Long likeCount = LIKE_CONTROLLER.getCount(postId);
+        Long postId = getPostId();
+        Long likeCount = LIKE_CONTROLLER.getCount(postId);
 
-            System.out.println("TOTAL LIKE FOR POST ID " + postId + ": " + likeCount);
-        } catch (final NumberFormatException exception) {
-            System.out.println("PLEASE ENTER AN INTEGER");
-            getCount();
-        }
+        System.out.println("TOTAL LIKE FOR POST ID " + postId + ": " + likeCount);
+
     }
 
     /**
@@ -153,7 +150,7 @@ public class LikeView {
             System.out.println("ENTER THE POST ID:");
             final Long postId = Long.valueOf(SCANNER.nextLine());
 
-            if (USER_VALIDATION.validatePostId(String.valueOf(postId))) {
+            if (POST_VALIDATION.validatePostId(String.valueOf(postId))) {
                 return postId;
             }
         } catch (final NumberFormatException exception) {

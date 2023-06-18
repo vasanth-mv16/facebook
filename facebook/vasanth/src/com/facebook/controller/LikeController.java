@@ -2,7 +2,7 @@ package com.facebook.controller;
 
 import com.facebook.model.Like;
 import com.facebook.service.LikeService;
-import com.facebook.service.Impl.LikeImpl;
+import com.facebook.service.Impl.LikeServiceImpl;
 
 import java.util.Collection;
 
@@ -17,7 +17,7 @@ import java.util.Collection;
 public class LikeController {
 
     private static LikeController likeController;
-    private static final LikeService LIKE_SERVICE = LikeImpl.getInstance();
+    private static final LikeService LIKE_SERVICE = LikeServiceImpl.getInstance();
 
     /**
      * <p>

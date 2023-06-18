@@ -2,6 +2,7 @@ package com.facebook.view;
 
 import com.facebook.controller.PostController;
 import com.facebook.model.Post;
+import com.facebook.view.validation.PostValidation;
 import com.facebook.view.validation.UserValidation;
 
 import java.sql.Timestamp;
@@ -23,7 +24,7 @@ public class PostView {
     private static final UserView USER_VIEW = UserView.getInstance();
     private static final LikeView LIKE_VIEW = LikeView.getInstance();
     private static final PostController POST_CONTROLLER = PostController.getInstance();
-    private static final UserValidation USER_VALIDATION = UserValidation.getInstance();
+    private static final PostValidation POST_VALIDATION = PostValidation.getInstance();
     private static PostView postView;
     private static Long postId = 1L;
 
@@ -61,15 +62,15 @@ public class PostView {
         System.out.println(String.join("\n", "CLICK 1 TO CREATE", "CLICK 2 TO GET", "CLICK 3 TO GET USING ID",
                 "CLICK 4 TO UPDATE", "CLICK 5 TO DISPLAY LIKE DETAILS", "CLICK 6 TO DISPLAY USER OPTIONS"));
 
-        switch (USER_VIEW.getChoice()) {
+        switch (getChoice()) {
             case 1:
                 create(userId);
                 break;
             case 2:
-                get();
+                getAll();
                 break;
             case 3:
-                getById();
+                get();
                 break;
             case 4:
                 update();
@@ -146,10 +147,10 @@ public class PostView {
      *
      * @return Collection of post
      */
-    private Collection<Post> get() {
-        System.out.println(POST_CONTROLLER.get());
+    private Collection<Post> getAll() {
+        System.out.println(POST_CONTROLLER.getALl());
 
-        return POST_CONTROLLER.get();
+        return POST_CONTROLLER.getALl();
     }
 
     /**
@@ -159,14 +160,13 @@ public class PostView {
      *
      * @return {@link Post}
      */
-    private Post getById() {
-        System.out.println("ENTER YOUR POST ID:");
-        final Post post = POST_CONTROLLER.getById(Long.valueOf(SCANNER.nextLine()));
+    private Post get() {
+        final Post post = POST_CONTROLLER.get(getPostId());
         System.out.println(post);
 
         if (null == post) {
             System.out.println("ENTER AN VALID POST ID");
-            return getById();
+            return get();
         }
 
         return post;
@@ -179,13 +179,13 @@ public class PostView {
      */
     private void update() {
         final Post post = new Post();
-        final Post get = getById();
+        final Post get = get();
 
         post.setId(get.getId());
         System.out.println("DO YOU WANT TO EDIT CAPTION, PRESS ANY KEY AND DON'T WANT TO EDIT PRESS 'NO' OR 'N' ");
-        post.setCaption((USER_VALIDATION.validateAccess(SCANNER.nextLine())) ? getCaption() : get.getCaption());
+        post.setCaption((POST_VALIDATION.validateAccess(SCANNER.nextLine())) ? getCaption() : get.getCaption());
         System.out.println("DO YOU WANT TO EDIT LOCATION, PRESS ANY KEY AND DON'T WANT TO EDIT PRESS 'NO' OR 'N' ");
-        post.setLocation((USER_VALIDATION.validateAccess(SCANNER.nextLine())) ? getLocation() : get.getLocation());
+        post.setLocation((POST_VALIDATION.validateAccess(SCANNER.nextLine())) ? getLocation() : get.getLocation());
 
         if (POST_CONTROLLER.update(post)) {
             System.out.println("POST UPDATED");
@@ -193,5 +193,49 @@ public class PostView {
             System.out.println("NOT UPDATED");
             update();
         }
+    }
+
+    /**
+     * <p>
+     * Collects and validates the user's choice as an integer value
+     * </p>
+     *
+     * @return The validated choice
+     */
+    public int getChoice() {
+        try {
+            System.out.println("ENTER YOUR CHOICE :");
+            final int choice = Integer.parseInt(SCANNER.nextLine());
+
+            if (POST_VALIDATION.validateChoice(String.valueOf(choice))) {
+                return choice;
+            }
+        } catch (final NumberFormatException exception) {
+            System.out.println("PLEASE ENTER AN INTEGER");
+        }
+
+        return getChoice();
+    }
+
+    /**
+     * <p>
+     * Gets the post id detail
+     * </p>
+     *
+     * @return Returns the post id of the user
+     */
+    private Long getPostId() {
+        try {
+            System.out.println("ENTER THE POST ID:");
+            final Long postId = Long.valueOf(SCANNER.nextLine());
+
+            if (POST_VALIDATION.validatePostId(String.valueOf(postId))) {
+                return postId;
+            }
+        } catch (final NumberFormatException exception) {
+            System.out.println("PLEASE ENTER AN INTEGER");
+        }
+
+        return getPostId();
     }
 }

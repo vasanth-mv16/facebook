@@ -31,7 +31,7 @@ public interface PostService {
      *
      * @return The collection of posts
      */
-    Collection<Post> get();
+    Collection<Post> getAll();
 
     /**
      * <p>
@@ -41,7 +41,7 @@ public interface PostService {
      * @param id Represents the id of the post to retrieve
      * @return {@link Post}
      */
-    Post getById(final Long id);
+    Post get(final Long id);
 
     /**
      * <p>

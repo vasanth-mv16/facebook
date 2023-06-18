@@ -3,6 +3,8 @@ package com.facebook.service.Impl;
 import com.facebook.model.Post;
 import com.facebook.service.PostService;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.ListIterator;
 import java.util.List;
 import java.util.ArrayList;
@@ -17,17 +19,17 @@ import java.util.Iterator;
  * @author vasanth
  * @version 1.0
  */
-public class PostImpl implements PostService {
+public class PostServiceImpl implements PostService {
 
     private static final List<Post> POSTS = new ArrayList<>();
-    private static PostImpl postImpl;
+    private static PostService postServiceImpl;
 
     /**
      * <p>
      * Default constructor for post service implementation
      * </p>
      */
-    private PostImpl() {
+    private PostServiceImpl() {
     }
 
     /**
@@ -37,11 +39,11 @@ public class PostImpl implements PostService {
      *
      * @return Returns the singleton instance of the post service implementation class.
      */
-    public static PostImpl getInstance() {
-        if (null == postImpl) {
-            postImpl = new PostImpl();
+    public static PostService getInstance() {
+        if (null == postServiceImpl) {
+            postServiceImpl = new PostServiceImpl();
         }
-        return postImpl;
+        return postServiceImpl;
     }
 
     /**
@@ -60,7 +62,7 @@ public class PostImpl implements PostService {
      * @param id Represents the id of the post to retrieve
      * @return {@link Post}
      */
-    public Post getById(final Long id) {
+    public Post get(final Long id) {
         final ListIterator<Post> iterator = POSTS.listIterator();
 
         while (iterator.hasNext()) {
@@ -79,7 +81,7 @@ public class PostImpl implements PostService {
      *
      * @return The collection of posts
      */
-    public Collection<Post> get() {
+    public Collection<Post> getAll() {
         return POSTS;
     }
 
@@ -91,6 +93,7 @@ public class PostImpl implements PostService {
      */
     public boolean update(final Post post) {
         final Iterator<Post> iterator = POSTS.iterator();
+        final Timestamp postUploadTime = Timestamp.from(Instant.now());
 
         while (iterator.hasNext()) {
             final Post existingPost = iterator.next();
@@ -98,6 +101,7 @@ public class PostImpl implements PostService {
             if (existingPost.getId().equals(post.getId())) {
                 existingPost.setCaption(post.getCaption());
                 existingPost.setLocation(post.getLocation());
+                existingPost.setUploadTime(postUploadTime);
 
                 return true;
             }

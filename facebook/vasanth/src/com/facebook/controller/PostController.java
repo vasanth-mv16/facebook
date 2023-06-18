@@ -2,7 +2,7 @@ package com.facebook.controller;
 
 import com.facebook.model.Post;
 import com.facebook.service.PostService;
-import com.facebook.service.Impl.PostImpl;
+import com.facebook.service.Impl.PostServiceImpl;
 
 import java.util.Collection;
 
@@ -17,7 +17,7 @@ import java.util.Collection;
 public class PostController {
 
     private static PostController postController;
-    private static final PostService POST_SERVICE = PostImpl.getInstance();
+    private static final PostService POST_SERVICE = PostServiceImpl.getInstance();
 
     /**
      * <p>
@@ -61,8 +61,8 @@ public class PostController {
      *
      * @return Collection of post of the user
      */
-    public Collection<Post> get() {
-        return POST_SERVICE.get();
+    public Collection<Post> getALl() {
+        return POST_SERVICE.getAll();
     }
 
     /**
@@ -73,8 +73,8 @@ public class PostController {
      * @param id Represents the id of the post
      * @return {@link Post}
      */
-    public Post getById(final Long id) {
-        return POST_SERVICE.getById(id);
+    public Post get(final Long id) {
+        return POST_SERVICE.get(id);
     }
 
     /**

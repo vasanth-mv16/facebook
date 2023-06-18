@@ -16,9 +16,9 @@ import java.util.ListIterator;
  * @author vasanth
  * @version 1.0
  */
-public class UserImpl implements UserService {
+public class UserServiceImpl implements UserService {
 
-    private static UserImpl userImpl;
+    private static UserService userServiceImpl;
     private static final List<User> USER_LIST = new ArrayList<>();
 
     /**
@@ -26,7 +26,7 @@ public class UserImpl implements UserService {
      * Default constructor for user service
      * </p>
      */
-    private UserImpl() {
+    private UserServiceImpl() {
     }
 
     /**
@@ -36,12 +36,12 @@ public class UserImpl implements UserService {
      *
      * @return Returns the singleton instance of the user service implementation class.
      */
-    public static UserImpl getInstance() {
-        if (null == userImpl) {
-            userImpl = new UserImpl();
+    public static UserService getInstance() {
+        if (null == userServiceImpl) {
+            userServiceImpl = new UserServiceImpl();
         }
 
-        return userImpl;
+        return userServiceImpl;
     }
 
     /**

@@ -23,7 +23,7 @@ public class UserValidation {
 
     /**
      * <p>
-     * Default constructor for validation
+     * Default constructor for user validation
      * </p>
      */
     private UserValidation() {
@@ -53,7 +53,7 @@ public class UserValidation {
      * @return boolean - True if the name is valid, false otherwise.
      */
     public boolean validateName(final String name) {
-        return name.matches("^[a-zA-Z_]+\\.?");
+        return name.matches("^[a-zA-Z\\s]+\\.?");
     }
 
     /**
@@ -143,10 +143,6 @@ public class UserValidation {
         return (access.equalsIgnoreCase("yes") || access.equalsIgnoreCase("y"));
     }
 
-    public boolean validateAccessNo(final String access) {
-        return (access.equalsIgnoreCase("no") || access.equalsIgnoreCase("n"));
-    }
-
     /**
      * <p>
      * Validates a userId string using a regular expression pattern.
@@ -157,18 +153,6 @@ public class UserValidation {
      */
     public boolean validateUserId(final String userId) {
         return userId.matches("[\\d]");
-    }
-
-    /**
-     * <p>
-     * Validates a post id string using a regular expression pattern
-     * </p>
-     *
-     * @param postId The post id to be validated
-     * @return boolean - True if the user id is valid, false otherwise.
-     */
-    public boolean validatePostId(final String postId) {
-        return postId.matches("[\\d]");
     }
 
     /**
