@@ -85,7 +85,7 @@ public class PostServiceImpl implements PostService {
      * {@inheritDoc}
      *
      * @param post Refers {@link Post} to be updated
-     * @return True if the post is successfully updated, false otherwise
+     * @return True if the post has successfully updated, false otherwise
      */
     public boolean update(final Post post) {
         final Iterator<Post> iterator = POSTS.iterator();
