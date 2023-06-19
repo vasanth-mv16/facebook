@@ -47,7 +47,7 @@ public class PostController {
      * Checks the post to be created
      * </p>
      *
-     * @param post {@link Post}To create the post
+     * @param post Refer {@link Post} to create
      * @return True if the post is created, false otherwise.
      */
     public boolean create(final Post post) {
@@ -71,7 +71,7 @@ public class PostController {
      * </p>
      *
      * @param id Represents the id of the post
-     * @return {@link Post}
+     * @return Returns {@link Post} of the user by id
      */
     public Post get(final Long id) {
         return POST_SERVICE.get(id);
@@ -82,7 +82,7 @@ public class PostController {
      * Checks the post is updated
      * </p>
      *
-     * @param post {@link Post}Represents the post to update
+     * @param post Refers {@link Post} to update
      * @return True if the post is updated, false otherwise.
      */
     public boolean update(final Post post) {

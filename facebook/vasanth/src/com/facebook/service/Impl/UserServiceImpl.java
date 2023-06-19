@@ -47,21 +47,21 @@ public class UserServiceImpl implements UserService {
     /**
      * {@inheritDoc}
      *
-     * @param user {@link User}Represents the user to be add
+     * @param user Refers {@link User} to be add
      * @return True if the user is successfully added, false otherwise
      */
     public boolean add(final User user) {
         for (final User existingUser : USER_LIST) {
-
             return !(existingUser.getMobileNumber().equals(user.getMobileNumber()));
         }
+
         return USER_LIST.add(user);
     }
 
     /**
      * {@inheritDoc}
      *
-     * @param user {@link User}Refers the user to get the id
+     * @param user Refers {@link User} to get the id
      * @return Returns the id of the user
      */
     public Long getUserId(final User user) {
@@ -71,13 +71,14 @@ public class UserServiceImpl implements UserService {
                 return existingUser.getId();
             }
         }
+
         return null;
     }
 
     /**
      * {@inheritDoc}
      *
-     * @param user {@link User}Represents the user to be update
+     * @param user Refers {@link User} to be update
      * @param id Represents the user id
      * @return True if the user details are updated, false otherwise
      */
@@ -103,7 +104,7 @@ public class UserServiceImpl implements UserService {
     /**
      * {@inheritDoc}
      *
-     * @param user {@link User}Represents user to sign in
+     * @param user Refers {@link User} to sign in
      * @return True if the sign-in is successful, false otherwise
      */
     public boolean signIn(final User user) {
@@ -133,6 +134,7 @@ public class UserServiceImpl implements UserService {
         if (null != user) {
             return USER_LIST.remove(user);
         }
+
         return false;
     }
 
@@ -140,7 +142,7 @@ public class UserServiceImpl implements UserService {
      * {@inheritDoc}
      *
      * @param id Represents the id of the user to retrieve
-     * @return {@link User}
+     * @return Returns {@link User} through id
      */
     public User get(final Long id) {
         final Iterator<User> iterator = USER_LIST.iterator();

@@ -17,7 +17,7 @@ public interface UserService {
      * Adds user details.
      * </p>
      *
-     * @param user {@link User}Represents the user to be add
+     * @param user Refers {@link User} to add
      * @return True if the user is successfully added, false otherwise
      */
     boolean add(final User user);
@@ -27,7 +27,7 @@ public interface UserService {
      * Updates user details
      * </p>
      *
-     * @param user {@link User}Represents the user to be update
+     * @param user Refers {@link User} to update
      * @param id Represents id of the user
      * @return True if the user details are updated, false otherwise
      */
@@ -48,7 +48,7 @@ public interface UserService {
      * Validates user sign-in details.
      * </p>
      *
-     * @param user Represents user to sign in
+     * @param user Refer {@link User} to sign in
      * @return True if the sign-in is successful, false otherwise
      */
     boolean signIn(final User user);
@@ -59,7 +59,7 @@ public interface UserService {
      * </p>
      *
      * @param id Represents the id of the user to retrieve
-     * @return {@link User}
+     * @return Returns {@link User} details
      */
     User get(final Long id);
 
@@ -68,7 +68,7 @@ public interface UserService {
      * Retrieves user id
      * </p>
      *
-     * @param user Refers the user to get the id
+     * @param user Refers {@link User} to get the id
      * @return Returns the id of the user
      */
     Long getUserId(final User user);

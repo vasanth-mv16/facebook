@@ -3,8 +3,6 @@ package com.facebook.view.validation;
 import com.facebook.model.User;
 
 import java.time.LocalDate;
-import java.time.Month;
-import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.ResolverStyle;
@@ -77,7 +75,7 @@ public class UserValidation {
      * @return boolean - True if the email is valid, false otherwise.
      */
     public boolean validateEmail(final String email) {
-        return email.matches("^[a-z0-9._]+@[a-z]+\\.[a-z-]{2,3}");
+        return email.matches("^[a-zA-Z0-9._]{1,15}@[a-z]{1,15}\\.[com[org[edu[in]]]]{2,3}$");
     }
 
     /**
@@ -102,14 +100,13 @@ public class UserValidation {
      */
     public boolean validateDateOfBirth(final String dateOfBirth) {
         try {
-            final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-uuuu").withResolverStyle(ResolverStyle.STRICT);
-            final LocalDate date = LocalDate.parse(dateOfBirth, dateFormatter);
-            final YearMonth presentDate = YearMonth.now();
-            final YearMonth dateToCheck = YearMonth.of(date.getYear(), date.getMonth());
+            final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-uuuu")
+                                                   .withResolverStyle(ResolverStyle.STRICT);
+            final LocalDate localDate = LocalDate.parse(dateOfBirth, dateFormatter);
+            final LocalDate presentDate = LocalDate.now();
+            final LocalDate previousYear = LocalDate.MIN;
 
-            if ((dateToCheck.isBefore(YearMonth.of(1900, 1)) || dateToCheck.isAfter(presentDate)) &&
-                    (date.getDayOfMonth() > date.getMonth().maxLength() ||
-                    (date.getMonth() == Month.FEBRUARY && date.getDayOfMonth() > 29 && !date.isLeapYear()))) {
+            if (localDate.isBefore(previousYear.withYear(1900)) || localDate.isAfter(presentDate)) {
                 return false;
             }
 
@@ -161,7 +158,7 @@ public class UserValidation {
      * </p>
      *
      * @param gender Represents the gender of the user
-     * @return {@link User.Gender}
+     * @return Returns {@link User.Gender} for the user
      */
     public User.Gender validateGender(final String gender) {
         return User.Gender.valueOf(gender);

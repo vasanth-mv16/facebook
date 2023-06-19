@@ -51,9 +51,9 @@ public class LikeView {
      * Shows the menu details for the user to like the post
      * </p>
      *
-     * @param id Refer the user id for the like
+     * @param userId Refer the user id for the like
      */
-    public void displayLikeDetails(final Long id) {
+    public void displayLikeDetails(final Long userId) {
         System.out.println(String.join("\n", "CLICK 1 TO CREATE LIKE", "CLICK 2 TO GET ALL LIKES",
                 "CLICK 3 TO GET LIKE COUNT", "CLICK 4 TO DISPLAY POST DETAILS"));
 
@@ -68,16 +68,16 @@ public class LikeView {
                 getCount();
                 break;
             case 4:
-                POST_VIEW.displayPostDetails(id);
+                POST_VIEW.displayPostDetails(userId);
                 break;
             case 5:
-                USER_VIEW.displaysUserOptions(id);
+                USER_VIEW.displaysUserOptions(userId);
                 break;
             default:
                 System.out.println("INVALID CHOICE, SELECT THE ABOVE CHOICE");
-                displayLikeDetails(id);
+                displayLikeDetails(userId);
         }
-        displayLikeDetails(id);
+        displayLikeDetails(userId);
     }
 
     /**
@@ -113,7 +113,6 @@ public class LikeView {
         Long likeCount = LIKE_CONTROLLER.getCount(postId);
 
         System.out.println("TOTAL LIKE FOR POST ID " + postId + ": " + likeCount);
-
     }
 
     /**

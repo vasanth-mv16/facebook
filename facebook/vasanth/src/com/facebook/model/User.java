@@ -17,7 +17,7 @@ public class User {
     private String dateOfBirth;
 
     /**
-     * An enum with values MALE, FEMALE
+     * An enum with values MALE, FEMALE, OTHERS
      */
     public enum Gender {
         

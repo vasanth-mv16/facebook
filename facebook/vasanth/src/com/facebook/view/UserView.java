@@ -46,7 +46,7 @@ public class UserView {
      */
     public static UserView getInstance() {
         if (null == userView) {
-           userView = new UserView();
+            userView = new UserView();
         }
 
         return userView;
@@ -123,7 +123,7 @@ public class UserView {
 
     /**
      * <p>
-     * Updates the user's account information based on the provided ID
+     * Updates the user's account information based on the provided id
      * </p>
      *
      * @param id The user id to update
@@ -171,7 +171,7 @@ public class UserView {
      * </p>
      *
      * @param id Refer the user id to retrieve
-     * @return {@link User}
+     * @return Returns {@link User} details
      */
     private User get(final Long id) {
         System.out.println(USER_CONTROLLER.get(id));
@@ -214,7 +214,6 @@ public class UserView {
             default:
                 System.out.println("INVALID CHOICE, SELECT THE ABOVE CHOICE");
                 displaysUserOptions(id);
-                break;
         }
         displaysUserOptions(id);
     }
@@ -237,7 +236,7 @@ public class UserView {
      * Collects and validates the user's email address
      * </p>
      *
-     * @return the validated email address.
+     * @return Returns validated email.
      */
     private String getEmail() {
         System.out.println("ENTER YOUR EMAIL ID : \nDO YOU WANT GO MENU, PRESS($)");
@@ -250,8 +249,8 @@ public class UserView {
         if (USER_VALIDATION.validateEmail(email)) {
             return email;
         } else {
-            System.out.println(String.join("", "EMAIL MUST CONTAINS 'a-z' AT FIRST, THEN CONTAINS",
-                    " 'a-z' OR '0-9' AND '@', AFTER 'a-z' AND '.' THEN 2 OR MORE 'a-z'"));
+            System.out.println(String.join("", "EMAIL MUST CONTAINS ONLY LETTERS 'A-Z', 'a-z', " +
+                    "NUMBERS '0-9', DOT '.' AND '@', AFTER 'a-z' AND DOT '.' THEN 2 OR MORE 'COM','ORG', 'EDU', 'IN'"));
 
             return getEmail();
         }
@@ -262,7 +261,7 @@ public class UserView {
      * Collects and validates the user's mobile number
      * </p>
      *
-     * @return the validated mobile number
+     * @return Returns validated mobile number
      */
     private String getMobileNumber() {
         System.out.println("ENTER YOUR MOBILE NUMBER : \nDO YOU WANT GO MENU, PRESS($)");
@@ -287,7 +286,7 @@ public class UserView {
      * Collects and validates the user's name
      * </p>
      *
-     * @return the validated name
+     * @return Returns validated name
      */
     private String getName() {
         System.out.println("ENTER YOUR USERNAME :\nDO YOU WANT TO GO MENU, PRESS '$'");
@@ -311,7 +310,7 @@ public class UserView {
      * Collects and validates the user's password
      * </p>
      *
-     * @return the validated password
+     * @return Returns validated password
      */
     private String getPassword() {
         System.out.println("ENTER PASSWORD : \nDO YOU WANT GO MENU, PRESS($)");
@@ -336,7 +335,7 @@ public class UserView {
      * Collects and validates the user's date of birth
      * </p>
      *
-     * @return the validated date of birth
+     * @return Returns validated date of birth
      */
     private String getDateOfBirth() {
         System.out.println("ENTER DATE OF BIRTH : \nDO YOU WANT GO MENU, PRESS($)");
@@ -350,6 +349,7 @@ public class UserView {
             return dateOfBirth;
         } else {
             System.out.println("ENTER THE CORRECT DATE!!!");
+
             return getDateOfBirth();
         }
     }
@@ -359,7 +359,7 @@ public class UserView {
      * Collects and validates the user's gender
      * </p>
      *
-     * @return {@link User.Gender}
+     * @return Returns {@link User.Gender} of the user
      */
     private User.Gender getGender() {
         System.out.println("ENTER GENDER (MALE,FEMALE,OTHERS)");
@@ -370,6 +370,7 @@ public class UserView {
         } catch (final IllegalArgumentException illegalArgumentException) {
             System.out.println("ENTER AN VALID GENDER");
         }
+
         return getGender();
     }
 
@@ -378,7 +379,7 @@ public class UserView {
      * Collects and validates the user's choice as an integer value
      * </p>
      *
-     * @return The validated choice
+     * @return Returns validated choice
      */
     public int getChoice() {
         try {
@@ -400,7 +401,7 @@ public class UserView {
      * Collects the user's sign-in choice
      * </p>
      *
-     * @param user {@link User}
+     * @param user Refer {@link User} to sign in
      */
     private void SignInChoice(final User user) {
         System.out.println("CLICK 1 TO MOBILE NUMBER\nCLICK 2 TO EMAIL ID");
@@ -415,7 +416,6 @@ public class UserView {
             default:
                 System.out.println("INVALID CHOICE, SELECT 1 OR 2");
                 SignInChoice(user);
-                break;
         }
     }
 }

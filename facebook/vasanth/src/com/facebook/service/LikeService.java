@@ -19,7 +19,7 @@ public interface LikeService {
      * Checks the like is created
      * </p>
      *
-     * @param like Represents the like to create
+     * @param like Refer {@link Like} to create
      * @return boolean - True if the like is created, false otherwise.
      */
     boolean create(final Like like);

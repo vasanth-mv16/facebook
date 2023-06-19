@@ -1,5 +1,13 @@
 package com.facebook.view.validation;
 
+/**
+ * <p>
+ * Given class used for validation the POST details
+ * </p>
+ *
+ * @author vasanth
+ * @version 1.0
+ */
 public class PostValidation {
 
     private static PostValidation postValidation;
@@ -10,7 +18,6 @@ public class PostValidation {
      * </p>
      */
     private PostValidation() {
-
     }
 
     /**
@@ -21,7 +28,6 @@ public class PostValidation {
      * @return Returns the singleton instance of the user validation class.
      */
     public static PostValidation getInstance() {
-
         if (null == postValidation) {
             postValidation = new PostValidation();
         }
@@ -64,5 +70,4 @@ public class PostValidation {
     public boolean validatePostId(final String postId) {
         return postId.matches("[\\d]");
     }
-
 }

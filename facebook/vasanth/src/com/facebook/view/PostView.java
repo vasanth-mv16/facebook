@@ -3,7 +3,6 @@ package com.facebook.view;
 import com.facebook.controller.PostController;
 import com.facebook.model.Post;
 import com.facebook.view.validation.PostValidation;
-import com.facebook.view.validation.UserValidation;
 
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -158,7 +157,7 @@ public class PostView {
      * Retrieves and returns a User object based on the provided user ID
      * </p>
      *
-     * @return {@link Post}
+     * @return Returns {@link Post} of the user
      */
     private Post get() {
         final Post post = POST_CONTROLLER.get(getPostId());
@@ -166,6 +165,7 @@ public class PostView {
 
         if (null == post) {
             System.out.println("ENTER AN VALID POST ID");
+
             return get();
         }
 
@@ -202,7 +202,7 @@ public class PostView {
      *
      * @return The validated choice
      */
-    public int getChoice() {
+    private int getChoice() {
         try {
             System.out.println("ENTER YOUR CHOICE :");
             final int choice = Integer.parseInt(SCANNER.nextLine());

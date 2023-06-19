@@ -43,13 +43,14 @@ public class PostServiceImpl implements PostService {
         if (null == postServiceImpl) {
             postServiceImpl = new PostServiceImpl();
         }
+
         return postServiceImpl;
     }
 
     /**
      * {@inheritDoc}
      *
-     * @param post {@link Post}Represents post to be added
+     * @param post Refers {@link Post} to be added
      * @return True if the post is successfully added, false otherwise
      */
     public boolean create(Post post) {
@@ -60,7 +61,7 @@ public class PostServiceImpl implements PostService {
      * {@inheritDoc}
      *
      * @param id Represents the id of the post to retrieve
-     * @return {@link Post}
+     * @return Returns {@link Post} through id of the post
      */
     public Post get(final Long id) {
         final ListIterator<Post> iterator = POSTS.listIterator();
@@ -88,7 +89,7 @@ public class PostServiceImpl implements PostService {
     /**
      * {@inheritDoc}
      *
-     * @param post {@link Post}Represents the post to be updated
+     * @param post Refers {@link Post} to be updated
      * @return True if the post is successfully updated, false otherwise
      */
     public boolean update(final Post post) {

@@ -8,11 +8,11 @@ import java.util.Collection;
 
 /**
  * <p>
- *    Given controller acts as request and respond
+ * Given controller acts as request and respond
  * </p>
  *
- * @version 1.0
  * @author vasanth
+ * @version 1.0
  */
 public class LikeController {
 
@@ -24,7 +24,8 @@ public class LikeController {
      * Default constructor for like controller
      * </p>
      */
-    private LikeController() {}
+    private LikeController() {
+    }
 
     /**
      * <p>
@@ -43,10 +44,10 @@ public class LikeController {
 
     /**
      * <p>
-     *    Checks the like to be created
+     * Checks the like to be created
      * </p>
      *
-     * @param like {@link Like}Represents like to created
+     * @param like Refers {@link Like} to created
      * @return True if the like is created, false otherwise.
      */
     public boolean create(final Like like) {
@@ -55,7 +56,7 @@ public class LikeController {
 
     /**
      * <p>
-     *    Gets the like details
+     * Gets the like details
      * </p>
      *
      * @return Collection of like of the post
@@ -66,7 +67,7 @@ public class LikeController {
 
     /**
      * <p>
-     *    Gets the like count details
+     * Gets the like count details
      * </p>
      *
      * @param postId Represents the user id has to get the post

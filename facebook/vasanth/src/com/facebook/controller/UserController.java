@@ -45,7 +45,7 @@ public class UserController {
      * Checks the user to be created
      * </p>
      *
-     * @param user {@link User}Represents user has to created
+     * @param user Refers {@link User} has to created
      * @return True if the user is created, false otherwise.
      */
     public boolean create(final User user) {
@@ -57,7 +57,7 @@ public class UserController {
      * Updates the user details.
      * </p>
      *
-     * @param user {@link User}Represents user has to updated
+     * @param user Refers {@link User} has to updated
      * @return True if the user is updated, false otherwise.
      */
     public boolean update(final User user, final Long id) {
@@ -69,7 +69,7 @@ public class UserController {
      * Checks the user sign in
      * </p>
      *
-     * @param user {@link User}Represents user has to sign in
+     * @param user Refers {@link User} has to sign in
      * @return True if the user is sign in, false otherwise.
      */
     public boolean signIn(final User user) {
@@ -94,7 +94,7 @@ public class UserController {
      * </p>
      *
      * @param id Represents the user through id
-     * @return {@link User}
+     * @return Returns {@link User} details
      */
     public User get(final Long id) {
         return USER_SERVICE.get(id);
@@ -105,7 +105,7 @@ public class UserController {
      * Retrieves the id of the user
      * </p>
      *
-     * @param user {@link User} Represents the user to get id
+     * @param user Refers {@link User} to get id
      * @return The id of the user
      */
     public Long getUserId(final User user) {

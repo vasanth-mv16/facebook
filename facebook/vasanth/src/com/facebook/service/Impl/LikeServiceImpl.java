@@ -44,7 +44,7 @@ public class LikeServiceImpl implements LikeService {
     /**
      * {@inheritDoc}
      *
-     * @param like {@link Like}Represents the like to create
+     * @param like Refers {@link Like} to be create
      * @return boolean - True if the like is created, false otherwise.
      */
     public boolean create(final Like like) {
@@ -70,11 +70,12 @@ public class LikeServiceImpl implements LikeService {
         Long likeCount = 0L;
 
         for (final Like like : LIKE_LIST) {
+
             if (like.getPostId().equals(postId)) {
                 likeCount++;
             }
         }
+
         return likeCount;
     }
-
 }
