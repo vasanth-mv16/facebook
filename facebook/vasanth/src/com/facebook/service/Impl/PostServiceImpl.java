@@ -5,8 +5,6 @@ import com.facebook.service.PostService;
 
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.ListIterator;
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -21,7 +19,7 @@ import java.util.Iterator;
  */
 public class PostServiceImpl implements PostService {
 
-    private static final List<Post> POSTS = new ArrayList<>();
+    private static final Collection<Post> POSTS = new ArrayList<>();
     private static PostService postServiceImpl;
 
     /**
@@ -64,10 +62,7 @@ public class PostServiceImpl implements PostService {
      * @return Returns {@link Post} through id of the post
      */
     public Post get(final Long id) {
-        final ListIterator<Post> iterator = POSTS.listIterator();
-
-        while (iterator.hasNext()) {
-            final Post existingPost = iterator.next();
+        for (final Post existingPost : POSTS) {
 
             if (existingPost.getId().equals(id)) {
                 return existingPost;
