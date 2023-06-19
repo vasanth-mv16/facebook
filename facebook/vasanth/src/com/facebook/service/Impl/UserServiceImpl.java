@@ -3,10 +3,11 @@ package com.facebook.service.Impl;
 import com.facebook.model.User;
 import com.facebook.service.UserService;
 
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.ListIterator;
+
 
 /**
  * <p>
@@ -145,10 +146,7 @@ public class UserServiceImpl implements UserService {
      * @return Returns {@link User} through id
      */
     public User get(final Long id) {
-        final Iterator<User> iterator = USER_LIST.iterator();
-
-        while (iterator.hasNext()) {
-            final User existingUser = iterator.next();
+        for (final User existingUser : USER_LIST) {
 
             if (existingUser.getId().equals(id)) {
                 return existingUser;
