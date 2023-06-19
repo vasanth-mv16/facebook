@@ -1,6 +1,5 @@
 package com.facebook.model;
 
-
 /**
  * Represents the post like
  *
