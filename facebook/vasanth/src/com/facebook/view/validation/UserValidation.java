@@ -75,7 +75,7 @@ public class UserValidation {
      * @return boolean - True if the email is valid, false otherwise.
      */
     public boolean validateEmail(final String email) {
-        return email.matches("^[a-zA-Z0-9._]{1,15}@[a-z]{3,15}\\.[com[org[edu[in]]]]{2,3}$");
+        return email.matches("^[a-zA-Z][a-zA-Z0-9]{1,15}@[a-z]{3,15}\\.[com[org[edu[in]]]]{2,3}$");
     }
 
     /**

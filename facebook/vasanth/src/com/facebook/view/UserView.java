@@ -58,7 +58,7 @@ public class UserView {
      * </p>
      */
     private void displayMenu() {
-        System.out.println("\tFACEBOOK\nCLICK 1 TO SIGN UP\nCLICK 2 TO SIGN IN");
+        System.out.println("\tFACEBOOK\nCLICK 1 TO SIGN UP\nCLICK 2 TO SIGN IN\nCLICK 3 TO EXIT");
 
         switch (getChoice()) {
             case 1:
@@ -67,6 +67,8 @@ public class UserView {
             case 2:
                 signIn();
                 break;
+            case 3:
+                System.exit(0);
             default:
                 System.out.println("INVALID CHOICE");
                 displayMenu();
@@ -249,7 +251,7 @@ public class UserView {
         if (USER_VALIDATION.validateEmail(email)) {
             return email;
         } else {
-            System.out.println(String.join("", "EMAIL MUST CONTAINS ONLY LETTERS 'A-Z', 'a-z', " +
+            System.out.println(String.join("", "EMAIL CONTAINS ONLY LETTERS 'A-Z', 'a-z', " +
                     "NUMBERS '0-9', DOT '.' AND '@', AFTER 'a-z' AND DOT '.' THEN 2 OR MORE 'COM','ORG', 'EDU', 'IN'"));
 
             return getEmail();
