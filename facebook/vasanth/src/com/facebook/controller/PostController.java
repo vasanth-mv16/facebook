@@ -1,6 +1,7 @@
 package com.facebook.controller;
 
 import com.facebook.model.Post;
+import com.facebook.service.Impl.PostServiceDAO;
 import com.facebook.service.PostService;
 import com.facebook.service.Impl.PostServiceImpl;
 
@@ -18,6 +19,8 @@ public class PostController {
 
     private static PostController postController;
     private static final PostService POST_SERVICE = PostServiceImpl.getInstance();
+
+    private static final PostServiceDAO POST_SERVICE_DAO = new PostServiceDAO();
 
     /**
      * <p>
@@ -53,6 +56,8 @@ public class PostController {
     public boolean create(final Post post) {
         return POST_SERVICE.create(post);
     }
+
+    public boolean create_post(final Post post) { return POST_SERVICE_DAO.insert_post(post);}
 
     /**
      * <p>

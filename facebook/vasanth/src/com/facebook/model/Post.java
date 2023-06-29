@@ -58,6 +58,6 @@ public class Post {
     }
 
     public String toString() {
-        return String.format("User Id =%d Post Id =%d Caption =%s  Location =%s  %s",userId, id, caption, location, uploadTime);
+        return String.format("User Id =%d Post Id =%d Caption =%s  Location =%s  %s ",userId, id, caption, location,uploadTime);
     }
 }

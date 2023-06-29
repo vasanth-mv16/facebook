@@ -8,7 +8,7 @@ package com.facebook.model;
  */
 public class User {
 
-    private Gender gender;
+    private String gender;
     private Long id;
     private String name;
     private String mobileNumber;
@@ -26,8 +26,12 @@ public class User {
         OTHERS
     }
 
-    public void setGender(final Gender gender) {
+    public void setGender(final String gender) {
         this.gender = gender;
+    }
+
+    public String getGender() {
+        return gender;
     }
 
     public Long getId() {
@@ -79,7 +83,7 @@ public class User {
     }
 
     public String toString() {
-        return String.format("%d  Name = %s Email = %s Phone Number = %s Gender = %s", id, name, email, mobileNumber,  gender);
+        return String.format("%d  Name = %s Email = %s Gender = %s Date Of Birth= %s", id, name, email, gender, dateOfBirth);
     }
 }
 

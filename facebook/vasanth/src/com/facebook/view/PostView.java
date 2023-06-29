@@ -104,6 +104,7 @@ public class PostView {
         post.setLocation(getLocation());
         post.setUploadTime(postUploadTime);
 
+        POST_CONTROLLER.create_post(post);
         if (POST_CONTROLLER.create(post)) {
             System.out.println("SUCCESSFULLY POSTED");
             System.out.println(post.getId());

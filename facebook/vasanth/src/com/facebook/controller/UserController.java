@@ -1,6 +1,7 @@
 package com.facebook.controller;
 
 import com.facebook.model.User;
+import com.facebook.service.Impl2.UserServiceDAOImpl;
 import com.facebook.service.UserService;
 import com.facebook.service.Impl.UserServiceImpl;
 
@@ -15,7 +16,9 @@ import com.facebook.service.Impl.UserServiceImpl;
 public class UserController {
 
     private static UserController userController;
-    private static final UserService USER_SERVICE = UserServiceImpl.getInstance();
+    private static final UserService USER_SERVICE = new UserServiceDAOImpl();
+    //private static final UserService USER_SERVICE = UserServiceImpl.getInstance();
+    //private static final UserServiceDAO USER_SERVICE_DAO = new UserServiceDAO();
 
     /**
      * <p>
@@ -48,8 +51,8 @@ public class UserController {
      * @param user Refers {@link User} has to created
      * @return True if the user is created, false otherwise.
      */
-    public boolean create(final User user) {
-        return USER_SERVICE.add(user);
+    public boolean signUp(final User user) {
+        return USER_SERVICE.signUp(user);
     }
 
     /**

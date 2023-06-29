@@ -25,8 +25,8 @@ public class UserView {
 
     public static void main(String[] args) {
         final UserView userView = getInstance();
-
         userView.displayMenu();
+
     }
 
     /**
@@ -91,7 +91,7 @@ public class UserView {
         user.setGender(getGender());
         user.setDateOfBirth(getDateOfBirth());
 
-        if (USER_CONTROLLER.create(user)) {
+        if (USER_CONTROLLER.signUp(user)) {
             System.out.println("ACCOUNT SUCCESSFULLY SIGN UP");
         } else {
             System.out.println("ACCOUNT ALREADY EXIST");
@@ -154,7 +154,7 @@ public class UserView {
     private void signIn() {
         final User user = new User();
 
-        SignInChoice(user);
+        signInChoice(user);
         user.setPassword(getPassword());
         System.out.println((USER_CONTROLLER.signIn(user)) ? "ACCOUNT SIGN IN" : "INCORRECT EMAIL OR MOBILE NUMBER AND PASSWORD");
         System.out.println(String.join("", "DO YOU WANT TO EDIT,GET,DELETE THE USER DETAILS,PRESS 'YES' ",
@@ -363,17 +363,27 @@ public class UserView {
      *
      * @return Returns {@link User.Gender} of the user
      */
-    private User.Gender getGender() {
+//    private User.Gender getGender() {
+//        System.out.println("ENTER GENDER (MALE,FEMALE,OTHERS)");
+//        final String gender = SCANNER.nextLine().toUpperCase();
+//
+//        try {
+//            return (USER_VALIDATION.validateGender(gender));
+//        } catch (final IllegalArgumentException illegalArgumentException) {
+//            System.out.println("ENTER AN VALID GENDER");
+//        }
+//
+//        return getGender();
+//    }
+    private String getGender() {
         System.out.println("ENTER GENDER (MALE,FEMALE,OTHERS)");
-        final String gender = SCANNER.nextLine().toUpperCase();
+        final String gender = SCANNER.nextLine();
 
-        try {
-            return (USER_VALIDATION.validateGender(gender));
-        } catch (final IllegalArgumentException illegalArgumentException) {
-            System.out.println("ENTER AN VALID GENDER");
+        if(USER_VALIDATION.validateGender(gender)){
+            return gender;
+        } else {
+            return getGender();
         }
-
-        return getGender();
     }
 
     /**
@@ -405,7 +415,7 @@ public class UserView {
      *
      * @param user Refer {@link User} to sign in
      */
-    private void SignInChoice(final User user) {
+    private void signInChoice(final User user) {
         System.out.println("CLICK 1 TO MOBILE NUMBER\nCLICK 2 TO EMAIL ID");
 
         switch (getChoice()) {
@@ -417,7 +427,8 @@ public class UserView {
                 break;
             default:
                 System.out.println("INVALID CHOICE, SELECT 1 OR 2");
-                SignInChoice(user);
+                signInChoice(user);
         }
     }
+
 }

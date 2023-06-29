@@ -20,7 +20,7 @@ public interface UserService {
      * @param user Refers {@link User} to add
      * @return True if the user is successfully added, false otherwise
      */
-    boolean add(final User user);
+    boolean signUp(final User user);
 
     /**
      * <p>

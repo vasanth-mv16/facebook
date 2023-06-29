@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
      * @param user Refers {@link User} to be add
      * @return True if the user is successfully added, false otherwise
      */
-    public boolean add(final User user) {
+    public boolean signUp(final User user) {
         for (final User existingUser : USER_LIST) {
             return !(existingUser.getMobileNumber().equals(user.getMobileNumber()));
         }
@@ -84,10 +84,7 @@ public class UserServiceImpl implements UserService {
      * @return True if the user details are updated, false otherwise
      */
     public boolean update(final User user, Long id) {
-        final ListIterator<User> listIterator = USER_LIST.listIterator();
-
-        while (listIterator.hasNext()) {
-            final User existingUser = listIterator.next();
+        for (User existingUser : USER_LIST) {
 
             if (existingUser.getId().equals(id)) {
                 existingUser.setName(user.getName());
@@ -102,6 +99,7 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
+
     /**
      * {@inheritDoc}
      *
@@ -109,14 +107,27 @@ public class UserServiceImpl implements UserService {
      * @return True if the sign-in is successful, false otherwise
      */
     public boolean signIn(final User user) {
-        final Iterator<User> iterator = USER_LIST.iterator();
+        if (null != user.getEmail()) {
+            return user_email(user);
+        } else {
+            return user_mobile_number(user);
+        }
+    }
 
-        while (iterator.hasNext()) {
-            final User existingUser = iterator.next();
+    public boolean user_mobile_number (final User user) {
+        for (User existingUser : USER_LIST) {
 
-            if (existingUser.getMobileNumber().equals(user.getMobileNumber()) ||
-                    existingUser.getEmail().equals(user.getEmail()) &&
-                            (existingUser.getPassword().equals(user.getPassword()))) {
+            if ((user.getMobileNumber().equals(existingUser.getMobileNumber()) &&
+                    user.getPassword().equals(existingUser.getPassword()))) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean user_email (final User user) {
+        for (User existingUser : USER_LIST) {
+            if (existingUser.getEmail().equals(user.getEmail()) &&
+                    existingUser.getPassword().equals(user.getPassword())) {
                 return true;
             }
         }
