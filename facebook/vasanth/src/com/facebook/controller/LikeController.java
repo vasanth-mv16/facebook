@@ -1,8 +1,8 @@
 package com.facebook.controller;
 
 import com.facebook.model.Like;
+import com.facebook.service.Impl2.LikeDAOImpl;
 import com.facebook.service.LikeService;
-import com.facebook.service.Impl.LikeServiceImpl;
 
 import java.util.Collection;
 
@@ -17,7 +17,8 @@ import java.util.Collection;
 public class LikeController {
 
     private static LikeController likeController;
-    private static final LikeService LIKE_SERVICE = LikeServiceImpl.getInstance();
+    //private static final LikeService LIKE_SERVICE = LikeServiceImpl.getInstance();
+    private static final LikeService LIKE_DAO_IMPL = LikeDAOImpl.getInstance();
 
     /**
      * <p>
@@ -51,7 +52,7 @@ public class LikeController {
      * @return True if the like is created, false otherwise.
      */
     public boolean create(final Like like) {
-        return LIKE_SERVICE.create(like);
+        return LIKE_DAO_IMPL.create(like);
     }
 
     /**
@@ -61,8 +62,8 @@ public class LikeController {
      *
      * @return Collection of like of the post
      */
-    public Collection<Like> get() {
-        return LIKE_SERVICE.get();
+    public Collection<Like> get(final Long userId) {
+        return LIKE_DAO_IMPL.get(userId);
     }
 
     /**
@@ -74,6 +75,10 @@ public class LikeController {
      * @return returns the like count of the post
      */
     public Long getCount(final Long postId) {
-        return LIKE_SERVICE.getCount(postId);
+        return LIKE_DAO_IMPL.getCount(postId);
+    }
+
+    public boolean delete(final Long likeId) {
+        return LIKE_DAO_IMPL.delete(likeId);
     }
 }

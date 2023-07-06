@@ -31,7 +31,7 @@ public interface PostService {
      *
      * @return The collection of posts
      */
-    Collection<Post> getAll();
+    Collection<Post> getAll(final Long userId);
 
     /**
      * <p>
@@ -52,4 +52,6 @@ public interface PostService {
      * @return True if the post is successfully updated, false otherwise
      */
     boolean update(final Post post);
+
+    boolean delete (final Long id);
 }

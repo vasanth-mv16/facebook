@@ -8,7 +8,7 @@ package com.facebook.model;
  */
 public class User {
 
-    private String gender;
+    private static Gender gender;
     private Long id;
     private String name;
     private String mobileNumber;
@@ -20,17 +20,31 @@ public class User {
      * An enum with values MALE, FEMALE, OTHERS
      */
     public enum Gender {
-        
-        MALE,
-        FEMALE,
-        OTHERS
+
+        male(1), female(2), others(3);
+        private final int choice;
+
+        Gender(final int choice) {
+            this.choice = choice;
+        }
+
+        public static Gender getUserGender(final int choice) {
+            for (final Gender existingGender : Gender.values()) {
+
+                if (existingGender.choice == choice) {
+                    return existingGender;
+                }
+            }
+
+            return null;
+        }
     }
 
-    public void setGender(final String gender) {
+    public void setGender(final Gender gender) {
         this.gender = gender;
     }
 
-    public String getGender() {
+    public static Gender getGender() {
         return gender;
     }
 
@@ -83,7 +97,7 @@ public class User {
     }
 
     public String toString() {
-        return String.format("%d  Name = %s Email = %s Gender = %s Date Of Birth= %s", id, name, email, gender, dateOfBirth);
+        return String.format("%d  Name = %s  Email = %s  Gender = %s  Date Of Birth= %s", id, name, email, gender, dateOfBirth);
     }
 }
 

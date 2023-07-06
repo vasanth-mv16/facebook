@@ -28,10 +28,9 @@ public interface UserService {
      * </p>
      *
      * @param user Refers {@link User} to update
-     * @param id Represents id of the user
      * @return True if the user details are updated, false otherwise
      */
-    boolean update(final User user, final Long id);
+    boolean update(final User user);
 
     /**
      * <p>

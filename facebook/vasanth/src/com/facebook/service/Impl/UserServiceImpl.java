@@ -4,9 +4,7 @@ import com.facebook.model.User;
 import com.facebook.service.UserService;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 
 /**
@@ -48,7 +46,7 @@ public class UserServiceImpl implements UserService {
     /**
      * {@inheritDoc}
      *
-     * @param user Refers {@link User} to be add
+     * @param user Refers {@link User} to be signUp
      * @return True if the user is successfully added, false otherwise
      */
     public boolean signUp(final User user) {
@@ -80,13 +78,12 @@ public class UserServiceImpl implements UserService {
      * {@inheritDoc}
      *
      * @param user Refers {@link User} to be update
-     * @param id Represents the user id
      * @return True if the user details are updated, false otherwise
      */
-    public boolean update(final User user, Long id) {
+    public boolean update(final User user) {
         for (User existingUser : USER_LIST) {
 
-            if (existingUser.getId().equals(id)) {
+            if (existingUser.getId().equals(user.getId())) {
                 existingUser.setName(user.getName());
                 existingUser.setEmail(user.getEmail());
                 existingUser.setPassword(user.getPassword());

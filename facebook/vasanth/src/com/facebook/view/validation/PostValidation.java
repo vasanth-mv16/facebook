@@ -14,7 +14,7 @@ public class PostValidation {
 
     /**
      * <p>
-     * Default constructor for user validation
+     * Default constructor for post validation
      * </p>
      */
     private PostValidation() {
@@ -22,10 +22,10 @@ public class PostValidation {
 
     /**
      * <p>
-     * Gets the instance of the user validation
+     * Gets the instance of the post validation
      * </p>
      *
-     * @return Returns the singleton instance of the user validation class.
+     * @return Returns the singleton instance of the post validation class.
      */
     public static PostValidation getInstance() {
         if (null == postValidation) {

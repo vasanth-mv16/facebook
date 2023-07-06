@@ -77,8 +77,17 @@ public class PostServiceImpl implements PostService {
      *
      * @return The collection of posts
      */
-    public Collection<Post> getAll() {
-        return POSTS;
+    public Collection<Post> getAll(Long userId) {
+        final Collection<Post> posts = new ArrayList<>();
+
+        for (final Post existingPost : POSTS) {
+
+            if (existingPost.getUserId().equals(userId)) {
+                return posts;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -101,6 +110,17 @@ public class PostServiceImpl implements PostService {
 
                 return true;
             }
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean delete(Long id) {
+        final Post post = get(id);
+
+        if (null != post) {
+            return POSTS.remove(post);
         }
 
         return false;

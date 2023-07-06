@@ -1,9 +1,8 @@
 package com.facebook.controller;
 
 import com.facebook.model.User;
-import com.facebook.service.Impl2.UserServiceDAOImpl;
+import com.facebook.service.Impl2.UserDAOImpl;
 import com.facebook.service.UserService;
-import com.facebook.service.Impl.UserServiceImpl;
 
 /**
  * <p>
@@ -16,9 +15,7 @@ import com.facebook.service.Impl.UserServiceImpl;
 public class UserController {
 
     private static UserController userController;
-    private static final UserService USER_SERVICE = new UserServiceDAOImpl();
-    //private static final UserService USER_SERVICE = UserServiceImpl.getInstance();
-    //private static final UserServiceDAO USER_SERVICE_DAO = new UserServiceDAO();
+    private static final UserService USER_SERVICE =  UserDAOImpl.getInstance();
 
     /**
      * <p>
@@ -63,8 +60,8 @@ public class UserController {
      * @param user Refers {@link User} has to updated
      * @return True if the user is updated, false otherwise.
      */
-    public boolean update(final User user, final Long id) {
-        return USER_SERVICE.update(user, id);
+    public boolean update(final User user) {
+        return USER_SERVICE.update(user);
     }
 
     /**

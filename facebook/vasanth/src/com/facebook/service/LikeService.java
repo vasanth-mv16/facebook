@@ -31,7 +31,7 @@ public interface LikeService {
      *
      * @return Collection of likes
      */
-    Collection<Like> get();
+    Collection<Like> get(final Long userId);
 
     /**
      * <p>
@@ -42,4 +42,6 @@ public interface LikeService {
      * @return Gets the like count of the user
      */
     Long getCount(final Long postId);
+
+    boolean delete(final Long likeId);
 }

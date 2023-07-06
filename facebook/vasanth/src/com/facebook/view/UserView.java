@@ -54,187 +54,6 @@ public class UserView {
 
     /**
      * <p>
-     * Displays the menu details
-     * </p>
-     */
-    private void displayMenu() {
-        System.out.println("\tFACEBOOK\nCLICK 1 TO SIGN UP\nCLICK 2 TO SIGN IN\nCLICK 3 TO EXIT");
-
-        switch (getChoice()) {
-            case 1:
-                signUp();
-                break;
-            case 2:
-                signIn();
-                break;
-            case 3:
-                System.exit(0);
-            default:
-                System.out.println("INVALID CHOICE");
-                displayMenu();
-        }
-    }
-
-    /**
-     * <p>
-     * Handles the sign-up process for a new user, collecting and validating user information
-     * </p>
-     */
-    private void signUp() {
-        final User user = new User();
-
-        user.setId(id++);
-        user.setName(getName());
-        user.setMobileNumber(getMobileNumber());
-        user.setEmail(getEmail());
-        user.setPassword(getPassword());
-        user.setGender(getGender());
-        user.setDateOfBirth(getDateOfBirth());
-
-        if (USER_CONTROLLER.signUp(user)) {
-            System.out.println("ACCOUNT SUCCESSFULLY SIGN UP");
-        } else {
-            System.out.println("ACCOUNT ALREADY EXIST");
-            displayMenu();
-        }
-        System.out.println("PRESS YES FOR EDIT USER DETAILS AND PRESS ANY KEY FOR MENU ");
-
-        if (USER_VALIDATION.validateAccess(SCANNER.nextLine())) {
-            System.out.println(user.getId());
-            displaysUserOptions(user.getId());
-        } else {
-            displayMenu();
-        }
-    }
-
-    /**
-     * <p>
-     * Deletes a user based on the provided userID
-     * </p>
-     *
-     * @param id Refer user id to delete
-     */
-    private void delete(final Long id) {
-        if (USER_CONTROLLER.delete(id)) {
-            System.out.println("SUCCESSFULLY DELETED");
-            displayMenu();
-        } else {
-            System.out.println("NOT DELETED");
-        }
-    }
-
-    /**
-     * <p>
-     * Updates the user's account information based on the provided id
-     * </p>
-     *
-     * @param id The user id to update
-     */
-    private void update(final Long id) {
-        final User user = new User();
-        final User existingUser = get(id);
-
-        System.out.println("DO YOU WANT TO EDIT NAME, PRESS 'YES' OR 'Y' AND DON'T WANT TO EDIT PRESS ANY KEY ");
-        user.setName(USER_VALIDATION.validateAccess(SCANNER.nextLine()) ? getName() : existingUser.getName());
-        System.out.println("DO YOU WANT TO EDIT EMAIL, PRESS 'YES' OR 'Y' AND DON'T WANT TO EDIT PRESS ANY KEY ");
-        user.setEmail(USER_VALIDATION.validateAccess(SCANNER.nextLine()) ? getEmail() : existingUser.getEmail());
-        System.out.println("DO YOU WANT TO EDIT PASSWORD, PRESS ANY KEY AND DON'T WANT TO EDIT PRESS ANY KEY ");
-        user.setPassword(USER_VALIDATION.validateAccess(SCANNER.nextLine()) ? getPassword() : existingUser.getPassword());
-        System.out.println("DO YOU WANT TO EDIT MOBILE NUMBER, PRESS 'YES' OR 'Y' AND DON'T WANT TO EDIT PRESS ANY KEY ");
-        user.setMobileNumber(USER_VALIDATION.validateAccess(SCANNER.nextLine()) ? getMobileNumber() : existingUser.getMobileNumber());
-        System.out.println((USER_CONTROLLER.update(user, id)) ? "DETAILS SUCCESSFULLY UPDATED" : "NOT UPDATED");
-    }
-
-    /**
-     * <p>
-     * Handles the sign-in process for a user, collecting and validating user information, providing options for
-     * user edit details.
-     * </p>
-     */
-    private void signIn() {
-        final User user = new User();
-
-        signInChoice(user);
-        user.setPassword(getPassword());
-        System.out.println((USER_CONTROLLER.signIn(user)) ? "ACCOUNT SIGN IN" : "INCORRECT EMAIL OR MOBILE NUMBER AND PASSWORD");
-        System.out.println(String.join("", "DO YOU WANT TO EDIT,GET,DELETE THE USER DETAILS,PRESS 'YES' ",
-                "FOR PRINT OPTION AND PRESS ANY KEY FOR MAIN MENU"));
-
-        if (USER_VALIDATION.validateAccess(SCANNER.nextLine())) {
-            displaysUserOptions((USER_CONTROLLER.getUserId(user)));
-        } else {
-            displayMenu();
-        }
-    }
-
-    /**
-     * <p>
-     * Retrieves and returns a user object based on the provided user id
-     * </p>
-     *
-     * @param id Refer the user id to retrieve
-     * @return Returns {@link User} details
-     */
-    private User get(final Long id) {
-        System.out.println(USER_CONTROLLER.get(id));
-
-        return (USER_CONTROLLER.get(id));
-    }
-
-    /**
-     * <p>
-     * Displays the user options and performs the action based on the user's choice.
-     * </p>
-     *
-     * @param id The user id to edit, delete, retrieves
-     */
-    public void displaysUserOptions(final Long id) {
-        System.out.println(String.join("\n", "CLICK 1 TO UPDATE", "CLICK 2 TO DELETE",
-                "CLICK 3 TO GET USERS", "CLICK 4 TO DISPLAY POST DETAILS", "CLICK 5 TO LOGOUT", "CLICK 6 TO EXIT"));
-
-        switch (getChoice()) {
-            case 1:
-                update(id);
-                break;
-            case 2:
-                delete(id);
-                break;
-            case 3:
-                get(id);
-                break;
-            case 4:
-                POST_VIEW.displayPostDetails(id);
-                break;
-            case 5:
-                logout();
-                break;
-            case 6:
-                System.out.println("EXITING");
-                SCANNER.close();
-                System.exit(0);
-                break;
-            default:
-                System.out.println("INVALID CHOICE, SELECT THE ABOVE CHOICE");
-                displaysUserOptions(id);
-        }
-        displaysUserOptions(id);
-    }
-
-    /**
-     * <p>
-     * Handles the user logout process, displaying a confirmation message, and log out the user if confirmed
-     * </p>
-     */
-    private void logout() {
-        System.out.println("DO YOU WANT TO LOGOUT?,CLICK YES AND OTHERWISE CLICK ANY KEY FOR MENU OPTIONS");
-
-        if (USER_VALIDATION.validateAccess(SCANNER.nextLine())) {
-            displayMenu();
-        }
-    }
-
-    /**
-     * <p>
      * Collects and validates the user's email address
      * </p>
      *
@@ -363,25 +182,15 @@ public class UserView {
      *
      * @return Returns {@link User.Gender} of the user
      */
-//    private User.Gender getGender() {
-//        System.out.println("ENTER GENDER (MALE,FEMALE,OTHERS)");
-//        final String gender = SCANNER.nextLine().toUpperCase();
-//
-//        try {
-//            return (USER_VALIDATION.validateGender(gender));
-//        } catch (final IllegalArgumentException illegalArgumentException) {
-//            System.out.println("ENTER AN VALID GENDER");
-//        }
-//
-//        return getGender();
-//    }
-    private String getGender() {
-        System.out.println("ENTER GENDER (MALE,FEMALE,OTHERS)");
-        final String gender = SCANNER.nextLine();
+    private User.Gender getGender() {
+        System.out.println("CLICK 1 TO MALE\nCLICK 2 TO FEMALE\nCLICK 3 TO OTHERS");
+        final User.Gender gender = User.Gender.getUserGender(getChoice());
 
-        if(USER_VALIDATION.validateGender(gender)){
+        if (null != gender) {
             return gender;
         } else {
+            System.out.println("INVALID USER GENDER, PLEASE SELECT THE ABOVE CHOICES");
+
             return getGender();
         }
     }
@@ -408,6 +217,116 @@ public class UserView {
         return getChoice();
     }
 
+    private Long getUserId() {
+        try {
+            System.out.println("ENTER THE USER ID:");
+            final Long userId = Long.valueOf(SCANNER.nextLine());
+
+            if (USER_VALIDATION.validateUserId(String.valueOf(userId))) {
+                return userId;
+            }
+        } catch (final NumberFormatException exception) {
+            System.out.println("PLEASE ENTER AN INTEGER");
+        }
+
+        return getUserId();
+    }
+
+    /**
+     * <p>
+     * Retrieves and returns a user's id
+     * </p>
+     *
+     * @param id The id to retrieves the user
+     * @return Returns {@link User} details
+     */
+    private User getUserId(final Long id) {
+        System.out.println(USER_CONTROLLER.get(id));
+        return USER_CONTROLLER.get(id);
+    }
+
+    /**
+     * <p>
+     * Displays the menu details
+     * </p>
+     */
+    private void displayMenu() {
+        System.out.println("\tFACEBOOK\nCLICK 1 TO SIGN UP\nCLICK 2 TO SIGN IN\nCLICK 3 TO EXIT");
+
+        switch (getChoice()) {
+            case 1:
+                signUp();
+                break;
+            case 2:
+                signIn();
+                break;
+            case 3:
+                System.exit(0);
+            default:
+                System.out.println("INVALID CHOICE");
+                displayMenu();
+        }
+    }
+
+    /**
+     * <p>
+     * Handles the sign-up process for a new user, collecting and validating user information
+     * </p>
+     */
+    private void signUp() {
+        final User user = new User();
+
+        user.setId(id++);
+        user.setName(getName());
+        user.setMobileNumber(getMobileNumber());
+        user.setEmail(getEmail());
+        user.setPassword(getPassword());
+        user.setGender(getGender());
+        user.setDateOfBirth(getDateOfBirth());
+
+        if (USER_CONTROLLER.signUp(user)) {
+            System.out.println("ACCOUNT SUCCESSFULLY SIGN UP");
+        } else {
+            System.out.println("ACCOUNT ALREADY EXIST");
+            displayMenu();
+        }
+        System.out.println("PRESS YES FOR EDIT USER DETAILS AND PRESS ANY KEY FOR MENU ");
+
+        if (USER_VALIDATION.validateAccess(SCANNER.nextLine())) {
+            displaysUserOptions(USER_CONTROLLER.getUserId(user));
+        } else {
+            displayMenu();
+        }
+    }
+
+    /**
+     * <p>
+     * Handles the sign-in process for a user, collecting and validating user information, providing options for
+     * user edit details.
+     * </p>
+     */
+    private void signIn() {
+        final User user = new User();
+
+        signInChoice(user);
+        user.setPassword(getPassword());
+
+        if (USER_CONTROLLER.signIn(user)) {
+            System.out.println("ACCOUNT SIGN IN");
+        } else {
+            System.out.println("INCORRECT EMAIL OR MOBILE NUMBER AND PASSWORD");
+            displayMenu();
+        }
+        System.out.println(String.join("", "DO YOU WANT TO EDIT,GET,DELETE THE USER DETAILS,PRESS 'YES' ",
+                "FOR PRINT OPTION AND PRESS ANY KEY FOR MAIN MENU"));
+
+        if (USER_VALIDATION.validateAccess(SCANNER.nextLine())) {
+            displaysUserOptions(USER_CONTROLLER.getUserId(user));
+        } else {
+            displayMenu();
+        }
+    }
+
     /**
      * <p>
      * Collects the user's sign-in choice
@@ -431,4 +350,106 @@ public class UserView {
         }
     }
 
+    /**
+     * <p>
+     * Displays the user options and performs the action based on the user's choice.
+     * </p>
+     *
+     * @param id The user id to edit, delete, retrieves
+     */
+    public void displaysUserOptions(final Long id) {
+        System.out.println(String.join("\n", "CLICK 1 TO UPDATE", "CLICK 2 TO DELETE",
+                "CLICK 3 TO GET USERS", "CLICK 4 TO DISPLAY POST DETAILS", "CLICK 5 TO LOGOUT", "CLICK 6 TO EXIT"));
+
+        switch (getChoice()) {
+            case 1:
+                update(id);
+                break;
+            case 2:
+                delete();
+                break;
+            case 3:
+                get();
+                break;
+            case 4:
+                POST_VIEW.displayPostDetails(id);
+                break;
+            case 5:
+                logout();
+                break;
+            case 6:
+                System.out.println("EXITING");
+                SCANNER.close();
+                System.exit(0);
+                break;
+            default:
+                System.out.println("INVALID CHOICE, SELECT THE ABOVE CHOICE");
+                displaysUserOptions(id);
+        }
+        displaysUserOptions(id);
+    }
+
+    /**
+     * <p>
+     * Updates the user's account information based on the provided id
+     * </p>
+     *
+     * @param id The user id to update
+     */
+    private void update(final Long id) {
+        final User user = new User();
+        final User existingUser = getUserId(id);
+
+        user.setId(id);
+        System.out.println("DO YOU WANT TO EDIT NAME, PRESS 'YES' OR 'Y' AND DON'T WANT TO EDIT PRESS ANY KEY ");
+        user.setName(USER_VALIDATION.validateAccess(SCANNER.nextLine()) ? getName() : existingUser.getName());
+        System.out.println("DO YOU WANT TO EDIT EMAIL, PRESS 'YES' OR 'Y' AND DON'T WANT TO EDIT PRESS ANY KEY ");
+        user.setEmail(USER_VALIDATION.validateAccess(SCANNER.nextLine()) ? getEmail() : existingUser.getEmail());
+        System.out.println("DO YOU WANT TO EDIT PASSWORD, PRESS ANY KEY AND DON'T WANT TO EDIT PRESS ANY KEY ");
+        user.setPassword(USER_VALIDATION.validateAccess(SCANNER.nextLine()) ? getPassword() : existingUser.getPassword());
+        System.out.println("DO YOU WANT TO EDIT MOBILE NUMBER, PRESS 'YES' OR 'Y' AND DON'T WANT TO EDIT PRESS ANY KEY ");
+        user.setMobileNumber(USER_VALIDATION.validateAccess(SCANNER.nextLine()) ? getMobileNumber() : existingUser.getMobileNumber());
+        System.out.println((USER_CONTROLLER.update(user)) ? "DETAILS SUCCESSFULLY UPDATED" : "NOT UPDATED");
+    }
+
+    /**
+     * <p>
+     * Retrieves and returns a user object based on the provided user id
+     * </p>
+     *
+     * @return Returns {@link User} details
+     */
+    private User get() {
+        final User user = (USER_CONTROLLER.get(getUserId()));
+
+        System.out.println(user);
+        return user;
+    }
+
+    /**
+     * <p>
+     * Deletes a user based on the provided userID
+     * </p>
+     */
+    private void delete() {
+        if (USER_CONTROLLER.delete(getUserId())) {
+            System.out.println("SUCCESSFULLY DELETED");
+            displayMenu();
+        } else {
+            System.out.println("NOT DELETED");
+        }
+    }
+
+    /**
+     * <p>
+     * Handles the user logout process, displaying a confirmation message, and log out the user if confirmed
+     * </p>
+     */
+    private void logout() {
+        System.out.println("DO YOU WANT TO LOGOUT?,CLICK YES AND OTHERWISE CLICK ANY KEY FOR MENU OPTIONS");
+
+        if (USER_VALIDATION.validateAccess(SCANNER.nextLine())) {
+            displayMenu();
+        }
+    }
 }

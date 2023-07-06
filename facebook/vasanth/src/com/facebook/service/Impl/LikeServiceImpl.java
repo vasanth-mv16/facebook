@@ -1,6 +1,7 @@
 package com.facebook.service.Impl;
 
 import com.facebook.model.Like;
+import com.facebook.model.Post;
 import com.facebook.service.LikeService;
 
 import java.util.ArrayList;
@@ -56,7 +57,7 @@ public class LikeServiceImpl implements LikeService {
      *
      * @return Collection of likes
      */
-    public Collection<Like> get() {
+    public Collection<Like> get(Long userId) {
         return LIKE_LIST;
     }
 
@@ -77,5 +78,15 @@ public class LikeServiceImpl implements LikeService {
         }
 
         return likeCount;
+    }
+
+    @Override
+    public boolean delete(Long likeId) {
+//        final Like like = get(likeId);
+//
+//        if (null != like) {
+//            return LIKE_LIST.remove(like);
+//        }
+        return false;
     }
 }

@@ -160,7 +160,8 @@ public class UserValidation {
      * @param gender Represents the gender of the user
      * @return Returns {@link User.Gender} for the user1
      */
-    public boolean validateGender(final String gender) {
-        return gender.matches("[male[female[others]]]{1,8}");
+    public User.Gender validateGender(final String gender) {
+        //return gender.matches("[male[female[others]]]{1,8}");
+        return User.Gender.valueOf(gender);
     }
 }
