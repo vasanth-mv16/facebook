@@ -53,5 +53,13 @@ public interface PostService {
      */
     boolean update(final Post post);
 
-    boolean delete (final Long id);
+    /**
+     * <p>
+     * Deletes the post details by passing id
+     * </p>
+     *
+     * @param id Refers the id for delete the post
+     * @return True if the post is successfully updated, false otherwise
+     */
+    boolean delete(final Long id);
 }

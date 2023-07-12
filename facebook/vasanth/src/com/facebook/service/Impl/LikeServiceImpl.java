@@ -1,7 +1,6 @@
 package com.facebook.service.Impl;
 
 import com.facebook.model.Like;
-import com.facebook.model.Post;
 import com.facebook.service.LikeService;
 
 import java.util.ArrayList;
@@ -12,8 +11,8 @@ import java.util.Collection;
  * Implements the following services for the like
  * </p>
  *
- * @version 1.0
  * @author vasanth
+ * @version 1.0
  */
 public class LikeServiceImpl implements LikeService {
 
@@ -25,7 +24,8 @@ public class LikeServiceImpl implements LikeService {
      * Default constructor for like service implementation
      * </p>
      */
-    private LikeServiceImpl() {}
+    private LikeServiceImpl() {
+    }
 
     /**
      * <p>
@@ -55,9 +55,10 @@ public class LikeServiceImpl implements LikeService {
     /**
      * {@inheritDoc}
      *
+     * @param userId Refers the userId to get like
      * @return Collection of likes
      */
-    public Collection<Like> get(Long userId) {
+    public Collection<Like> get(final Long userId) {
         return LIKE_LIST;
     }
 

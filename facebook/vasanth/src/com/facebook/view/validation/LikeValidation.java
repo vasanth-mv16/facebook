@@ -1,5 +1,13 @@
 package com.facebook.view.validation;
 
+/**
+ * <p>
+ * Given class used for validation the like details
+ * </p>
+ *
+ * @author vasanth
+ * @version 1.0
+ */
 public class LikeValidation {
 
     private static LikeValidation likeValidation;
@@ -31,7 +39,7 @@ public class LikeValidation {
      * </p>
      *
      * @param likeId The like id to be validated
-     * @return boolean - True if the user id is valid, false otherwise.
+     * @return True if the like id is valid, false otherwise.
      */
     public boolean validateLikeId(final String likeId) {
         return likeId.matches("[\\d]");

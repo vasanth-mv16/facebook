@@ -20,7 +20,7 @@ public interface LikeService {
      * </p>
      *
      * @param like Refer {@link Like} to create
-     * @return boolean - True if the like is created, false otherwise.
+     * @return True if the like is created, otherwise false
      */
     boolean create(final Like like);
 
@@ -29,6 +29,7 @@ public interface LikeService {
      * Gets the like list details
      * </p>
      *
+     * @param userId Refers the userId to get like
      * @return Collection of likes
      */
     Collection<Like> get(final Long userId);
@@ -43,5 +44,13 @@ public interface LikeService {
      */
     Long getCount(final Long postId);
 
+    /**
+     * <p>
+     * Deletes the like for post by the id
+     * </p>
+     *
+     * @param likeId Refers the id for unlike the post
+     * @return True if the like is unliked, otherwise false
+     */
     boolean delete(final Long likeId);
 }

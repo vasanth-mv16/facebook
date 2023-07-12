@@ -48,7 +48,7 @@ public class UserValidation {
      * </p>
      *
      * @param name - The name string to be validated.
-     * @return boolean - True if the name is valid, false otherwise.
+     * @return True if the name is valid, false otherwise.
      */
     public boolean validateName(final String name) {
         return name.matches("^[a-zA-Z\\s]+\\.?");
@@ -60,7 +60,7 @@ public class UserValidation {
      * </p>
      *
      * @param mobileNumber - The mobile Number string to be validated.
-     * @return boolean - True if the mobileNumber is valid, false otherwise.
+     * @return True if the mobileNumber is valid, false otherwise.
      */
     public boolean validateMobileNumber(final String mobileNumber) {
         return mobileNumber.matches("(^\\+(91){1,2}[6-9][0-9]{9}$)");
@@ -72,7 +72,7 @@ public class UserValidation {
      * </p>
      *
      * @param email The email string to be validated.
-     * @return boolean - True if the email is valid, false otherwise.
+     * @return True if the email is valid, false otherwise.
      */
     public boolean validateEmail(final String email) {
         return email.matches("^[a-zA-Z][a-zA-Z0-9]{1,15}@[a-z]{3,15}\\.[com[org[edu[in]]]]{2,3}$");
@@ -84,7 +84,7 @@ public class UserValidation {
      * </p>
      *
      * @param password The password string to be validated.
-     * @return boolean - True if the password is valid, false otherwise.
+     * @return True if the password is valid, false otherwise.
      */
     public boolean validatePassword(final String password) {
         return password.matches("^(?=.*[\\d])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,20}$");
@@ -96,7 +96,7 @@ public class UserValidation {
      * </p>
      *
      * @param dateOfBirth The date of birth has to validated
-     * @return boolean - True if the date of birth is valid, false otherwise.
+     * @return True if the date of birth is valid, false otherwise.
      */
     public boolean validateDateOfBirth(final String dateOfBirth) {
         try {
@@ -122,7 +122,7 @@ public class UserValidation {
      * </p>
      *
      * @param choice The choice has to validated
-     * @return boolean - True if the choice is valid, false otherwise.
+     * @return True if the choice is valid, false otherwise.
      */
     public boolean validateChoice(final String choice) {
         return choice.matches("\\d{1,2}");
@@ -134,7 +134,7 @@ public class UserValidation {
      * </p>
      *
      * @param access The access to be validated
-     * @return boolean - True if the check is valid, false otherwise.
+     * @return True if the check is valid, false otherwise.
      */
     public boolean validateAccess(final String access) {
         return (access.equalsIgnoreCase("yes") || access.equalsIgnoreCase("y"));
@@ -146,7 +146,7 @@ public class UserValidation {
      * </p>
      *
      * @param userId The user id to be validated
-     * @return boolean - True if the user id is valid, false otherwise.
+     * @return True if the user id is valid, false otherwise.
      */
     public boolean validateUserId(final String userId) {
         return userId.matches("[\\d]");
@@ -161,7 +161,6 @@ public class UserValidation {
      * @return Returns {@link User.Gender} for the user1
      */
     public User.Gender validateGender(final String gender) {
-        //return gender.matches("[male[female[others]]]{1,8}");
         return User.Gender.valueOf(gender);
     }
 }

@@ -1,9 +1,9 @@
 package com.facebook.controller;
 
 import com.facebook.model.Post;
-import com.facebook.service.Impl2.PostDAOIml;
 import com.facebook.service.PostService;
 import com.facebook.service.Impl.PostServiceImpl;
+import com.facebook.service.impl2.PostDAOImpl;
 
 import java.util.Collection;
 
@@ -18,7 +18,7 @@ import java.util.Collection;
 public class PostController {
 
     private static PostController postController;
-    private static final PostService POST_SERVICE_DAO = PostDAOIml.getInstance();
+    private static final PostService POST_SERVICE_DAO = PostDAOImpl.getInstance();
     private static final PostService POST_SERVICE = PostServiceImpl.getInstance();
 
     /**
@@ -91,6 +91,14 @@ public class PostController {
         return POST_SERVICE_DAO.update(post);
     }
 
+    /**
+     * <p>
+     * Checks the post is deleted
+     * </p>
+     *
+     * @param id Refers the id to delete the post
+     * @return True if the post is deleted, false otherwise.
+     */
     public boolean delete(final Long id) {
         return POST_SERVICE_DAO.delete(id);
     }

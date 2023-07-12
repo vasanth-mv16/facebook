@@ -2,12 +2,12 @@ package com.facebook.view;
 
 import com.facebook.controller.PostController;
 import com.facebook.model.Post;
+import com.facebook.model.PostBuilder;
 import com.facebook.view.validation.PostValidation;
 
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Collection;
-import java.util.Scanner;
 
 /**
  * <p>
@@ -17,15 +17,15 @@ import java.util.Scanner;
  * @author vasanth
  * @version 1.0
  */
-public class PostView {
+public class PostView extends CommonView {
 
-    private static final Scanner SCANNER = new Scanner(System.in);
     private static final UserView USER_VIEW = UserView.getInstance();
-    private static final LikeView LIKE_VIEW = LikeView.getInstance();
-    private static final PostController POST_CONTROLLER = PostController.getInstance();
-    private static final PostValidation POST_VALIDATION = PostValidation.getInstance();
+    private final LikeView likeView = LikeView.getInstance();
+    private final CommentView commentView = CommentView.getInstance();
+    private final PostController postController = PostController.getInstance();
+    private final PostValidation postValidation = PostValidation.getInstance();
     private static PostView postView;
-    private static Long postId = 1L;
+    private static Long id = 1L;
 
     /**
      * <p>
@@ -52,39 +52,17 @@ public class PostView {
 
     /**
      * <p>
-     * Collects and validates the user's choice as an integer value
-     * </p>
-     *
-     * @return The validated choice
-     */
-    private int getChoice() {
-        try {
-            System.out.println("ENTER YOUR CHOICE :");
-            final int choice = Integer.parseInt(SCANNER.nextLine());
-
-            if (POST_VALIDATION.validateChoice(String.valueOf(choice))) {
-                return choice;
-            }
-        } catch (final NumberFormatException exception) {
-            System.out.println("PLEASE ENTER AN INTEGER");
-        }
-
-        return getChoice();
-    }
-
-    /**
-     * <p>
      * Gets the post id detail
      * </p>
      *
      * @return Returns the post id of the user
      */
-    private Long getPostId() {
+    public Long getPostId() {
         try {
             System.out.println("ENTER THE POST ID:");
             final Long postId = Long.valueOf(SCANNER.nextLine());
 
-            if (POST_VALIDATION.validatePostId(String.valueOf(postId))) {
+            if (postValidation.validatePostId(String.valueOf(postId))) {
                 return postId;
             }
         } catch (final NumberFormatException exception) {
@@ -129,9 +107,10 @@ public class PostView {
      */
     public void displayPostDetails(final Long userId) {
         System.out.println(String.join("\n", "CLICK 1 TO CREATE", "CLICK 2 TO GET", "CLICK 3 TO GET USING ID",
-                "CLICK 4 TO DELETE", "CLICK 5 TO UPDATE", "CLICK 6 TO DISPLAY LIKE DETAILS", "CLICK 6 TO DISPLAY USER OPTIONS"));
+                "CLICK 4 TO DELETE", "CLICK 5 TO UPDATE", "CLICK 6 TO DISPLAY LIKE DETAILS", "CLICK 7 TO DISPLAY COMMENT OPTIONS",
+                "CLICK 8 TO DISPLAY USER OPTION"));
 
-        switch (getChoice()) {
+        switch (USER_VIEW.getChoice()) {
             case 1:
                 create(userId);
                 break;
@@ -148,9 +127,12 @@ public class PostView {
                 update();
                 break;
             case 6:
-                LIKE_VIEW.displayLikeDetails(userId);
+                likeView.displayLikeDetails(userId);
                 break;
             case 7:
+                commentView.displayCommentDetails(userId);
+                break;
+            case 8:
                 USER_VIEW.displaysUserOptions(userId);
                 break;
             default:
@@ -168,22 +150,32 @@ public class PostView {
      * @param userId Refer the user id for the post
      */
     private void create(final Long userId) {
-        final Post post = new Post();
+        final PostBuilder post = new PostBuilder();
         final Timestamp postUploadTime = Timestamp.from(Instant.now());
 
         post.setUserId(userId);
-        post.setId(postId++);
+        post.setId(getPostIdGenerate());
         post.setCaption(getCaption());
         post.setLocation(getLocation());
         post.setUploadTime(postUploadTime);
 
-        if (POST_CONTROLLER.create(post)) {
+        if (postController.create(post.bulidPost())) {
             System.out.println("SUCCESSFULLY POSTED");
-            System.out.println(post.getId());
         } else {
             System.out.println("FAILED TO POST");
             create(userId);
         }
+    }
+
+    /**
+     * <p>
+     * Generates id for the user, post, like, comment
+     * </p>
+     *
+     * @return Returns the id
+     */
+    private Long getPostIdGenerate() {
+        return id++;
     }
 
     /**
@@ -194,9 +186,9 @@ public class PostView {
      * @return Collection of post
      */
     private Collection<Post> getAll(final Long userId) {
-        System.out.println(POST_CONTROLLER.getALl(userId));
+        System.out.println(postController.getALl(userId));
 
-        return POST_CONTROLLER.getALl(userId);
+        return postController.getALl(userId);
     }
 
     /**
@@ -207,7 +199,8 @@ public class PostView {
      * @return Returns {@link Post} of the user
      */
     private Post get() {
-        final Post post = POST_CONTROLLER.get(getPostId());
+        final Post post = postController.get(getPostId());
+
         System.out.println(post);
 
         if (null == post) {
@@ -224,17 +217,17 @@ public class PostView {
      * </p>
      */
     private void update() {
-        final Post post = new Post();
+        final PostBuilder post = new PostBuilder();
         final Post get = get();
 
         post.setId(get.getId());
         post.setUserId(get.getUserId());
         System.out.println("DO YOU WANT TO EDIT CAPTION, PRESS ANY KEY AND DON'T WANT TO EDIT PRESS 'NO' OR 'N' ");
-        post.setCaption((POST_VALIDATION.validateAccess(SCANNER.nextLine())) ? getCaption() : get.getCaption());
+        post.setCaption((postValidation.validateAccess(SCANNER.nextLine())) ? getCaption() : get.getCaption());
         System.out.println("DO YOU WANT TO EDIT LOCATION, PRESS ANY KEY AND DON'T WANT TO EDIT PRESS 'NO' OR 'N' ");
-        post.setLocation((POST_VALIDATION.validateAccess(SCANNER.nextLine())) ? getLocation() : get.getLocation());
+        post.setLocation((postValidation.validateAccess(SCANNER.nextLine())) ? getLocation() : get.getLocation());
 
-        if (POST_CONTROLLER.update(post)) {
+        if (postController.update(post.bulidPost())) {
             System.out.println("POST UPDATED");
         } else {
             System.out.println("NOT UPDATED");
@@ -242,7 +235,12 @@ public class PostView {
         }
     }
 
+    /**
+     * <p>
+     * Deletes the post based on post id
+     * </p>
+     */
     private void delete() {
-        System.out.println(POST_CONTROLLER.delete(getPostId()) ? "SUCCESSFULLY DELETED" : "NOT DELETED");
+        System.out.println(postController.delete(getPostId()) ? "SUCCESSFULLY DELETED" : "NOT DELETED");
     }
 }

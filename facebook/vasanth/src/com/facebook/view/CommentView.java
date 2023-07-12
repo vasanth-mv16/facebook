@@ -1,26 +1,41 @@
 package com.facebook.view;
 
 import com.facebook.controller.CommentController;
-import com.facebook.controller.LikeController;
 import com.facebook.model.Comment;
 import com.facebook.view.validation.CommentValidation;
-import com.facebook.view.validation.PostValidation;
 
-import java.util.Scanner;
-
-public class CommentView {
+/**
+ * <p>
+ * Represents the comment for the post by user
+ * </p>
+ *
+ * @author vasanth
+ * @version 1.0
+ */
+public class CommentView extends CommonView {
 
     private static CommentView commentView;
-    private static final Scanner SCANNER = new Scanner(System.in);
-    private static final CommentController  COMMENT_CONTROLLER = CommentController.getInstance();
+    private final CommentController commentController = CommentController.getInstance();
     private static final UserView USER_VIEW = UserView.getInstance();
     private static final PostView POST_VIEW = PostView.getInstance();
-    private static final PostValidation POST_VALIDATION = PostValidation.getInstance();
-    private static  final CommentValidation COMMENT_VALIDATION = CommentValidation.getInstance();
+    private final CommentValidation commentValidation = CommentValidation.getInstance();
     private static Long id = 1L;
 
-    private CommentView() {}
+    /**
+     * <p>
+     * Default constructor for comment view
+     * </p>
+     */
+    private CommentView() {
+    }
 
+    /**
+     * <p>
+     * Gets the instance of the comment view
+     * </p>
+     *
+     * @return Returns the singleton instance of the comment view class.
+     */
     public static CommentView getInstance() {
         if (null == commentView) {
             commentView = new CommentView();
@@ -29,40 +44,82 @@ public class CommentView {
         return commentView;
     }
 
+    /**
+     * <p>
+     * Generates the comment id for the post
+     * </p>
+     *
+     * @return Returns the generated id for comment
+     */
+    private Long getCommentIdGenerate() {
+        return id++;
+    }
+    /**
+     * <p>
+     * Shows the menu details for the user to comment the post
+     * </p>
+     *
+     * @param userId Refer the user id for the like
+     */
     public void displayCommentDetails(final Long userId) {
-        System.out.println();
+        System.out.println("CLICK 1 TO CREATE\nCLICK 2 TO DELETE\nCLICK 3 TO DISPLAY POST DETAILS");
 
-        switch(USER_VIEW.getChoice()) {
+        switch (USER_VIEW.getChoice()) {
             case 1:
                 create(userId);
                 break;
-            default :
-                System.out.println();
+            case 2:
+                delete();
+                break;
+            case 3:
+                POST_VIEW.displayPostDetails(userId);
+                break;
+            default:
+                System.out.println("INVALID INPUT, SELECT THE ABOVE OPTION");
                 displayCommentDetails(userId);
         }
-
+        displayCommentDetails(userId);
     }
 
+    /**
+     * <p>
+     * Shows the comments details for the post
+     * </p>
+     *
+     * @param userId Refer the userId for the post like
+     */
     private void create(final Long userId) {
         final Comment comment = new Comment();
 
-        comment.setId(id++);
+        comment.setId(getCommentIdGenerate());
         comment.setUserId(userId);
-        comment.setPostId(getPostId());
-        comment.setMessage(comment.getMessage());
-        System.out.println(COMMENT_CONTROLLER.create(comment) ? "COMMENTED" : "NOT COMMENTED");
+        comment.setPostId(POST_VIEW.getPostId());
+        comment.setMessage(getMessage());
+        System.out.println(commentController.create(comment) ? "COMMENTED" : "NOT COMMENTED");
     }
 
+    /**
+     * <p>
+     * Deletes the comment based on comment id
+     * </p>
+     */
     private void delete() {
-        System.out.println(COMMENT_CONTROLLER.delete(getCommentId()) ? "COMMENT DELETED" : "NOT DELETED");
+        System.out.println(commentController.delete(getCommentId()) ? "COMMENT DELETED" : "NOT DELETED");
     }
 
+    /**
+     * <p>
+     * Gets the comment id detail
+     * </p>
+     *
+     * @return Returns the comment id of the user
+     */
     private Long getCommentId() {
         try {
             System.out.println("ENTER THE COMMENT ID:");
             final Long commentId = Long.valueOf(SCANNER.nextLine());
 
-            if (COMMENT_VALIDATION.validateCommentId(String.valueOf(commentId))) {
+            if (commentValidation.validateCommentId(String.valueOf(commentId))) {
                 return commentId;
             }
         } catch (final NumberFormatException exception) {
@@ -71,19 +128,16 @@ public class CommentView {
         return null;
     }
 
-    private Long getPostId() {
-        try {
-            System.out.println("ENTER THE POST ID:");
-            final Long postId = Long.valueOf(SCANNER.nextLine());
+    /**
+     * <p>
+     * Collects the post caption
+     * </p>
+     *
+     * @return The caption of the post
+     */
+    private String getMessage() {
+        System.out.println("ENTER YOUR MESSAGE FOR YOUR POST:");
 
-            if (POST_VALIDATION.validatePostId(String.valueOf(postId))) {
-                return postId;
-            }
-        } catch (final NumberFormatException exception) {
-            System.out.println("PLEASE ENTER AN INTEGER");
-        }
-
-        return getPostId();
+        return SCANNER.nextLine().trim();
     }
-
 }

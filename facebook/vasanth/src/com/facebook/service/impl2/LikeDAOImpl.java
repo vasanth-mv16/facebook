@@ -1,4 +1,4 @@
-package com.facebook.service.Impl2;
+package com.facebook.service.impl2;
 
 import com.facebook.DAOConnection.JDBCConnection;
 import com.facebook.model.Like;
@@ -9,26 +9,54 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * <p>
+ * Provides the Service for the like DAO
+ * </p>
+ *
+ * @author vasanth
+ * @version 1.1
+ */
 public class LikeDAOImpl implements LikeService {
 
     private static LikeService likeDAOImpl;
 
+    /**
+     * <p>
+     * Default constructor for like DAO
+     * </p>
+     */
     private LikeDAOImpl() {
     }
 
+    /**
+     * <p>
+     * Gets the instance of like service implementation
+     * </p>
+     *
+     * @return Returns the singleton instance of the like service implementation class.
+     */
     public static LikeService getInstance() {
-        if(null == likeDAOImpl) {
+        if (null == likeDAOImpl) {
             likeDAOImpl = new LikeDAOImpl();
         }
 
         return likeDAOImpl;
     }
+
+    /**
+     * <p>
+     * Creates a like and inserts it into the database
+     * </p>
+     *
+     * @param like Refers the like to create and insert.
+     * @return True, if the post was created and inserted successfully, otherwise false
+     */
     @Override
     public boolean create(final Like like) {
         final String sql = "insert into likes(user_id, post_id) values (?,?);";
 
-        try {
-            PreparedStatement preparedStatement = JDBCConnection.getConnection().prepareStatement(sql);
+        try (PreparedStatement preparedStatement = JDBCConnection.getConnection().prepareStatement(sql)) {
 
             preparedStatement.setLong(1, like.getUserId());
             preparedStatement.setLong(2, like.getPostId());
@@ -42,6 +70,14 @@ public class LikeDAOImpl implements LikeService {
         return false;
     }
 
+    /**
+     * <p>
+     * Retrieves all likes with the user id from the database
+     * </p>
+     *
+     * @param userId Refers the user id to retrieve the likes
+     * @return Collection of {@link Like} objects with the user id
+     */
     @Override
     public Collection<Like> get(final Long userId) {
         final Collection<Like> likes = new ArrayList<>();
@@ -67,6 +103,14 @@ public class LikeDAOImpl implements LikeService {
         return likes;
     }
 
+    /**
+     * <p>
+     * Gets the like count of the post id
+     * </p>
+     *
+     * @param postId Represents the user id to get the like count
+     * @return Returns count of likes for the post.
+     */
     @Override
     public Long getCount(final Long postId) {
         final String sql = "select post_id, count(post_id) as post_count from likes where post_id = ? group by post_id;";
@@ -88,6 +132,14 @@ public class LikeDAOImpl implements LikeService {
         return postId;
     }
 
+    /**
+     * <p>
+     * Unlikes the post by passing like id
+     * </p>
+     *
+     * @param likeId Refers the id for unlike the post
+     * @return True, if the post was unliked, otherwise false
+     */
     @Override
     public boolean delete(Long likeId) {
         final String sql = "delete from likes where id = ?";

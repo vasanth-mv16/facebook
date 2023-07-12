@@ -1,5 +1,13 @@
 package com.facebook.model;
 
+/**
+ * <p>
+ * Represents the post comment by the user
+ * </p>
+ *
+ * @author vasanth
+ * @version 1.0
+ */
 public class Comment {
 
     private Long id ;

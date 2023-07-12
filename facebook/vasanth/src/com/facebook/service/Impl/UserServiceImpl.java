@@ -6,7 +6,6 @@ import com.facebook.service.UserService;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * <p>
  * Implements the following services for the user
@@ -96,7 +95,6 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
-
     /**
      * {@inheritDoc}
      *
@@ -105,13 +103,21 @@ public class UserServiceImpl implements UserService {
      */
     public boolean signIn(final User user) {
         if (null != user.getEmail()) {
-            return user_email(user);
+            return isEmailExist(user);
         } else {
-            return user_mobile_number(user);
+            return isMobileNumberExist(user);
         }
     }
 
-    public boolean user_mobile_number (final User user) {
+    /**
+     * <p>
+     * Checks the users mobile number and password exists in the list
+     * </p>
+     *
+     * @param user {@link User}user object containing the mobile number and password.
+     * @return true if a user with the given mobile number and password is found, otherwise false
+     */
+    public boolean isMobileNumberExist(final User user) {
         for (User existingUser : USER_LIST) {
 
             if ((user.getMobileNumber().equals(existingUser.getMobileNumber()) &&
@@ -119,15 +125,27 @@ public class UserServiceImpl implements UserService {
                 return true;
             }
         }
+
         return false;
     }
-    public boolean user_email (final User user) {
+
+    /**
+     * <p>
+     * Checks the users email and password exists in the list
+     * </p>
+     *
+     * @param user {@link User}user object containing the mobile number and password.
+     * @return true if a user with the given mobile number and password is found, otherwise false
+     */
+    public boolean isEmailExist(final User user) {
         for (User existingUser : USER_LIST) {
+
             if (existingUser.getEmail().equals(user.getEmail()) &&
                     existingUser.getPassword().equals(user.getPassword())) {
                 return true;
             }
         }
+
         return false;
     }
 

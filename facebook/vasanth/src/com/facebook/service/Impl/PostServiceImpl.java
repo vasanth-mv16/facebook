@@ -115,6 +115,12 @@ public class PostServiceImpl implements PostService {
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param id Refers the id for delete the post
+     * @return True if the post is successfully updated, false otherwise
+     */
     @Override
     public boolean delete(Long id) {
         final Post post = get(id);

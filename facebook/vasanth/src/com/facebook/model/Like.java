@@ -1,7 +1,9 @@
 package com.facebook.model;
 
 /**
- * Represents the post like
+ * <p>
+ * Represents the post like by user
+ * </p>
  *
  * @version 1.0
  * @author vasanth

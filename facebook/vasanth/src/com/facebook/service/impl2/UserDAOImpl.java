@@ -7,16 +7,24 @@ import com.facebook.service.UserService;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+/**
+ * <p>
+ * Provides the following services for the user
+ * </p>
+ *
+ * @author vasanth
+ * @version 1.1
+ */
 public class UserDAOImpl implements UserService {
 
     private static UserService userDAOImpl;
 
     /**
      * <p>
-     * Default constructor for user controller
+     * Default constructor for user DAO
      * </p>
      */
-    private UserDAOImpl() {
+    public UserDAOImpl() {
     }
 
     /**
@@ -36,10 +44,10 @@ public class UserDAOImpl implements UserService {
 
     /**
      * <p>
-     * Signs up a new user by inserting their details into the "users" table
+     * Signs up a new user by inserting their details into the user table
      * </p>
      *
-     * @param user The User object containing the user's details.
+     * @param user Represents the user details for getting information
      * @return true if the sign-up was successful, false otherwise.
      */
     public boolean signUp(final User user) {
@@ -84,6 +92,7 @@ public class UserDAOImpl implements UserService {
         } catch (final Exception exception) {
             System.out.println(exception.getMessage());
         }
+
         return false;
     }
 
@@ -96,7 +105,7 @@ public class UserDAOImpl implements UserService {
      * @return true if a user with the given mobile number and password is found, otherwise false
      */
     public boolean isUserEmailExists(final User user) {
-        final String sql = "select * from users where email = ? and password = ?;";
+        final String sql = "select * from users where email = ? and password = ?";
 
         try (final PreparedStatement preparedStatement = JDBCConnection.getConnection().prepareStatement(sql)) {
 
@@ -108,6 +117,7 @@ public class UserDAOImpl implements UserService {
         } catch (final Exception exception) {
             System.out.println(exception.getMessage());
         }
+
         return false;
     }
 
@@ -143,6 +153,7 @@ public class UserDAOImpl implements UserService {
         } catch (final Exception exception) {
             System.out.println(exception.getMessage());
         }
+
         return null;
     }
 
@@ -156,7 +167,7 @@ public class UserDAOImpl implements UserService {
      */
     @Override
     public Long getUserId(final User user) {
-        final String sql = "select id from users where phonenumber = ? or email = ?;";
+        final String sql = "select id from users where phonenumber = ? or email = ?";
 
         try (final PreparedStatement preparedStatement = JDBCConnection.getConnection().prepareStatement(sql)) {
 
@@ -167,10 +178,10 @@ public class UserDAOImpl implements UserService {
             if (resultSet.next()) {
                 return resultSet.getLong("id");
             }
-
         } catch (final Exception exception) {
             System.out.println(exception.getMessage());
         }
+
         return null;
     }
 
@@ -194,6 +205,7 @@ public class UserDAOImpl implements UserService {
         } catch (final Exception exception) {
             System.out.println(exception.getMessage());
         }
+
         return false;
     }
 
@@ -206,7 +218,7 @@ public class UserDAOImpl implements UserService {
      * @return true if the user is successfully signed in, otherwise false
      */
     @Override
-    public boolean signIn(User user) {
+    public boolean signIn(final User user) {
         return (null != user.getEmail() ? isUserEmailExists(user) : isUserMobileNumberExists(user));
     }
 
@@ -221,8 +233,7 @@ public class UserDAOImpl implements UserService {
     public boolean update(final User user) {
         final String sql = "update users set name = ?, phonenumber = ?, email = ?, password = ? where id = ?";
 
-        try {
-            final PreparedStatement preparedStatement = JDBCConnection.getConnection().prepareStatement(sql);
+        try (final PreparedStatement preparedStatement = JDBCConnection.getConnection().prepareStatement(sql)){
 
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getMobileNumber());
@@ -238,32 +249,5 @@ public class UserDAOImpl implements UserService {
 
         return false;
     }
-
-    /**
-     * <p>
-     * Retrieves id of the user based on their mobile number or email address
-     * </p>
-     *
-     * @param user Refers {@link User}user to get id
-     * @return Returns id of the user if found, otherwise null
-     */
-    public Long getID(final User user) {
-        final String sql = "select id from users where phonenumber = ? or email = ?";
-
-        try {
-            final PreparedStatement preparedStatement = JDBCConnection.getConnection().prepareStatement(sql);
-
-            preparedStatement.setString(1, user.getMobileNumber());
-            preparedStatement.setString(2, user.getEmail());
-            final ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                return resultSet.getLong("id");
-            }
-        } catch (final Exception exception) {
-            System.out.println(exception.getMessage());
-        }
-
-        return null;
-    }
 }
+

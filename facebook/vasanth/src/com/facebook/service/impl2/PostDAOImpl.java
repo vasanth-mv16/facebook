@@ -1,4 +1,4 @@
-package com.facebook.service.Impl2;
+package com.facebook.service.impl2;
 
 import com.facebook.DAOConnection.JDBCConnection;
 import com.facebook.model.Post;
@@ -9,42 +9,77 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class PostDAOIml implements PostService {
+/**
+ * <p>
+ * Provides the following services for post
+ * </p>
+ *
+ * @author vasanth
+ * @version 1.1
+ */
+public class PostDAOImpl implements PostService {
 
     private static PostService postDAOImpl;
 
-    private PostDAOIml() {
+    /**
+     * <p>
+     * Default constructor for post DAO
+     * </p>
+     */
+    private PostDAOImpl() {
     }
 
+    /**
+     * <p>
+     * Gets the instance of post service implementation
+     * </p>
+     *
+     * @return Returns the singleton instance of the post service implementation class.
+     */
     public static PostService getInstance() {
         if (null == postDAOImpl) {
-            postDAOImpl = new PostDAOIml();
+            postDAOImpl = new PostDAOImpl();
         }
 
         return postDAOImpl;
     }
 
+    /**
+     * <p>
+     * Creates a new post and inserts it into the database
+     * </p>
+     *
+     * @param posts The post to create and insert.
+     * @return True, if the post was created and inserted successfully, otherwise false
+     */
     @Override
     public boolean create(final Post posts) {
         final String sql = "insert into posts(user_id, caption, location, uploadtime) values (?,?,?,?);";
 
-        try {
-            PreparedStatement preparedStatement = JDBCConnection.getConnection().prepareStatement(sql);
+        try (PreparedStatement preparedStatement = JDBCConnection.getConnection().prepareStatement(sql)) {
 
             preparedStatement.setLong(1, posts.getUserId());
             preparedStatement.setString(2, posts.getCaption());
             preparedStatement.setString(3, posts.getLocation());
-            preparedStatement.setTimestamp(4,posts.getUploadTime());
+            preparedStatement.setTimestamp(4, posts.getUploadTime());
             preparedStatement.executeUpdate();
 
             return true;
-        } catch (Exception exception) {
+        } catch (final Exception exception) {
             System.out.println(exception.getMessage());
         }
 
         return false;
     }
 
+    /**
+     * <p>
+     * Retrieves all posts with the user id from the database
+     * </p>
+     *
+     * @param user_id Refers the user id to retrieve the posts
+     * @return A collection of {@link Post} objects with the user id
+     */
     @Override
     public Collection<Post> getAll(final Long user_id) {
         final Collection<Post> POSTS = new ArrayList<>();
@@ -52,7 +87,7 @@ public class PostDAOIml implements PostService {
 
         try (final PreparedStatement preparedStatement = JDBCConnection.getConnection().prepareStatement(sql)) {
 
-            preparedStatement.setLong(1,user_id);
+            preparedStatement.setLong(1, user_id);
             final ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -64,7 +99,6 @@ public class PostDAOIml implements PostService {
                 post.setLocation(resultSet.getString("location"));
                 post.setUploadTime(resultSet.getTimestamp("uploadtime"));
                 POSTS.add(post);
-
             }
         } catch (final Exception exception) {
             System.out.println(exception.getMessage());
@@ -73,6 +107,14 @@ public class PostDAOIml implements PostService {
         return POSTS;
     }
 
+    /**
+     * <p>
+     * Retrieves posts with the post id from the database
+     * </p>
+     *
+     * @param id Refers the id of the user to retrieve the posts
+     * @return A collection of {@link Post} objects with the user id
+     */
     @Override
     public Post get(final Long id) {
         final String sql = "select * from posts where id = ?";
@@ -100,6 +142,14 @@ public class PostDAOIml implements PostService {
         return null;
     }
 
+    /**
+     * <p>
+     * Updates the caption and location of a post in the database
+     * </p>
+     *
+     * @param post Refers the post for update caption and location
+     * @return True if the post was updated successfully, otherwise false
+     */
     @Override
     public boolean update(final Post post) {
         final String sql = "update posts set caption = ?, location = ? where id = ? AND user_id = ?";
@@ -120,6 +170,14 @@ public class PostDAOIml implements PostService {
         return false;
     }
 
+    /**
+     * <p>
+     * Deletes a post from the database based on the post id
+     * </p>
+     *
+     * @param id Refer the id of the post to delete
+     * @return True, if the post was deleted successfully, otherwise false
+     */
     @Override
     public boolean delete(final Long id) {
         final String sql = "delete from posts where id = ?";

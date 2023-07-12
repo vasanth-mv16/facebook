@@ -3,26 +3,24 @@ package com.facebook.view;
 import com.facebook.controller.LikeController;
 import com.facebook.model.Like;
 import com.facebook.view.validation.LikeValidation;
-import com.facebook.view.validation.PostValidation;
 import com.facebook.view.validation.UserValidation;
-
-import java.util.Scanner;
 
 /**
  * <p>
  * Represents the like for the post by user
  * </p>
+ *
+ * @author vasanth
+ * @version 1.0
  */
-public class LikeView {
+public class LikeView extends CommonView {
 
     private static LikeView likeView;
-    private static final Scanner SCANNER = new Scanner(System.in);
-    private static final LikeController LIKE_CONTROLLER = LikeController.getInstance();
+    private final LikeController likeController = LikeController.getInstance();
     private static final UserView USER_VIEW = UserView.getInstance();
     private static final PostView POST_VIEW = PostView.getInstance();
-    private static final PostValidation POST_VALIDATION = PostValidation.getInstance();
-    private static final UserValidation USER_VALIDATION = UserValidation.getInstance();
-    private static final LikeValidation LIKE_VALIDATION = LikeValidation.getInstance();
+    private final UserValidation userValidation = UserValidation.getInstance();
+    private final LikeValidation likeValidation = LikeValidation.getInstance();
     private static Long id = 1L;
 
     /**
@@ -48,12 +46,29 @@ public class LikeView {
         return likeView;
     }
 
+    /**
+     * <p>
+     * Generates the like id of the post
+     * </p>
+     *
+     * @return Returns generated id for the like
+     */
+    private Long getLikeIdGenerate() {
+        return id++;
+    }
+    /**
+     * <p>
+     * Gets the like id detail
+     * </p>
+     *
+     * @return Returns the like id of the user
+     */
     private Long getLikeId() {
         try {
             System.out.println("ENTER THE LIKE ID:");
             final Long likeId = Long.valueOf(SCANNER.nextLine());
 
-            if (LIKE_VALIDATION.validateLikeId(String.valueOf(likeId))) {
+            if (likeValidation.validateLikeId(String.valueOf(likeId))) {
                 return likeId;
             }
         } catch (final NumberFormatException exception) {
@@ -62,6 +77,7 @@ public class LikeView {
 
         return getLikeId();
     }
+
     /**
      * <p>
      * Gets the user id detail
@@ -74,7 +90,7 @@ public class LikeView {
             System.out.println("ENTER THE USER ID:");
             final Long userId = Long.valueOf(SCANNER.nextLine());
 
-            if (USER_VALIDATION.validateUserId(String.valueOf(userId))) {
+            if (userValidation.validateUserId(String.valueOf(userId))) {
                 return userId;
             }
         } catch (final NumberFormatException exception) {
@@ -82,28 +98,6 @@ public class LikeView {
         }
 
         return getUserId();
-    }
-
-    /**
-     * <p>
-     * Gets the post id detail
-     * </p>
-     *
-     * @return Returns the post id of the user
-     */
-    private Long getPostId() {
-        try {
-            System.out.println("ENTER THE POST ID:");
-            final Long postId = Long.valueOf(SCANNER.nextLine());
-
-            if (POST_VALIDATION.validatePostId(String.valueOf(postId))) {
-                return postId;
-            }
-        } catch (final NumberFormatException exception) {
-            System.out.println("PLEASE ENTER AN INTEGER");
-        }
-
-        return getPostId();
     }
 
     /**
@@ -147,14 +141,16 @@ public class LikeView {
      * <p>
      * Shows the like details
      * </p>
+     *
+     * @param userId Refer the userId for the post comment
      */
     private void create(final Long userId) {
         final Like like = new Like();
 
-        like.setId(id++);
+        like.setId(getLikeIdGenerate());
         like.setUserId(userId);
-        like.setPostId(getPostId());
-        System.out.println(LIKE_CONTROLLER.create(like) ? "LIKED" : "NOT LIKED");
+        like.setPostId(POST_VIEW.getPostId());
+        System.out.println(likeController.create(like) ? "LIKED" : "NOT LIKED");
     }
 
     /**
@@ -163,7 +159,7 @@ public class LikeView {
      * </p>
      */
     private void get() {
-        System.out.println(LIKE_CONTROLLER.get(getUserId()));
+        System.out.println(likeController.get(getUserId()));
     }
 
     /**
@@ -172,14 +168,18 @@ public class LikeView {
      * </p>
      */
     private void getCount() {
-        Long postId = getPostId();
-        Long likeCount = LIKE_CONTROLLER.getCount(postId);
+        Long postId = POST_VIEW.getPostId();
+        Long likeCount = likeController.getCount(postId);
 
         System.out.println("TOTAL LIKE FOR POST ID " + postId + ": " + likeCount);
-
     }
 
+    /**
+     * <p>
+     * Unlikes the like for the post
+     * </p>
+     */
     private void delete() {
-        System.out.println(LIKE_CONTROLLER.delete(getLikeId()) ? "POST UNLIKED" : "LIKE NOT REMOVE");
+        System.out.println(likeController.delete(getLikeId()) ? "POST UNLIKED" : "LIKE NOT REMOVE");
     }
 }

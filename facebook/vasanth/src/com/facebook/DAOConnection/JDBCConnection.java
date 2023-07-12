@@ -1,36 +1,50 @@
 package com.facebook.DAOConnection;
 
+import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.util.Properties;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
 /**
  * Provides a static method to retrieve a database connection using the postgreSQL driver
  *
- * @version 1.0
  * @author vasanth
+ * @version 1.1
  */
 public class JDBCConnection {
-
     private static JDBCConnection connection;
-    private static final String SQL_URL = "jdbc:postgresql://localhost:5432/facebook";
-    private static final String USER_NAME = "postgres";
-    private static final String PASSWORD = "vasanth16";
     private static final Integer MAX_POOL_SIZE = 10;
     private static BlockingQueue<Connection> connectionPool;
 
+    /**
+     * <p>
+     * Default constructor for JDBC connection
+     * </p>
+     */
     private JDBCConnection() {
         connectionPool = new ArrayBlockingQueue<>(MAX_POOL_SIZE);
 
         createPool();
     }
 
+    /**
+     * <p>
+     * Gets the instance of JDBC connection service
+     * </p>
+     *
+     * @return Returns the singleton instance of the JDBC connection class.
+     */
     public static JDBCConnection getInstance() {
         return null == connection ? connection = new JDBCConnection() : connection;
     }
 
+    /**
+     * <p>
+     * Creates a connection pool by obtaining and adding connections to the pool
+     * </p>
+     */
     private static void createPool() {
         try {
 
@@ -47,12 +61,23 @@ public class JDBCConnection {
     }
 
     /**
+     * <p>
      * Retrieves a database connection using the postgreSQL driver
+     * </p>
      *
      * @return The database connection object.
      */
     public static Connection getConnection() {
         try {
+            final String filePath = "C:\\Users\\maria\\Downloads\\facebooks (3)\\facebooks\\facebooks\\DataBase_Resource\\jdbc.properties";
+            final FileInputStream fileInputStream = new FileInputStream(filePath);
+            final Properties properties = new Properties();
+
+            properties.load(fileInputStream);
+            final String SQL_URL = properties.getProperty("SQL_URL");
+            final String USER_NAME = properties.getProperty("USER_NAME");
+            final String PASSWORD = properties.getProperty("PASSWORD");
+
             return DriverManager.getConnection(SQL_URL, USER_NAME, PASSWORD);
         } catch (final Exception exception) {
             exception.printStackTrace();
@@ -60,6 +85,13 @@ public class JDBCConnection {
         return null;
     }
 
+    /**
+     * <p>
+     * Retrieves a connection from the connection pool.
+     * </p>
+     *
+     * @return Connection object retrieved from the connection pool, or null if an error occurs.
+     */
     public Connection get() {
         try {
             return connectionPool.take();
@@ -68,24 +100,6 @@ public class JDBCConnection {
         }
         return null;
     }
-
-    public void releaseConnection(final Connection connection) {
-        if (null != connection) {
-            connectionPool.offer(connection);
-        }
-    }
-
-    public void closeConnectionPool() {
-        try {
-            for (final Connection connection : connectionPool) {
-                connection.close();
-            }
-        } catch (final Exception exception) {
-            exception.printStackTrace();
-        }
-    }
-
-
 }
 
 

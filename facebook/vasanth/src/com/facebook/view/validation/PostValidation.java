@@ -37,23 +37,11 @@ public class PostValidation {
 
     /**
      * <p>
-     * Validates a choice string using a regular expression pattern.
-     * </p>
-     *
-     * @param choice The choice has to validated
-     * @return boolean - True if the choice is valid, false otherwise.
-     */
-    public boolean validateChoice(final String choice) {
-        return choice.matches("\\d{1,2}");
-    }
-
-    /**
-     * <p>
      * Validates a check string using a regular expression pattern.
      * </p>
      *
      * @param access The access to be validated
-     * @return boolean - True if the check is valid, false otherwise.
+     * @return True if the check is valid, false otherwise.
      */
     public boolean validateAccess(final String access) {
         return (access.equalsIgnoreCase("yes") || access.equalsIgnoreCase("y"));
@@ -65,7 +53,7 @@ public class PostValidation {
      * </p>
      *
      * @param postId The post id to be validated
-     * @return boolean - True if the user id is valid, false otherwise.
+     * @return True if the user id is valid, false otherwise.
      */
     public boolean validatePostId(final String postId) {
         return postId.matches("[\\d]");
